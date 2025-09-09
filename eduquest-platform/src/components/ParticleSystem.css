@@ -1,0 +1,166 @@
+.particle-system {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  overflow: hidden;
+  /* Performance optimizations */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: layout style paint;
+}
+
+.particle-system.active {
+  opacity: 1;
+}
+
+/* Interactive particles allow mouse events */
+.particle-system.interactive {
+  pointer-events: auto;
+}
+
+/* Container for particle systems */
+.particle-container {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Floating elements */
+.floating-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.floating-element {
+  position: absolute;
+  opacity: 0.6;
+  animation: float 6s ease-in-out infinite;
+  will-change: transform;
+  transform-origin: center;
+  /* Performance optimizations */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: layout style paint;
+}
+
+.floating-element.star {
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #ffd700, #ffed4e);
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ffd700;
+}
+
+.floating-element.diamond {
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(45deg, #4f46e5, #7c3aed);
+  transform: rotate(45deg);
+  box-shadow: 0 0 8px #4f46e5;
+}
+
+.floating-element.circle {
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, #06b6d4, #0891b2);
+  border-radius: 50%;
+  box-shadow: 0 0 6px #06b6d4;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.6;
+  }
+  25% {
+    transform: translateY(-20px) rotate(90deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-10px) rotate(180deg);
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(-30px) rotate(270deg);
+    opacity: 0.8;
+  }
+}
+
+/* Staggered animation delays */
+.floating-element:nth-child(1) { animation-delay: 0s; }
+.floating-element:nth-child(2) { animation-delay: 0.5s; }
+.floating-element:nth-child(3) { animation-delay: 1s; }
+.floating-element:nth-child(4) { animation-delay: 1.5s; }
+.floating-element:nth-child(5) { animation-delay: 2s; }
+.floating-element:nth-child(6) { animation-delay: 2.5s; }
+.floating-element:nth-child(7) { animation-delay: 3s; }
+.floating-element:nth-child(8) { animation-delay: 3.5s; }
+
+/* Background gradient overlay */
+.particle-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(79, 70, 229, 0.03) 0%,
+    rgba(124, 58, 237, 0.02) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Performance optimizations */
+.floating-elements {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  contain: layout style paint;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .particle-system {
+    display: none;
+  }
+  
+  .floating-element {
+    animation: none;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .particle-system {
+    opacity: 0.5;
+  }
+  
+  .floating-element {
+    animation-duration: 8s;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .particle-system {
+    opacity: 0.3;
+  }
+  
+  .floating-element {
+    opacity: 0.4;
+  }
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation Test</title>
+    <link rel="stylesheet" href="smooth-animations.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-item {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #333;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="status" id="status">Loading...</div>
+    
+    <div class="test-container">
+        <h1>Animation Library Test</h1>
+        
+        <div class="test-item animate-fade-in" data-delay="0">
+            <h2>Fade In Animation</h2>
+            <p>This should fade in when it comes into view.</p>
+        </div>
+        
+        <div class="test-item animate-slide-up" data-delay="200">
+            <h2>Slide Up Animation</h2>
+            <p>This should slide up from below.</p>
+        </div>
+        
+        <div class="test-item animate-scale-in" data-delay="400">
+            <h2>Scale In Animation</h2>
+            <p>This should scale in from small to normal size.</p>
+        </div>
+        
+        <div class="test-item animate-bounce-in" data-delay="600">
+            <h2>Bounce In Animation</h2>
+            <p>This should bounce in with a spring effect.</p>
+        </div>
+        
+        <div style="height: 100vh;"></div>
+        
+        <div class="test-item animate-fade-in">
+            <h2>Scroll Test</h2>
+            <p>This should animate when you scroll down to it.</p>
+        </div>
+    </div>
+    
+    <script src="smooth-animations.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const status = document.getElementById('status');
+            
+            try {
+                // Test if SmoothAnimations class exists
+                if (typeof SmoothAnimations === 'undefined') {
+                    status.textContent = 'Error: SmoothAnimations class not found';
+                    status.style.background = '#e74c3c';
+                    return;
+                }
+                
+                // Initialize animations
+                const animations = new SmoothAnimations({
+                    threshold: 0.2,
+                    once: true
+                });
+                
+                status.textContent = 'Animations initialized successfully!';
+                status.style.background = '#27ae60';
+                
+                // Log animation events
+                console.log('Animation system initialized');
+                
+            } catch (error) {
+                status.textContent = 'Error: ' + error.message;
+                status.style.background = '#e74c3c';
+                console.error('Animation initialization error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

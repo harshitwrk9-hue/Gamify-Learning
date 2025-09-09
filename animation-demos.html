@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smooth Responsive Animations - Demo Gallery</title>
+    <link rel="stylesheet" href="smooth-animations.css">
+    <style>
+        /* Demo page specific styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #fff;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%),
+                linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 25% 25%, #ff006e22 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, #8338ec22 0%, transparent 50%);
+            animation: gradient-shift 8s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #fff 0%, #78dbff 25%, #ff77c6 50%, #fff 75%, #8338ec 100%);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 4s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(120, 219, 255, 0.5);
+            position: relative;
+        }
+        
+        .header h1::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.8) 50%, transparent 70%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: neon-flicker 3s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .demo-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .demo-section h2 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        /* Hero Section Styles */
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            min-height: 500px;
+        }
+
+        .hero-content {
+            flex: 1;
+            padding-right: 40px;
+        }
+
+        .hero-content h2 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-primary {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .placeholder-image {
+            font-size: 8rem;
+            opacity: 0.8;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 20px;
+            background: 
+                linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(15px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 
+                0 25px 80px rgba(0, 0, 0, 0.3),
+                0 0 40px rgba(120, 219, 255, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Testimonials */
+        .testimonial-content {
+            margin-bottom: 20px;
+        }
+
+        .testimonial-content p {
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 0;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            font-size: 2.5rem;
+        }
+
+        .author-info h4 {
+            margin: 0;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .author-info span {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Statistics */
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Pricing */
+        .plan-header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .plan-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 30px 0;
+        }
+
+        .plan-features li {
+            padding: 8px 0;
+            color: #555;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .demo-card {
+            background: 
+                linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%),
+                radial-gradient(circle at 30% 30%, rgba(120, 219, 255, 0.1) 0%, transparent 70%),
+                linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(15px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .demo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                0 0 30px rgba(120, 219, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .demo-card:hover::before {
+            left: 100%;
+        }
+
+        .demo-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .demo-card p {
+            opacity: 0.9;
+        }
+
+        .demo-card a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .demo-card a:hover {
+            opacity: 0.8;
+        }
+
+        .demo-card input {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-right: 10px;
+            font-size: 1rem;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn {
+            background: 
+                linear-gradient(135deg, rgba(120, 219, 255, 0.8) 0%, rgba(255, 119, 198, 0.8) 100%),
+                linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 
+                0 15px 40px rgba(0, 0, 0, 0.3),
+                0 0 30px rgba(120, 219, 255, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+
+        .stagger-demo {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .stagger-item {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .performance-info {
+            background: #e8f5e8;
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .accessibility-info {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-section {
+                padding: 20px;
+            }
+            
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    /* Particle Effects */
+            @keyframes particle-burst {
+                0% {
+                    transform: translate(-50%, -50%) translateX(0) scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translate(-50%, -50%) translateX(100px) scale(0);
+                    opacity: 0;
+                }
+            }
+            
+            /* Enhanced Hover Effects */
+            .demo-card:hover .feature-icon {
+                animation: breathe 2s ease-in-out infinite;
+            }
+            
+            .btn:active {
+                transform: translateY(-3px) scale(0.98);
+            }
+            
+            /* Responsive Enhancements */
+            @media (max-width: 768px) {
+                .hero {
+                    padding: 60px 20px;
+                }
+                
+                h1 {
+                    font-size: 2.5rem;
+                }
+                
+                .demo-grid {
+                    grid-template-columns: 1fr;
+                    gap: 30px;
+                }
+                
+                .features-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header fade-in">
+            <h1 data-text="Smooth Responsive Animations">Smooth Responsive Animations</h1>
+            <p>A comprehensive demo gallery showcasing performance-optimized animations for modern web applications</p>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="demo-section hero-section fade-in-up" data-animate-delay="100">
+            <div class="hero-content">
+                <h2 class="fade-in" data-animate-delay="200">Welcome to Our Platform</h2>
+                <p class="fade-in-up" data-animate-delay="300">Experience smooth, responsive animations that enhance user engagement and create memorable interactions.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary scale-in" data-animate-delay="400">Get Started</button>
+                    <button class="btn btn-secondary scale-in" data-animate-delay="500">Learn More</button>
+                </div>
+            </div>
+            <div class="hero-image slide-in-right" data-animate-delay="600">
+                <div class="placeholder-image">🚀</div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="demo-section fade-in-up" data-animate-delay="150">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card glassmorphism fade-in-up" data-animate-delay="200">
+                    <div class="feature-icon neon-text">⚡</div>
+                    <h3>Lightning Fast</h3>
+                    <p>GPU-accelerated animations with minimal impact on performance. Optimized for 60fps smooth rendering with modern CSS transforms.</p>
+                </div>
+                <div class="feature-card gradient-bg fade-in-up" data-animate-delay="300">
+                    <div class="feature-icon breathe">🎨</div>
+                    <h3>Modern Visual Effects</h3>
+                    <p>Cutting-edge animations including glassmorphism, neon effects, morphing shapes, and 3D transforms for stunning visual impact.</p>
+                </div>
+                <div class="feature-card morph-blob fade-in-up" data-animate-delay="400">
+                    <div class="feature-icon hologram">📱</div>
+                    <h3>Dynamic & Responsive</h3>
+                    <p>Fluid animations that adapt to any screen size with advanced morphing effects and particle systems.</p>
+                </div>
+                <div class="feature-card neon-border fade-in-up" data-animate-delay="500">
+                    <div class="feature-icon glitch">🔧</div>
+                    <h3>Creative Integration</h3>
+                    <p>Innovative CSS classes with creative combinations. Mix and match effects for unique visual experiences.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modern Visual Effects Demo -->
+        <section class="demo-section fade-in-up" data-animate-delay="200">
+            <h2>Modern Visual Effects</h2>
+            <div class="demo-grid">
+                <div class="demo-card glassmorphism" data-animate-delay="300">
+                    <h3>Glassmorphism</h3>
+                    <p>Glass Effect</p>
+                </div>
+                <div class="demo-card gradient-bg" data-animate-delay="400">
+                    <h3>Gradient Animation</h3>
+                    <p>Gradient Flow</p>
+                </div>
+                <div class="demo-card morph-blob" data-animate-delay="500">
+                    <h3>Morphing Blob</h3>
+                    <p>Morphing Shape</p>
+                </div>
+                <div class="demo-card neon-text" data-animate-delay="600">
+                    <h3>Neon Glow</h3>
+                    <p>Neon Effect</p>
+                </div>
+                <div class="demo-card cube-3d" data-animate-delay="700">
+                    <h3>3D Cube</h3>
+                    <p>3D Transform</p>
+                </div>
+                <div class="demo-card hologram" data-animate-delay="800">
+                    <h3>Hologram</h3>
+                    <p>Holographic</p>
+                </div>
+                <div class="demo-card glitch" data-animate-delay="900">
+                    <h3>Glitch Effect</h3>
+                    <p>Digital Glitch</p>
+                </div>
+                <div class="demo-card breathe" data-animate-delay="1000">
+                    <h3>Breathing</h3>
+                    <p>Subtle Pulse</p>
+                </div>
+            </div>
+            <div class="code-example">
+&lt;div class="fade-in" data-animate-delay="300"&gt;
+    Content with fade in animation
+&lt;/div&gt;
+            </div>
+        </section>
+
+        <!-- Slide Animations Demo -->
+        <section class="demo-section slide-in-up" data-animate-delay="100">
+            <h2>Slide Animations</h2>
+            <div class="demo-grid">
+                <div class="demo-card slide-in-up" data-animate-delay="200">
+                    <h3>Slide In Up</h3>
+                    <p>Smooth upward slide</p>
+                </div>
+                <div class="demo-card slide-in-down" data-animate-delay="300">
+                    <h3>Slide In Down</h3>
+                    <p>Smooth downward slide</p>
+                </div>
+                <div class="demo-card slide-in-left" data-animate-delay="400">
+                    <h3>Slide In Left</h3>
+                    <p>Slide from left</p>
+                </div>
+                <div class="demo-card slide-in-right" data-animate-delay="500">
+                    <h3>Slide In Right</h3>
+                    <p>Slide from right</p>
+                </div>
+            </div>
+            <div class="code-example">
+&lt;div class="slide-in-up" data-animate-delay="200"&gt;
+    Content with slide animation
+&lt;/div&gt;
+            </div>
+        </section>
+
+        <!-- Scale Animations Demo -->
+        <section class="demo-section scale-in" data-animate-delay="150">
+            <h2>Scale Animations</h2>
+            <div class="demo-grid">
+                <div class="demo-card scale-in" data-animate-delay="250">
+                    <h3>Scale In</h3>
+                    <p>Smooth scale from center</p>
+                </div>
+                <div class="demo-card scale-in-up" data-animate-delay="350">
+                    <h3>Scale In Up</h3>
+                    <p>Scale with upward origin</p>
+                </div>
+                <div class="demo-card scale-in-center" data-animate-delay="450">
+                    <h3>Scale In Center</h3>
+                    <p>Perfect center scaling</p>
+                </div>
+            </div>
+            <div class="code-example">
+&lt;div class="scale-in" data-animate-delay="250"&gt;
+    Content with scale animation
+&lt;/div&gt;
+            </div>
+        </section>
+
+        <!-- Bounce Animations Demo -->
+        <section class="demo-section bounce-in" data-animate-delay="100">
+            <h2>Bounce Animations</h2>
+            <div class="demo-grid">
+                <div class="demo-card bounce-in" data-animate-delay="200">
+                    <h3>Bounce In</h3>
+                    <p>Playful bounce effect</p>
+                </div>
+                <div class="demo-card bounce-in-up" data-animate-delay="300">
+                    <h3>Bounce In Up</h3>
+                    <p>Bounce from bottom</p>
+                </div>
+            </div>
+            <div class="code-example">
+&lt;div class="bounce-in" data-animate-delay="200"&gt;
+    Content with bounce animation
+&lt;/div&gt;
+            </div>
+        </section>
+
+        <!-- Special Effects Demo -->
+        <section class="demo-section rotate-in" data-animate-delay="100">
+            <h2>Special Effects</h2>
+            <div class="demo-grid">
+                <div class="demo-card rotate-in" data-animate-delay="200">
+                    <h3>Rotate In</h3>
+                    <p>360° rotation entrance</p>
+                </div>
+                <div class="demo-card flip-in-x" data-animate-delay="300">
+                    <h3>Flip In X</h3>
+                    <p>Horizontal flip effect</p>
+                </div>
+                <div class="demo-card flip-in-y" data-animate-delay="400">
+                    <h3>Flip In Y</h3>
+                    <p>Vertical flip effect</p>
+                </div>
+                <div class="demo-card zoom-in" data-animate-delay="500">
+                    <h3>Zoom In</h3>
+                    <p>Dramatic zoom entrance</p>
+                </div>
+                <div class="demo-card blur-in" data-animate-delay="600">
+                    <h3>Blur In</h3>
+                    <p>Focus blur transition</p>
+                </div>
+            </div>
+            <div class="code-example">
+&lt;div class="rotate-in" data-animate-delay="200"&gt;
+    Content with rotation animation
+&lt;/div&gt;
+            </div>
+        </section>
+
+        <!-- Stagger Animation Demo -->
+        <section class="demo-section fade-in-up" data-animate-delay="100">
+            <h2>Stagger Animations</h2>
+            <p style="text-align: center; margin-bottom: 30px;">Watch elements animate in sequence</p>
+            <div class="stagger-demo">
+                <div class="stagger-item stagger-fade" data-animate-delay="100">1</div>
+                <div class="stagger-item stagger-fade" data-animate-delay="200">2</div>
+                <div class="stagger-item stagger-fade" data-animate-delay="300">3</div>
+                <div class="stagger-item stagger-fade" data-animate-delay="400">4</div>
+                <div class="stagger-item stagger-fade" data-animate-delay="500">5</div>
+                <div class="stagger-item stagger-fade" data-animate-delay="600">6</div>
+            </div>
+            <div class="controls">
+                <button class="btn" onclick="restartStagger()">Restart Stagger Animation</button>
+            </div>
+            <div class="code-example">
+// JavaScript for stagger animations
+window.smoothAnimations.stagger('.stagger-item', {
+    staggerDelay: 100,
+    delay: 0
+});
+            </div>
+        </section>
+
+        <!-- Hover Effects Demo -->
+        <section class="demo-section fade-in-up" data-animate-delay="150">
+            <h2>Interactive Hover Effects</h2>
+            <div class="demo-grid">
+                <div class="demo-card hover-lift" data-animate-delay="200">
+                    <h3>Hover Lift</h3>
+                    <p>Hover to see lift effect</p>
+                </div>
+                <div class="demo-card hover-glow" data-animate-delay="300">
+                    <h3>Hover Glow</h3>
+                    <p>Hover to see glow effect</p>
+                </div>
+                <div class="demo-card hover-scale" data-animate-delay="400">
+                    <h3>Hover Scale</h3>
+                    <p>Hover to see scale effect</p>
+                </div>
+                <div class="demo-card hover-rotate" data-animate-delay="500">
+                    <h3>Hover Rotate</h3>
+                    <p>Hover to see rotation</p>
+                </div>
+            </div>
+            <div class="code-example">
+&lt;div class="hover-lift"&gt;
+    Content with hover lift effect
+&lt;/div&gt;
+            </div>
+        </section>
+
+        <!-- Performance Information -->
+        <section class="demo-section fade-in-up" data-animate-delay="100">
+            <h2>Performance Features</h2>
+            <div class="performance-info">
+                <h3>🚀 Optimized for Performance</h3>
+                <ul>
+                    <li><strong>GPU Acceleration:</strong> Uses transform and opacity for hardware acceleration</li>
+                    <li><strong>Intersection Observer:</strong> Animations trigger only when elements are visible</li>
+                    <li><strong>Will-Change Optimization:</strong> Automatically manages will-change property</li>
+                    <li><strong>Reduced Motion Support:</strong> Respects user's motion preferences</li>
+                    <li><strong>Mobile Optimized:</strong> Lighter animations on mobile devices</li>
+                </ul>
+            </div>
+            <div class="code-example">
+// Performance-focused initialization
+const animations = SmoothAnimationsUtils.performanceSetup();
+            </div>
+        </section>
+
+        <!-- Accessibility Information -->
+        <section class="demo-section fade-in-up" data-animate-delay="150">
+            <h2>Accessibility Features</h2>
+            <div class="accessibility-info">
+                <h3>♿ Accessibility First</h3>
+                <ul>
+                    <li><strong>Prefers Reduced Motion:</strong> Automatically disables animations for users who prefer reduced motion</li>
+                    <li><strong>Keyboard Navigation:</strong> All interactive elements remain keyboard accessible</li>
+                    <li><strong>Screen Reader Friendly:</strong> Animations don't interfere with screen readers</li>
+                    <li><strong>Focus Management:</strong> Maintains proper focus indicators during animations</li>
+                </ul>
+            </div>
+            <div class="code-example">
+// Accessibility-focused initialization
+const animations = SmoothAnimationsUtils.accessibilitySetup();
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="demo-section fade-in-up" data-animate-delay="100">
+            <h2>What Our Users Say</h2>
+            <div class="demo-grid">
+                <div class="demo-card fade-in-left" data-animate-delay="200">
+                    <div class="testimonial-content">
+                        <p>"The animations are incredibly smooth and really enhance the user experience. Our conversion rates improved by 25%!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">👩‍💼</div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <span>Product Manager, TechCorp</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="demo-card fade-in-up" data-animate-delay="300">
+                    <div class="testimonial-content">
+                        <p>"Easy to implement and the performance is outstanding. Perfect for our mobile-first approach."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">👨‍💻</div>
+                        <div class="author-info">
+                            <h4>Mike Chen</h4>
+                            <span>Lead Developer, StartupXYZ</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="demo-card fade-in-right" data-animate-delay="400">
+                    <div class="testimonial-content">
+                        <p>"The accessibility features are fantastic. Finally, animations that work for everyone!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">👩‍🎨</div>
+                        <div class="author-info">
+                            <h4>Emma Davis</h4>
+                            <span>UX Designer, DesignStudio</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="demo-section scale-in" data-animate-delay="150">
+            <h2>Impressive Numbers</h2>
+            <div class="demo-grid">
+                <div class="demo-card scale-in" data-animate-delay="200">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                <div class="demo-card scale-in" data-animate-delay="300">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+                <div class="demo-card scale-in" data-animate-delay="400">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Support</div>
+                </div>
+                <div class="demo-card scale-in" data-animate-delay="500">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section class="demo-section fade-in-up" data-animate-delay="100">
+            <h2>Choose Your Plan</h2>
+            <div class="demo-grid">
+                <div class="demo-card fade-in-up" data-animate-delay="200">
+                    <div class="plan-header">
+                        <h3>Starter</h3>
+                        <div class="price">$9<span>/month</span></div>
+                    </div>
+                    <ul class="plan-features">
+                        <li>✓ Basic animations</li>
+                        <li>✓ Mobile support</li>
+                        <li>✓ Email support</li>
+                        <li>✗ Advanced features</li>
+                    </ul>
+                    <button class="btn">Choose Plan</button>
+                </div>
+                <div class="demo-card scale-in" data-animate-delay="300">
+                    <div class="popular-badge">Most Popular</div>
+                    <div class="plan-header">
+                        <h3>Professional</h3>
+                        <div class="price">$29<span>/month</span></div>
+                    </div>
+                    <ul class="plan-features">
+                        <li>✓ All animations</li>
+                        <li>✓ Advanced controls</li>
+                        <li>✓ Priority support</li>
+                        <li>✓ Custom themes</li>
+                    </ul>
+                    <button class="btn">Choose Plan</button>
+                </div>
+                <div class="demo-card fade-in-up" data-animate-delay="400">
+                    <div class="plan-header">
+                        <h3>Enterprise</h3>
+                        <div class="price">$99<span>/month</span></div>
+                    </div>
+                    <ul class="plan-features">
+                        <li>✓ Everything included</li>
+                        <li>✓ White-label solution</li>
+                        <li>✓ 24/7 phone support</li>
+                        <li>✓ Custom development</li>
+                    </ul>
+                    <button class="btn">Contact Sales</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Manual Controls Demo -->
+        <section class="demo-section fade-in-up" data-animate-delay="100">
+            <h2>Interactive Animation Controls</h2>
+            <div class="controls">
+                <button class="btn" onclick="triggerFadeAnimations()">Trigger Fade Animations</button>
+                <button class="btn" onclick="triggerSlideAnimations()">Trigger Slide Animations</button>
+                <button class="btn" onclick="triggerAllAnimations()">Trigger All Animations</button>
+                <button class="btn" onclick="resetAllAnimations()">Reset All Animations</button>
+            </div>
+            <div class="demo-grid" id="manual-demo">
+                <div class="demo-card manual-fade" style="opacity: 0.3;">
+                    <h3>Manual Fade</h3>
+                    <p>Click button to animate</p>
+                </div>
+                <div class="demo-card manual-slide" style="opacity: 0.3; transform: translateY(50px);">
+                    <h3>Manual Slide</h3>
+                    <p>Click button to animate</p>
+                </div>
+                <div class="demo-card manual-scale" style="opacity: 0.3; transform: scale(0.8);">
+                    <h3>Manual Scale</h3>
+                    <p>Click button to animate</p>
+                </div>
+            </div>
+            <div class="code-example">
+// Manual animation triggering
+window.smoothAnimations.trigger('.manual-fade');
+window.smoothAnimations.trigger('.manual-slide');
+            </div>
+        </section>
+
+        <!-- Code Examples Gallery -->
+        <section class="demo-section fade-in-up" data-animate-delay="100">
+            <h2>Code Examples</h2>
+            <div class="demo-grid">
+                <div class="demo-card fade-in-left" data-animate-delay="200">
+                    <h3>💻 Basic Usage</h3>
+                    <pre style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; text-align: left; font-size: 0.85rem; overflow-x: auto;">
+<code>&lt;div class="fade-in"&gt;Hello World&lt;/div&gt;
+&lt;script&gt;
+  const animations = new SmoothAnimations();
+  animations.init();
+&lt;/script&gt;</code></pre>
+                </div>
+                <div class="demo-card fade-in-up" data-animate-delay="300">
+                    <h3>⚙️ Custom Configuration</h3>
+                    <pre style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; text-align: left; font-size: 0.85rem; overflow-x: auto;">
+<code>const animations = new SmoothAnimations({
+  duration: 800,
+  threshold: 0.2,
+  once: false
+});</code></pre>
+                </div>
+                <div class="demo-card fade-in-right" data-animate-delay="400">
+                    <h3>🎯 Advanced Timing</h3>
+                    <pre style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; text-align: left; font-size: 0.85rem; overflow-x: auto;">
+<code>&lt;div class="slide-in-left" 
+     data-animate-delay="500"&gt;
+  Delayed animation
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Playground -->
+        <section class="demo-section fade-in-up" data-animate-delay="150">
+            <h2>Interactive Playground</h2>
+            <div class="demo-grid">
+                <div class="demo-card glassmorphism fade-in" data-animate-delay="200">
+                    <h3>🎮 Modern Effects</h3>
+                    <div style="margin: 20px 0;">
+                        <button class="btn neon-border" onclick="triggerAnimation('glassmorphism')">Glassmorphism</button>
+                        <button class="btn gradient-bg" onclick="triggerAnimation('neon-text')">Neon Glow</button>
+                        <button class="btn morph-blob" onclick="triggerAnimation('hologram')">Hologram</button>
+                        <button class="btn glitch" onclick="triggerAnimation('glitch')">Glitch</button>
+                    </div>
+                    <div id="playground-demo" class="morph-blob" style="padding: 20px; background: rgba(255,255,255,0.1); border-radius: 8px; margin-top: 15px;">
+                        <span class="typewriter">🎯 Experience the future!</span>
+                    </div>
+                </div>
+                <div class="demo-card gradient-bg fade-in-up" data-animate-delay="300">
+                    <h3>📊 Performance Monitor</h3>
+                    <div style="text-align: left; font-family: monospace; font-size: 0.9rem;">
+                        <div>FPS: <span id="fps-counter" class="neon-text">60</span></div>
+                        <div>Active Effects: <span id="active-count" class="hologram">0</span></div>
+                        <div>GPU Load: <span id="memory-usage" class="breathe">~15%</span></div>
+                        <div>Load Time: <span id="load-time">Loading...</span></div>
+                    </div>
+                </div>
+                <div class="demo-card neon-border fade-in-right" data-animate-delay="400">
+                    <h3>🔧 Creative Controls</h3>
+                    <div style="text-align: left;">
+                        <label style="display: block; margin: 10px 0;">
+                            <input type="checkbox" checked> Enable Modern Effects
+                        </label>
+                        <label style="display: block; margin: 10px 0;">
+                            <input type="checkbox" checked> Particle Effects
+                        </label>
+                        <label style="display: block; margin: 10px 0;">
+                            Effect Intensity: <input type="range" min="0.1" max="2" step="0.1" value="1" style="width: 100px;">
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="demo-section fade-in-up" data-animate-delay="100">
+            <h2>Stay Updated</h2>
+            <div class="demo-grid">
+                <div class="demo-card fade-in" data-animate-delay="200">
+                    <h3>📧 Newsletter</h3>
+                    <p>Get the latest updates on new animation features and performance improvements.</p>
+                    <div style="margin-top: 20px;">
+                        <input type="email" placeholder="Enter your email" style="padding: 10px; border-radius: 5px; border: 1px solid #ddd; margin-right: 10px;">
+                        <button class="btn">Subscribe</button>
+                    </div>
+                </div>
+                <div class="demo-card fade-in-up" data-animate-delay="300">
+                    <h3>🔔 Notifications</h3>
+                    <p>Join 10,000+ developers already subscribed to our updates.</p>
+                    <div style="margin-top: 20px;">
+                        <div style="font-size: 0.9rem; opacity: 0.8;">✓ New features & updates</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">✓ Performance tips</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8;">✓ Best practices</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Section -->
+        <section class="demo-section fade-in-up" data-animate-delay="150">
+            <h2>Connect With Us</h2>
+            <div class="demo-grid">
+                <div class="demo-card fade-in-left" data-animate-delay="200">
+                    <h3>🔗 Links</h3>
+                    <div style="text-align: left;">
+                        <p><a href="#" style="color: white; text-decoration: none;">📚 Documentation</a></p>
+                        <p><a href="#" style="color: white; text-decoration: none;">🎯 Examples</a></p>
+                        <p><a href="#" style="color: white; text-decoration: none;">💬 Community</a></p>
+                        <p><a href="#" style="color: white; text-decoration: none;">🐙 GitHub</a></p>
+                    </div>
+                </div>
+                <div class="demo-card fade-in-up" data-animate-delay="300">
+                    <h3>📞 Support</h3>
+                    <div style="text-align: left;">
+                        <p>📧 support@smoothanimations.com</p>
+                        <p>💬 Live chat available</p>
+                        <p>📖 Comprehensive docs</p>
+                        <p>🎥 Video tutorials</p>
+                    </div>
+                </div>
+                <div class="demo-card fade-in-right" data-animate-delay="400">
+                    <h3>🌟 Social</h3>
+                    <div style="text-align: left;">
+                        <p>🐦 Follow us on Twitter</p>
+                        <p>📘 Like us on Facebook</p>
+                        <p>💼 Connect on LinkedIn</p>
+                        <p>📺 Subscribe on YouTube</p>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.8);">
+                <p>&copy; 2024 Smooth Animations. All rights reserved. Made with ❤️ for developers.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Load animation library -->
+    <script src="smooth-animations.js"></script>
+    
+    <!-- Demo-specific JavaScript -->
+    <script>
+        // Custom demo functions
+        function restartStagger() {
+            const staggerItems = document.querySelectorAll('.stagger-item');
+            staggerItems.forEach(item => {
+                item.classList.remove('animate-active');
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(30px)';
+            });
+            
+            setTimeout(() => {
+                window.smoothAnimations.stagger('.stagger-item', {
+                    staggerDelay: 100,
+                    delay: 0
+                });
+            }, 100);
+        }
+        
+        function triggerFadeAnimations() {
+            window.smoothAnimations.trigger('.manual-fade');
+        }
+        
+        function triggerSlideAnimations() {
+            window.smoothAnimations.trigger('.manual-slide');
+        }
+        
+        function triggerAllAnimations() {
+            window.smoothAnimations.trigger('#manual-demo .demo-card');
+        }
+        
+        function resetAllAnimations() {
+            const manualCards = document.querySelectorAll('#manual-demo .demo-card');
+            manualCards.forEach(card => {
+                card.classList.remove('animate-active');
+                if (card.classList.contains('manual-fade')) {
+                    card.style.opacity = '0.3';
+                    card.style.transform = '';
+                } else if (card.classList.contains('manual-slide')) {
+                    card.style.opacity = '0.3';
+                    card.style.transform = 'translateY(50px)';
+                } else if (card.classList.contains('manual-scale')) {
+                    card.style.opacity = '0.3';
+                    card.style.transform = 'scale(0.8)';
+                }
+            });
+        }
+        
+        // Initialize stagger animation class
+        document.addEventListener('DOMContentLoaded', function() {
+            const style = document.createElement('style');
+            style.textContent = `
+                .stagger-fade {
+                    opacity: 0;
+                    transform: translateY(30px);
+                    transition: all 0.6s ease;
+                }
+                .stagger-fade.animate-active {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+                .manual-fade,
+                .manual-slide,
+                .manual-scale {
+                    transition: all 0.6s ease;
+                }
+                .manual-fade.animate-active {
+                    opacity: 1 !important;
+                }
+                .manual-slide.animate-active {
+                    opacity: 1 !important;
+                    transform: translateY(0) !important;
+                }
+                .manual-scale.animate-active {
+                    opacity: 1 !important;
+                    transform: scale(1) !important;
+                }
+            `;
+            document.head.appendChild(style);
+        });
+        
+        // Performance monitoring
+        const startTime = performance.now();
+        if ('performance' in window) {
+            window.addEventListener('load', function() {
+                const loadTime = performance.now() - startTime;
+                console.log(`Page loaded in ${loadTime.toFixed(2)}ms`);
+                
+                // Update load time display
+                const loadTimeElement = document.getElementById('load-time');
+                if (loadTimeElement) {
+                    loadTimeElement.textContent = `${loadTime.toFixed(0)}ms`;
+                }
+                
+                setTimeout(function() {
+                    const perfData = performance.getEntriesByType('navigation')[0];
+                    console.log('Page Load Performance:', {
+                        'DOM Content Loaded': perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart + 'ms',
+                        'Load Complete': perfData.loadEventEnd - perfData.loadEventStart + 'ms'
+                    });
+                }, 1000);
+            });
+        }
+
+        // Enhanced interactive playground functions
+        function triggerAnimation(effectClass) {
+            const target = document.getElementById('playground-demo');
+            if (!target) return;
+            
+            // Remove existing effect classes
+            const effectClasses = ['glassmorphism', 'neon-text', 'morph-blob', 'hologram', 'glitch', 'gradient-bg', 'breathe', 'cube-3d'];
+            effectClasses.forEach(cls => target.classList.remove(cls));
+            
+            // Force reflow
+            target.offsetHeight;
+            
+            // Add new effect class with enhanced feedback
+            target.classList.add(effectClass);
+            
+            // Add temporary glow effect
+            target.style.boxShadow = '0 0 50px rgba(120, 219, 255, 0.8)';
+            
+            // Update counters
+            updateActiveAnimationCount();
+            
+            // Create particle burst effect
+            createParticleBurst();
+            
+            // Reset after effect duration
+            setTimeout(() => {
+                target.style.boxShadow = '';
+                updateActiveAnimationCount();
+            }, 2000);
+        }
+        
+        // Particle Burst Effect
+        function createParticleBurst() {
+            const colors = ['#78dbff', '#ff77c6', '#8338ec', '#fff'];
+            for (let i = 0; i < 12; i++) {
+                const particle = document.createElement('div');
+                particle.style.cssText = `
+                    position: fixed;
+                    width: 6px;
+                    height: 6px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 1000;
+                    left: 50%;
+                    top: 50%;
+                    animation: particle-burst 1s ease-out forwards;
+                    transform: translate(-50%, -50%) rotate(${i * 30}deg) translateX(0);
+                `;
+                document.body.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 1000);
+            }
+        }
+
+        // Performance monitoring functions
+        function updateActiveAnimationCount() {
+            const activeElements = document.querySelectorAll('.animate-in, .bounce-in, .rotate-in, .zoom-in');
+            const counter = document.getElementById('active-count');
+            if (counter) {
+                counter.textContent = activeElements.length;
+            }
+        }
+
+        // Enhanced FPS monitoring with visual feedback
+        let frameCount = 0;
+        let lastTime = performance.now();
+        let effectCount = 0;
+        
+        function updateFPS() {
+            frameCount++;
+            const currentTime = performance.now();
+            
+            if (currentTime - lastTime >= 1000) {
+                const fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
+                const fpsCounter = document.getElementById('fps-counter');
+                if (fpsCounter) {
+                    fpsCounter.textContent = fps;
+                    // Add visual feedback based on performance
+                    if (fps >= 55) {
+                        fpsCounter.className = 'neon-text';
+                    } else if (fps >= 30) {
+                        fpsCounter.className = 'hologram';
+                    } else {
+                        fpsCounter.className = 'glitch';
+                    }
+                }
+                frameCount = 0;
+                lastTime = currentTime;
+            }
+            
+            requestAnimationFrame(updateFPS);
+        }
+        
+        // Start FPS monitoring
+        requestAnimationFrame(updateFPS);
+        
+        // Modern Effect Counter
+        function updateEffectCount() {
+            const activeElements = document.querySelectorAll('.glassmorphism, .neon-text, .morph-blob, .hologram, .glitch, .gradient-bg, .breathe');
+            effectCount = activeElements.length;
+            const countElement = document.getElementById('active-count');
+            if (countElement) {
+                countElement.textContent = effectCount;
+            }
+        }
+        
+        setInterval(updateEffectCount, 1000);
+
+        // Memory usage estimation (simplified)
+        function updateMemoryUsage() {
+            if (performance.memory) {
+                const usedMB = Math.round(performance.memory.usedJSHeapSize / 1024 / 1024);
+                const memoryElement = document.getElementById('memory-usage');
+                if (memoryElement) {
+                    memoryElement.textContent = `~${usedMB}MB`;
+                }
+            }
+        }
+        
+        // Update memory usage every 5 seconds
+        setInterval(updateMemoryUsage, 5000);
+        updateMemoryUsage();
+
+        // Settings panel functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            // Enable/disable animations checkbox
+            const enableAnimationsCheckbox = document.querySelector('input[type="checkbox"]');
+            if (enableAnimationsCheckbox) {
+                enableAnimationsCheckbox.addEventListener('change', (e) => {
+                    if (e.target.checked) {
+                        document.body.style.setProperty('--animation-duration', '0.6s');
+                    } else {
+                        document.body.style.setProperty('--animation-duration', '0s');
+                    }
+                });
+            }
+            
+            // Duration slider
+            const durationSlider = document.querySelector('input[type="range"]');
+            if (durationSlider) {
+                durationSlider.addEventListener('input', (e) => {
+                    const duration = e.target.value + 'ms';
+                    document.body.style.setProperty('--animation-duration', duration);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

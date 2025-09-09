@@ -1,0 +1,203 @@
+:root {
+  /* Dark Purple & Black Color Palette */
+  --primary-color: #8b5cf6;
+  --primary-gradient: linear-gradient(135deg, #1a0b2e 0%, #4c1d95 50%, #7c3aed 100%);
+  --secondary-color: #a855f7;
+  --secondary-gradient: linear-gradient(135deg, #581c87 0%, #7c2d12 100%);
+  --accent-color: #c084fc;
+  --accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  --success-color: #22c55e;
+  --success-gradient: linear-gradient(135deg, #166534 0%, #22c55e 100%);
+  --warning-color: #f59e0b;
+  --warning-gradient: linear-gradient(135deg, #92400e 0%, #f59e0b 100%);
+  --error-color: #ef4444;
+  --error-gradient: linear-gradient(135deg, #991b1b 0%, #ef4444 100%);
+  
+  /* Dark Glassmorphism Background */
+  --bg-primary: linear-gradient(135deg, #000000 0%, #1a0b2e 30%, #2d1b69 70%, #4c1d95 100%);
+  --bg-secondary: rgba(0, 0, 0, 0.8);
+  --bg-tertiary: rgba(26, 11, 46, 0.9);
+  --glass-bg: rgba(0, 0, 0, 0.4);
+  --glass-border: rgba(139, 92, 246, 0.3);
+  --card-bg: rgba(0, 0, 0, 0.6);
+  --hover-bg: rgba(139, 92, 246, 0.2);
+  
+  /* High Contrast Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.9);
+  --text-muted: rgba(255, 255, 255, 0.7);
+  --text-accent: #c084fc;
+  
+  /* Image Enhancement for Dark Mode */
+  --image-brightness: 1.1;
+  --image-contrast: 1.2;
+  --image-saturation: 1.1;
+  
+  /* Dark Glassmorphism Borders */
+  --border-color: rgba(139, 92, 246, 0.3);
+  --border-hover: rgba(139, 92, 246, 0.5);
+  --border-glass: rgba(139, 92, 246, 0.4);
+  --glass-border: rgba(139, 92, 246, 0.3);
+  --glass-border-hover: rgba(139, 92, 246, 0.5);
+  --border-gradient: linear-gradient(135deg, rgba(139, 92, 246, 0.4), rgba(168, 85, 247, 0.2));
+  --border-accent: linear-gradient(135deg, rgba(139, 92, 246, 0.6), rgba(168, 85, 247, 0.4));
+  --border-success: linear-gradient(135deg, rgba(34, 197, 94, 0.5), rgba(16, 185, 129, 0.3));
+  
+  /* Dark Enhanced Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.8);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.9);
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(139, 92, 246, 0.3);
+  --shadow-glass-hover: 0 16px 48px rgba(0, 0, 0, 0.8), 0 4px 12px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(139, 92, 246, 0.5);
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.7), 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover: 0 12px 40px rgba(0, 0, 0, 0.8), 0 4px 12px rgba(0, 0, 0, 0.6);
+  --shadow-elevated: 0 25px 50px rgba(0, 0, 0, 0.8), 0 12px 24px rgba(0, 0, 0, 0.6), 0 6px 12px rgba(0, 0, 0, 0.4);
+  --shadow-floating: 0 32px 64px rgba(0, 0, 0, 0.8), 0 16px 32px rgba(0, 0, 0, 0.6), 0 8px 16px rgba(0, 0, 0, 0.4);
+  --shadow-light: 0 4px 16px 0 rgba(0, 0, 0, 0.6);
+  --shadow-medium: 0 8px 24px 0 rgba(0, 0, 0, 0.7);
+  --shadow-heavy: 0 12px 40px 0 rgba(0, 0, 0, 0.8);
+  
+  /* Backdrop Blur */
+  --blur-light: blur(10px);
+  --blur-medium: blur(16px);
+  --blur-heavy: blur(24px);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--bg-primary);
+  backdrop-filter: var(--blur-medium);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+code {
+  font-family: 'JetBrains Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Typography Hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: 2.25rem;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.875rem;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+h5 {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+h6 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+p {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.7;
+  margin: 0 0 1rem 0;
+}
+
+.text-gradient {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Dark Mode Image Enhancements */
+[data-theme="dark"] img,
+[data-theme="dark"] .image,
+[data-theme="dark"] .course-image,
+[data-theme="dark"] .badge-svg,
+[data-theme="dark"] .avatar,
+[data-theme="dark"] .profile-image {
+  filter: brightness(var(--image-brightness)) contrast(var(--image-contrast)) saturate(var(--image-saturation));
+  transition: filter 0.3s ease;
+}
+
+[data-theme="dark"] img:hover,
+[data-theme="dark"] .image:hover,
+[data-theme="dark"] .course-image:hover {
+  filter: brightness(1.2) contrast(1.3) saturate(1.2);
+}
+
+/* Ensure text remains readable over enhanced images */
+[data-theme="dark"] .text-overlay,
+[data-theme="dark"] .course-category,
+[data-theme="dark"] .badge-name {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 1px 4px rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+/* Icon enhancements for better visibility */
+[data-theme="dark"] .icon,
+[data-theme="dark"] .nav-icon,
+[data-theme="dark"] .tab-icon {
+  filter: brightness(1.2) drop-shadow(0 0 4px rgba(139, 92, 246, 0.3));
+}
+
+/* Accessibility: High Contrast Support */
+@media (prefers-contrast: high) {
+  [data-theme="dark"] {
+    --text-primary: #ffffff;
+    --text-secondary: #ffffff;
+    --text-muted: #e5e5e5;
+    --border-color: rgba(255, 255, 255, 0.8);
+    --border-accent: rgba(255, 255, 255, 1);
+    --accent-color: #ffffff;
+  }
+  
+  [data-theme="dark"] .currency-item,
+  [data-theme="dark"] .gamification-panel,
+  [data-theme="dark"] .progress-tracker {
+    border: 2px solid #ffffff;
+  }
+}
+
+/* Focus indicators for accessibility */
+[data-theme="dark"] *:focus {
+  outline: 2px solid #c084fc;
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] button:focus,
+[data-theme="dark"] .tab-button:focus,
+[data-theme="dark"] .currency-item:focus {
+  box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.5);
+}

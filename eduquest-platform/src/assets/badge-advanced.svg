@@ -1,0 +1,62 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Badge Background -->
+  <circle cx="40" cy="40" r="35" fill="url(#advancedGradient)" stroke="#9b59b6" stroke-width="3"/>
+  
+  <!-- Inner Circle -->
+  <circle cx="40" cy="40" r="25" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+  
+  <!-- Crown Icon -->
+  <g transform="translate(40, 40)">
+    <!-- Crown base -->
+    <rect x="-12" y="8" width="24" height="6" fill="#fff" opacity="0.9" rx="2"/>
+    <!-- Crown points -->
+    <polygon points="-12,8 -8,-8 -4,2 0,-12 4,2 8,-8 12,8" fill="#fff" opacity="0.9">
+      <animateTransform attributeName="transform" type="scale" values="1;1.05;1" dur="4s" repeatCount="indefinite"/>
+    </polygon>
+    <!-- Crown jewels -->
+    <circle cx="-8" cy="-2" r="2" fill="#e74c3c">
+      <animate attributeName="fill" values="#e74c3c;#f39c12;#e74c3c" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="0" cy="-6" r="2.5" fill="#f39c12">
+      <animate attributeName="fill" values="#f39c12;#e74c3c;#f39c12" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="8" cy="-2" r="2" fill="#e74c3c">
+      <animate attributeName="fill" values="#e74c3c;#f39c12;#e74c3c" dur="3s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Sparkles -->
+  <g opacity="0.9">
+    <circle cx="15" cy="20" r="2.5" fill="#fff">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="65" cy="25" r="2" fill="#fff">
+      <animate attributeName="opacity" values="1;0.3;1" dur="2.3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="20" cy="65" r="1.5" fill="#fff">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.7s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="60" cy="60" r="2.5" fill="#fff">
+      <animate attributeName="opacity" values="1;0.2;1" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Additional sparkles for advanced badge -->
+    <circle cx="25" cy="15" r="1" fill="#fff">
+      <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2.1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="55" cy="20" r="1.5" fill="#fff">
+      <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2.9s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Badge Text -->
+  <text x="40" y="70" text-anchor="middle" fill="#9b59b6" font-size="8" font-weight="bold">ADVANCED</text>
+  
+  <!-- Definitions -->
+  <defs>
+    <linearGradient id="advancedGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9b59b6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8e44ad;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#663399;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>

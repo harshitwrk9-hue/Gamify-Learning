@@ -296,7 +296,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(26, 26, 46, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -369,53 +369,65 @@
 
 /* Course Content */
 .course-content {
-  padding: 1.5rem;
+  padding: 1.75rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  gap: 0.75rem;
+  gap: 1rem;
   /* Enhanced content structure */
   justify-content: space-between;
 }
 
 .course-category {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #667eea;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+  margin-bottom: 0.75rem;
+  background: rgba(102, 126, 234, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  display: inline-block;
+  width: fit-content;
 }
 
 .course-title {
-  font-size: 1.3rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 700;
   color: var(--text-primary);
-  margin: 0 0 0.75rem 0;
-  line-height: 1.3;
+  margin: 0 0 1rem 0;
+  line-height: 1.4;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: -0.02em;
 }
 
 .course-description {
   color: var(--text-secondary);
-  font-size: 0.9rem;
-  line-height: 1.5;
-  margin: 0 0 1rem 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 1.25rem 0;
+  font-weight: 400;
+  letter-spacing: 0.01em;
 }
 
 .course-instructor {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  font-weight: 500;
+  font-style: italic;
 }
 
 .course-meta {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  margin: 0.5rem 0;
-  padding: 0.75rem 0;
-  border-top: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
+  margin: 1rem 0;
+  padding: 1rem;
+  background: rgba(102, 126, 234, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(102, 126, 234, 0.1);
   /* Enhanced meta layout */
   gap: 1rem;
   flex-wrap: wrap;
@@ -424,37 +436,50 @@
 .meta-item {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
-  font-size: 0.8rem;
+  gap: 0.5rem;
+  font-size: 0.85rem;
   color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .meta-icon {
-  color: #ffa500;
+  color: #667eea;
+  font-size: 0.9rem;
 }
 
 /* Course Progress */
 .course-progress {
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  padding: 0.75rem;
+  background: rgba(102, 126, 234, 0.03);
+  border-radius: 10px;
+  border: 1px solid rgba(102, 126, 234, 0.08);
 }
 
 .progress-bar {
-  height: 6px;
-  background: #e0e0e0;
-  border-radius: 3px;
+  height: 8px;
+  background: rgba(102, 126, 234, 0.15);
+  border-radius: 4px;
   overflow: hidden;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .progress-fill {
   height: 100%;
-  border-radius: 3px;
-  transition: width 0.8s ease;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+  box-shadow: 0 1px 3px rgba(102, 126, 234, 0.3);
 }
 
 .progress-text {
   font-size: 0.8rem;
   color: var(--text-secondary);
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 0.3px;
 }
 
 /* Course Footer */
@@ -463,30 +488,36 @@
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
-  padding-top: 1rem;
+  padding-top: 1.5rem;
   /* Enhanced footer positioning */
   gap: 1rem;
   flex-wrap: wrap;
 }
 
 .xp-reward {
-  background: linear-gradient(45deg, #ffd700, #ffed4e);
-  color: var(--bg-primary);
-  padding: 0.5rem 1rem;
-  border-radius: 15px;
-  font-size: 0.8rem;
-  font-weight: 600;
+  background: linear-gradient(135deg, #ffd700, #ffb347);
+  color: #2d3748;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+  border: 1px solid rgba(255, 215, 0, 0.4);
 }
 
 .course-button {
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
-  padding: 0.75rem 1.5rem;
+  padding: 0.85rem 1.75rem;
   border-radius: 25px;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
   transition: all 0.3s ease;
+  letter-spacing: 0.3px;
+  text-transform: capitalize;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .course-button:hover,

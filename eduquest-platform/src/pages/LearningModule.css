@@ -1157,11 +1157,11 @@
 }
 
 [data-theme="dark"] .video-container {
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(26, 26, 46, 0.8);
 }
 
 [data-theme="dark"] .video-controls {
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(26, 26, 46, 0.9);
 }
 
 [data-theme="dark"] .video-controls button {
@@ -1178,19 +1178,19 @@
 }
 
 [data-theme="dark"] .answer-option {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
+  background: rgba(26, 26, 46, 0.6);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: var(--text-secondary);
 }
 
 [data-theme="dark"] .answer-option:hover {
-  background: var(--hover-bg);
-  border-color: var(--border-accent);
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.5);
 }
 
 [data-theme="dark"] .answer-option.selected {
-  background: var(--primary-color);
-  border-color: var(--primary-color);
+  background: rgba(139, 92, 246, 0.25);
+  border-color: rgba(139, 92, 246, 0.7);
 }
 
 [data-theme="dark"] .sidebar {
@@ -1199,18 +1199,18 @@
 }
 
 [data-theme="dark"] .lesson-item {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid var(--border-color);
+  background: rgba(26, 26, 46, 0.6);
+  border: 1px solid rgba(139, 92, 246, 0.2);
 }
 
 [data-theme="dark"] .lesson-item:hover {
-  background: var(--hover-bg);
-  border-color: var(--border-accent);
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.4);
 }
 
 [data-theme="dark"] .lesson-item.active {
-  background: var(--primary-color);
-  border-color: var(--primary-color);
+  background: rgba(139, 92, 246, 0.25);
+  border-color: rgba(139, 92, 246, 0.6);
 }
 
 [data-theme="dark"] .lesson-title {

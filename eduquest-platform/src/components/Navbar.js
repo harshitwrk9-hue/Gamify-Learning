@@ -5,6 +5,7 @@ import { FaHome, FaBook, FaTrophy, FaUser, FaBars, FaTimes, FaSignOutAlt, FaSign
 import { useAuth } from '../contexts/AuthContext';
 import { currentUser } from '../data/mockData';
 import { ReactComponent as ShikshaLogo } from '../assets/shiksha-logo.svg';
+import { ReactComponent as UserAvatar } from '../assets/user-avatar.svg';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -78,44 +79,16 @@ const Navbar = () => {
 
         {/* User Info or Auth Buttons */}
         {authUser ? (
-          <motion.div 
-            className="navbar-user"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div className="user-stats">
-              <div className="user-xp">
-                <span className="xp-label">XP</span>
-                <span className="xp-value">{currentUser.xp.toLocaleString()}</span>
-              </div>
-              <motion.div 
-                className="user-level"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <span className="level-badge">Lv. {currentUser.level}</span>
-              </motion.div>
-            </div>
-            <div className="user-actions">
-              <Link to="/profile" className="user-avatar">
-                <motion.img
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  whileTap={{ scale: 0.95 }}
-                  src={currentUser.avatar}
-                  alt={authUser.username}
-                  className="avatar-image"
-                />
-              </Link>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleLogout}
-                className="logout-btn"
-                title="Logout"
-              >
-                <FaSignOutAlt />
-              </motion.button>
-            </div>
+          <motion.div className="auth-buttons">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleLogout}
+              className="logout-btn user-avatar-btn"
+              title="Sign Out"
+            >
+              <UserAvatar className="user-avatar-icon" />
+            </motion.button>
           </motion.div>
         ) : (
           <motion.div className="auth-buttons">

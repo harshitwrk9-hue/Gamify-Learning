@@ -321,7 +321,7 @@
 }
 
 [data-theme="dark"] .play-overlay {
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(26, 26, 46, 0.8);
   color: var(--text-primary);
 }
 
@@ -345,8 +345,8 @@
 }
 
 [data-theme="dark"] .content-tabs {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--border-color);
+  background: rgba(26, 26, 46, 0.5);
+  border: 1px solid rgba(139, 92, 246, 0.3);
 }
 
 [data-theme="dark"] .tab-button {
@@ -359,8 +359,8 @@
 }
 
 [data-theme="dark"] .lesson-item {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid var(--border-color);
+  background: rgba(26, 26, 46, 0.6);
+  border: 1px solid rgba(139, 92, 246, 0.2);
 }
 
 [data-theme="dark"] .lesson-item:hover {

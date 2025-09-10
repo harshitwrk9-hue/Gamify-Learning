@@ -13,19 +13,19 @@
   --error-color: #ef4444;
   --error-gradient: linear-gradient(135deg, #991b1b 0%, #ef4444 100%);
   
-  /* Dark Glassmorphism Background */
-  --bg-primary: linear-gradient(135deg, #000000 0%, #1a0b2e 30%, #2d1b69 70%, #4c1d95 100%);
-  --bg-secondary: rgba(0, 0, 0, 0.8);
-  --bg-tertiary: rgba(26, 11, 46, 0.9);
-  --glass-bg: rgba(0, 0, 0, 0.4);
+  /* Balanced Dark Glassmorphism Background */
+  --bg-primary: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 30%, #3d2b69 70%, #4c3d85 100%);
+  --bg-secondary: rgba(26, 26, 46, 0.85);
+  --bg-tertiary: rgba(45, 27, 78, 0.9);
+  --glass-bg: rgba(26, 26, 46, 0.6);
   --glass-border: rgba(139, 92, 246, 0.3);
-  --card-bg: rgba(0, 0, 0, 0.6);
-  --hover-bg: rgba(139, 92, 246, 0.2);
+  --card-bg: rgba(26, 26, 46, 0.7);
+  --hover-bg: rgba(139, 92, 246, 0.15);
   
-  /* High Contrast Text Colors */
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.9);
-  --text-muted: rgba(255, 255, 255, 0.7);
+  /* Balanced Text Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: rgba(248, 250, 252, 0.85);
+  --text-muted: rgba(248, 250, 252, 0.65);
   --text-accent: #c084fc;
   
   /* Image Enhancement for Dark Mode */
@@ -43,20 +43,20 @@
   --border-accent: linear-gradient(135deg, rgba(139, 92, 246, 0.6), rgba(168, 85, 247, 0.4));
   --border-success: linear-gradient(135deg, rgba(34, 197, 94, 0.5), rgba(16, 185, 129, 0.3));
   
-  /* Dark Enhanced Shadows */
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.6);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.7);
-  --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.8);
-  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.9);
-  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(139, 92, 246, 0.3);
-  --shadow-glass-hover: 0 16px 48px rgba(0, 0, 0, 0.8), 0 4px 12px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(139, 92, 246, 0.5);
-  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.7), 0 1px 3px rgba(0, 0, 0, 0.5);
-  --shadow-card-hover: 0 12px 40px rgba(0, 0, 0, 0.8), 0 4px 12px rgba(0, 0, 0, 0.6);
-  --shadow-elevated: 0 25px 50px rgba(0, 0, 0, 0.8), 0 12px 24px rgba(0, 0, 0, 0.6), 0 6px 12px rgba(0, 0, 0, 0.4);
-  --shadow-floating: 0 32px 64px rgba(0, 0, 0, 0.8), 0 16px 32px rgba(0, 0, 0, 0.6), 0 8px 16px rgba(0, 0, 0, 0.4);
-  --shadow-light: 0 4px 16px 0 rgba(0, 0, 0, 0.6);
-  --shadow-medium: 0 8px 24px 0 rgba(0, 0, 0, 0.7);
-  --shadow-heavy: 0 12px 40px 0 rgba(0, 0, 0, 0.8);
+  /* Balanced Soft Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.6);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.7);
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(139, 92, 246, 0.3);
+  --shadow-glass-hover: 0 16px 48px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(139, 92, 246, 0.5);
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-card-hover: 0 12px 40px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-elevated: 0 25px 50px rgba(0, 0, 0, 0.6), 0 12px 24px rgba(0, 0, 0, 0.4), 0 6px 12px rgba(0, 0, 0, 0.3);
+  --shadow-floating: 0 32px 64px rgba(0, 0, 0, 0.6), 0 16px 32px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(0, 0, 0, 0.3);
+  --shadow-light: 0 4px 16px 0 rgba(0, 0, 0, 0.4);
+  --shadow-medium: 0 8px 24px 0 rgba(0, 0, 0, 0.5);
+  --shadow-heavy: 0 12px 40px 0 rgba(0, 0, 0, 0.6);
   
   /* Backdrop Blur */
   --blur-light: blur(10px);

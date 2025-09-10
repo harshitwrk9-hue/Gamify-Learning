@@ -62,7 +62,7 @@ const Profile = () => {
             </div>
           ) : (
             <div className="profile-details">
-              <h1>User</h1>
+              <h1>{currentUser.name}</h1>
               <p className="email">{currentUser.email}</p>
               <p className="join-date">Member since {new Date(currentUser.joinDate).toLocaleDateString()}</p>
               <button onClick={() => setIsEditing(true)} className="btn-edit">

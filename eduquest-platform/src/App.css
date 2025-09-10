@@ -1,58 +1,125 @@
-/* CSS Variables for Enhanced Theme Support */
+/* CSS Variables for Enhanced Theme Support with Organic Aesthetics */
 :root {
-  /* Light Theme Variables */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-tertiary: #f1f5f9;
-  --text-primary: #1a202c;
+  /* Light Theme Variables - Organic & Hand-crafted */
+  --bg-primary: #fefefe;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f2f4f6;
+  --text-primary: #2d3748;
   --text-secondary: #4a5568;
   --text-muted: #718096;
-  --border-color: #e2e8f0;
-  --border-accent: #cbd5e0;
-  --shadow-light: rgba(0, 0, 0, 0.1);
-  --shadow-medium: rgba(0, 0, 0, 0.15);
-  --shadow-glow: rgba(99, 102, 241, 0.2);
+  --border-color: #e8edf3;
+  --border-accent: #d1d9e0;
+  --shadow-light: rgba(0, 0, 0, 0.08);
+  --shadow-medium: rgba(0, 0, 0, 0.12);
+  --shadow-glow: rgba(99, 102, 241, 0.15);
   --card-bg: #ffffff;
-  --navbar-bg: rgba(255, 255, 255, 0.95);
+  --navbar-bg: rgba(255, 255, 255, 0.92);
   --input-bg: #ffffff;
-  --hover-bg: rgba(0, 0, 0, 0.05);
-  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --hover-bg: rgba(0, 0, 0, 0.03);
+  
+  /* Organic gradients with natural variations */
+  --gradient-primary: linear-gradient(138deg, #667eea 0%, #6b7ce8 25%, #764ba2 100%);
+  --gradient-secondary: linear-gradient(142deg, #f093fb 0%, #f287f0 30%, #f5576c 100%);
+  --gradient-organic: radial-gradient(ellipse 120% 80% at 30% 40%, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.05) 100%);
+  
   --accent-color: #6366f1;
   --primary-color: #667eea;
   --secondary-color: #764ba2;
-  --shadow-hover: rgba(0, 0, 0, 0.2);
+  --shadow-hover: rgba(0, 0, 0, 0.15);
   --success-color: #10b981;
   --warning-color: #f59e0b;
   --error-color: #ef4444;
+  
+  /* Hand-drawn border styles */
+  --border-organic: 2px solid transparent;
+  --border-sketch: 1.5px solid var(--border-accent);
+  --border-gradient: linear-gradient(45deg, var(--accent-color), var(--secondary-color));
+  --border-success: linear-gradient(45deg, var(--success-color), #22c55e);
+  
+  /* Organic blur and glass effects */
+  --blur-light: blur(8px);
+  --blur-medium: blur(12px);
+  --blur-heavy: blur(20px);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  
+  /* Natural shadow variations */
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-floating: 0 12px 32px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+  --shadow-organic: 0 6px 16px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Loading Spinner Styles for Authentication */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.loading-spinner .spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-color);
+  border-top: 3px solid var(--accent-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loading-spinner p {
+  color: var(--text-secondary);
+  font-size: 16px;
+  margin: 0;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 [data-theme="dark"] {
-  /* Ultra Dark Theme Variables - Black & Purple */
-  --bg-primary: #000000;
-  --bg-secondary: #0a0a0a;
-  --bg-tertiary: #1a0b2e;
-  --text-primary: #ffffff;
-  --text-secondary: #f1f5f9;
-  --text-muted: #cbd5e1;
-  --border-color: rgba(139, 92, 246, 0.3);
-  --border-accent: rgba(139, 92, 246, 0.5);
-  --shadow-light: rgba(0, 0, 0, 0.8);
-  --shadow-medium: rgba(0, 0, 0, 0.9);
-  --shadow-glow: rgba(139, 92, 246, 0.4);
-  --card-bg: rgba(0, 0, 0, 0.8);
-  --navbar-bg: rgba(0, 0, 0, 0.95);
-  --input-bg: rgba(26, 11, 46, 0.8);
-  --hover-bg: rgba(139, 92, 246, 0.2);
-  --gradient-primary: linear-gradient(135deg, #000000 0%, #1a0b2e 50%, #4c1d95 100%);
-  --gradient-secondary: linear-gradient(135deg, #581c87 0%, #7c3aed 100%);
+  /* Ultra Dark Theme Variables - Organic Black & Purple */
+  --bg-primary: #0f0f0f;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #2a1a3e;
+  --text-primary: #f8fafc;
+  --text-secondary: #e2e8f0;
+  --text-muted: #a0aec0;
+  --border-color: rgba(139, 92, 246, 0.25);
+  --border-accent: rgba(139, 92, 246, 0.4);
+  --shadow-light: rgba(0, 0, 0, 0.6);
+  --shadow-medium: rgba(0, 0, 0, 0.8);
+  --shadow-glow: rgba(139, 92, 246, 0.3);
+  --card-bg: rgba(15, 15, 15, 0.9);
+  --navbar-bg: rgba(15, 15, 15, 0.92);
+  --input-bg: rgba(42, 26, 62, 0.8);
+  --hover-bg: rgba(139, 92, 246, 0.15);
+  
+  /* Organic dark gradients */
+  --gradient-primary: linear-gradient(142deg, #1a1a1a 0%, #2a1a3e 40%, #4c1d95 100%);
+  --gradient-secondary: linear-gradient(138deg, #581c87 0%, #6b2d9e 35%, #7c3aed 100%);
+  --gradient-organic: radial-gradient(ellipse 110% 90% at 70% 60%, rgba(139, 92, 246, 0.08) 0%, rgba(168, 85, 247, 0.03) 100%);
+  
   --accent-color: #c084fc;
   --primary-color: #8b5cf6;
   --secondary-color: #a855f7;
-  --shadow-hover: rgba(0, 0, 0, 0.95);
+  --shadow-hover: rgba(0, 0, 0, 0.9);
   --success-color: #22c55e;
   --warning-color: #fbbf24;
   --error-color: #f87171;
+  
+  /* Dark theme organic elements */
+  --glass-bg: rgba(15, 15, 15, 0.8);
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.2);
+  --shadow-floating: 0 12px 40px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-organic: 0 6px 20px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 .App {
@@ -92,7 +159,7 @@
   color: #61dafb;
 }
 
-/* Enhanced Animation Keyframes */
+/* Enhanced Animation Keyframes with Organic Movement */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -235,6 +302,124 @@
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: xor;
   -webkit-mask-composite: xor;
+}
+
+.border-glow {
+  border: 2px solid var(--border-accent);
+  border-radius: 12px;
+}
+
+/* Organic Animation Keyframes */
+@keyframes organicFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-3px) rotate(0.5deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-2px) rotate(-0.3deg);
+  }
+}
+
+@keyframes organicPulse {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02) rotate(0.2deg);
+    opacity: 0.95;
+  }
+}
+
+@keyframes handDrawnLine {
+  0% {
+    stroke-dasharray: 0, 100;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 50, 50;
+    stroke-dashoffset: -10;
+  }
+  100% {
+    stroke-dasharray: 100, 0;
+    stroke-dashoffset: -20;
+  }
+}
+
+@keyframes organicGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px var(--shadow-glow)) brightness(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 16px var(--shadow-glow)) brightness(1.05);
+  }
+}
+
+/* Organic Utility Classes */
+.organic-float {
+  animation: organicFloat 6s ease-in-out infinite;
+}
+
+.organic-pulse {
+  animation: organicPulse 4s ease-in-out infinite;
+}
+
+.organic-glow {
+  animation: organicGlow 3s ease-in-out infinite;
+}
+
+.hand-drawn {
+  filter: url(#roughPaper);
+  position: relative;
+}
+
+.hand-drawn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border: 2px solid var(--border-accent);
+  border-radius: inherit;
+  opacity: 0.3;
+  transform: rotate(0.2deg) scale(1.001);
+}
+
+/* Organic border variations */
+.border-sketch {
+  border: var(--border-sketch);
+  border-radius: 8px;
+  position: relative;
+}
+
+.border-sketch::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 1px solid var(--border-accent);
+  border-radius: inherit;
+  opacity: 0.4;
+  transform: rotate(-0.1deg) translate(0.5px, -0.3px);
+}
+
+/* Natural imperfection classes */
+.imperfect-circle {
+  border-radius: 47% 53% 52% 48% / 48% 52% 48% 52%;
+}
+
+.imperfect-rounded {
+  border-radius: 12px 11px 13px 10px / 10px 13px 11px 12px;
+}
+
+.slightly-tilted {
+  transform: rotate(0.3deg);
+}
+
+.organic-shadow {
+  box-shadow: var(--shadow-organic);
 }
 
 .border-glow {

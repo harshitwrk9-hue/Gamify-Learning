@@ -4,7 +4,7 @@ export const currentUser = {
   id: 1,
   name: "Alex Johnson",
   email: "alex.johnson@email.com",
-  avatar: "/api/placeholder/100/100",
+  avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&h=100&q=80",
   level: 12,
   xp: 2850,
   xpToNextLevel: 3000,
@@ -322,7 +322,7 @@ export const leaderboard = [
   {
     id: 1,
     name: "Alex Johnson",
-    avatar: "/api/placeholder/50/50",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&h=50&q=80",
     xp: 2850,
     level: 12,
     streak: 7,
@@ -331,7 +331,7 @@ export const leaderboard = [
   {
     id: 2,
     name: "Emma Davis",
-    avatar: "/api/placeholder/50/50",
+    avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&h=50&q=80",
     xp: 3200,
     level: 14,
     streak: 12,
@@ -340,7 +340,7 @@ export const leaderboard = [
   {
     id: 3,
     name: "Michael Chen",
-    avatar: "/api/placeholder/50/50",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&h=50&q=80",
     xp: 2950,
     level: 13,
     streak: 5,
@@ -349,7 +349,7 @@ export const leaderboard = [
   {
     id: 4,
     name: "Sarah Wilson",
-    avatar: "/api/placeholder/50/50",
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&h=50&q=80",
     xp: 2700,
     level: 11,
     streak: 15,
@@ -358,7 +358,7 @@ export const leaderboard = [
   {
     id: 5,
     name: "David Rodriguez",
-    avatar: "/api/placeholder/50/50",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&h=50&q=80",
     xp: 2600,
     level: 11,
     streak: 3,
@@ -367,7 +367,7 @@ export const leaderboard = [
   {
     id: 6,
     name: "Lisa Park",
-    avatar: "/api/placeholder/50/50",
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&h=50&q=80",
     xp: 2400,
     level: 10,
     streak: 8,
@@ -376,7 +376,7 @@ export const leaderboard = [
   {
     id: 7,
     name: "James Taylor",
-    avatar: "/api/placeholder/50/50",
+    avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&h=50&q=80",
     xp: 2200,
     level: 9,
     streak: 4,
@@ -385,7 +385,7 @@ export const leaderboard = [
   {
     id: 8,
     name: "Anna Martinez",
-    avatar: "/api/placeholder/50/50",
+    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&h=50&q=80",
     xp: 2100,
     level: 9,
     streak: 6,

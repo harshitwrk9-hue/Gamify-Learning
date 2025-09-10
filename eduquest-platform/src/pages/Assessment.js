@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaPlay, FaClock, FaCheck, FaTimes, FaStar, FaRedo, FaChartLine, FaTrophy, FaLightbulb, FaArrowRight, FaArrowLeft, FaFlag } from 'react-icons/fa';
+import { FaPlay, FaClock, FaCheck, FaTimes, FaStar, FaRedo, FaChartLine, FaTrophy, FaLightbulb, FaArrowRight, FaArrowLeft, FaFlag, FaCoins, FaFire } from 'react-icons/fa';
 import { quizzes } from '../data/mockData';
+import InstantRewards from '../components/gamification/InstantRewards';
 import './Assessment.css';
 
 const Assessment = () => {
@@ -58,6 +59,17 @@ const Assessment = () => {
       ...prev,
       [questionIndex]: answerIndex
     }));
+    
+    // Instant feedback for correct answers
+    const question = currentQuiz.questions[questionIndex];
+    const isCorrect = answerIndex === question.correctAnswer;
+    
+    if (isCorrect && window.eduquestRewards) {
+      window.eduquestRewards.correctAnswer(currentQuiz.difficulty.toLowerCase());
+    }
+    
+    // Show explanation after selection
+    setTimeout(() => setShowExplanation(true), 500);
   };
 
   const nextQuestion = () => {
@@ -96,6 +108,13 @@ const Assessment = () => {
     const xpEarned = Math.round(finalScore * 2); // 2 XP per percentage point
     
     setScore(finalScore);
+    
+    // Trigger quiz completion rewards
+    if (window.eduquestRewards) {
+      setTimeout(() => {
+        window.eduquestRewards.quizComplete(finalScore);
+      }, 1000);
+    }
     setQuizResults({
       score: finalScore,
       correctAnswers,
@@ -561,6 +580,17 @@ const Assessment = () => {
           </motion.div>
         )}
       </div>
+      
+      {/* Instant Rewards System */}
+      <InstantRewards 
+        currentXP={1250}
+        currentCoins={450}
+        currentLevel={8}
+        onRewardEarned={(reward) => {
+          console.log('Reward earned:', reward);
+          // Here you would typically update user stats in your state management
+        }}
+      />
     </div>
   );
 };

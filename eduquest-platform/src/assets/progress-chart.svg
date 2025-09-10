@@ -1,81 +1,121 @@
 <svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Chart Background -->
-  <rect width="200" height="120" fill="url(#chartBg)" rx="8" opacity="0.1"/>
+  <!-- Hand-drawn Mathematical Compass -->
+  <defs>
+    <!-- Organic gradient for compass -->
+    <linearGradient id="compassGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="var(--primary-color)" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="var(--accent-color)" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="var(--secondary-color)" stop-opacity="0.9"/>
+    </linearGradient>
+    
+    <!-- Pencil gradient -->
+    <linearGradient id="pencilGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8B4513" stop-opacity="0.9"/>
+      <stop offset="70%" stop-color="#D2691E" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#FFD700" stop-opacity="0.7"/>
+    </linearGradient>
+    
+    <!-- Paper texture filter -->
+    <filter id="roughPaper" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence baseFrequency="0.04" numOctaves="3" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.8"/>
+    </filter>
+  </defs>
   
-  <!-- Grid Lines -->
-  <g stroke="var(--text-secondary)" stroke-width="0.5" opacity="0.3">
-    <line x1="20" y1="20" x2="20" y2="100"/>
-    <line x1="20" y1="100" x2="180" y2="100"/>
-    <!-- Horizontal grid lines -->
-    <line x1="20" y1="80" x2="180" y2="80"/>
-    <line x1="20" y1="60" x2="180" y2="60"/>
-    <line x1="20" y1="40" x2="180" y2="40"/>
-    <!-- Vertical grid lines -->
-    <line x1="60" y1="20" x2="60" y2="100"/>
-    <line x1="100" y1="20" x2="100" y2="100"/>
-    <line x1="140" y1="20" x2="140" y2="100"/>
+  <!-- Background with subtle texture -->
+  <rect width="200" height="120" fill="var(--card-bg)" rx="12" opacity="0.05" filter="url(#roughPaper)"/>
+  
+  <!-- Hand-drawn geometric construction lines (very light) -->
+  <g stroke="var(--text-muted)" stroke-width="0.5" opacity="0.2" fill="none">
+    <!-- Slightly wobbly construction lines -->
+    <path d="M30,25 Q32,24.8 35,25.2 T45,24.5 T60,25.8 T80,24.2 T100,25.5 T120,24.8 T140,25.3 T160,24.7 T170,25"/>
+    <path d="M30,45 Q32,44.7 35,45.3 T45,44.2 T60,45.9 T80,44.1 T100,45.6 T120,44.4 T140,45.1 T160,44.8 T170,45"/>
+    <path d="M30,65 Q32,64.9 35,65.1 T45,64.6 T60,65.4 T80,64.8 T100,65.2 T120,64.5 T140,65.7 T160,64.3 T170,65"/>
   </g>
   
-  <!-- Progress Line -->
-  <path d="M20,90 Q40,75 60,70 T100,50 T140,35 T180,25" 
-        stroke="url(#progressGradient)" 
-        stroke-width="3" 
+  <!-- Mathematical Compass Body -->
+  <!-- Left leg (pencil holder) -->
+  <path d="M85,20 Q84.8,22 85.2,25 T84.5,35 T85.8,50 T84.2,70 T85.5,85 Q85.3,87 85,90" 
+        stroke="url(#compassGradient)" 
+        stroke-width="2.5" 
         fill="none" 
         stroke-linecap="round">
-    <animate attributeName="stroke-dasharray" values="0,300;300,0" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="stroke-width" values="2.5;3;2.5" dur="4s" repeatCount="indefinite"/>
   </path>
   
-  <!-- Area under curve -->
-  <path d="M20,90 Q40,75 60,70 T100,50 T140,35 T180,25 L180,100 L20,100 Z" 
-        fill="url(#areaGradient)" 
-        opacity="0.3">
-    <animate attributeName="opacity" values="0.1;0.4;0.1" dur="4s" repeatCount="indefinite"/>
+  <!-- Right leg (needle) -->
+  <path d="M115,20 Q115.2,22 114.8,25 T115.5,35 T114.2,50 T115.8,70 T114.5,85 Q114.7,87 115,90" 
+        stroke="url(#compassGradient)" 
+        stroke-width="2.5" 
+        fill="none" 
+        stroke-linecap="round">
+    <animate attributeName="stroke-width" values="2.5;3;2.5" dur="4s" begin="1s" repeatCount="indefinite"/>
   </path>
   
-  <!-- Data Points -->
-  <g fill="var(--primary-color)">
-    <circle cx="20" cy="90" r="3" opacity="0.8">
-      <animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="60" cy="70" r="3" opacity="0.8">
-      <animate attributeName="r" values="3;5;3" dur="2s" begin="0.5s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="100" cy="50" r="3" opacity="0.8">
-      <animate attributeName="r" values="3;5;3" dur="2s" begin="1s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="140" cy="35" r="3" opacity="0.8">
-      <animate attributeName="r" values="3;5;3" dur="2s" begin="1.5s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="180" cy="25" r="3" opacity="0.8">
-      <animate attributeName="r" values="3;5;3" dur="2s" begin="2s" repeatCount="indefinite"/>
-    </circle>
+  <!-- Compass hinge/joint -->
+  <circle cx="100" cy="20" r="4" 
+          fill="url(#compassGradient)" 
+          stroke="var(--border-accent)" 
+          stroke-width="1">
+    <animate attributeName="r" values="4;4.5;4" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Pencil tip -->
+  <circle cx="85" cy="90" r="2" fill="url(#pencilGradient)" opacity="0.9">
+    <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Compass needle point -->
+  <circle cx="115" cy="90" r="1.5" fill="var(--accent-color)" opacity="0.8">
+    <animate attributeName="r" values="1.5;2;1.5" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Hand-drawn circle being constructed -->
+  <circle cx="100" cy="75" r="25" 
+          stroke="var(--primary-color)" 
+          stroke-width="1.5" 
+          fill="none" 
+          opacity="0.6"
+          stroke-dasharray="3,2"
+          transform="rotate(0 100 75)">
+    <animate attributeName="stroke-dasharray" values="3,2;5,1;3,2" dur="3s" repeatCount="indefinite"/>
+    <animateTransform attributeName="transform" 
+                      type="rotate" 
+                      values="0 100 75;360 100 75" 
+                      dur="8s" 
+                      repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Geometric angle markings -->
+  <g stroke="var(--secondary-color)" stroke-width="1" fill="none" opacity="0.4">
+    <path d="M100,75 L115,60 Q118,62 115,65 Z" stroke-dasharray="2,1"/>
+    <path d="M100,75 L125,75 Q127,78 125,80 Z" stroke-dasharray="2,1"/>
+    <text x="120" y="58" font-family="serif" font-size="8" fill="var(--text-secondary)" opacity="0.7">60°</text>
   </g>
   
-  <!-- Trend Arrow -->
-  <g transform="translate(160, 15)" fill="var(--success-color)">
-    <path d="M0,10 L10,0 L20,10 L15,10 L15,20 L5,20 L5,10 Z" opacity="0.8">
-      <animateTransform attributeName="transform" type="translate" values="0,0;0,-3;0,0" dur="1.5s" repeatCount="indefinite"/>
-    </path>
+  <!-- Measurement marks on compass legs -->
+  <g stroke="var(--text-muted)" stroke-width="0.5" opacity="0.5">
+    <line x1="83" y1="30" x2="87" y2="30"/>
+    <line x1="83" y1="40" x2="87" y2="40"/>
+    <line x1="83" y1="50" x2="87" y2="50"/>
+    <line x1="113" y1="30" x2="117" y2="30"/>
+    <line x1="113" y1="40" x2="117" y2="40"/>
+    <line x1="113" y1="50" x2="117" y2="50"/>
   </g>
   
-  <!-- Labels -->
-  <text x="10" y="15" fill="var(--text-secondary)" font-size="10" opacity="0.7">Progress</text>
-  <text x="190" y="115" fill="var(--text-secondary)" font-size="8" text-anchor="end" opacity="0.7">Time</text>
+  <!-- Small protractor in corner -->
+  <g transform="translate(160,25) scale(0.6)" opacity="0.3">
+    <path d="M0,20 A20,20 0 0,1 40,20 Z" 
+          stroke="var(--accent-color)" 
+          stroke-width="1" 
+          fill="none"/>
+    <g stroke="var(--text-muted)" stroke-width="0.5">
+      <line x1="20" y1="20" x2="20" y2="15"/>
+      <line x1="10" y1="20" x2="12" y2="17"/>
+      <line x1="30" y1="20" x2="28" y2="17"/>
+    </g>
+  </g>
   
-  <!-- Definitions -->
-  <defs>
-    <linearGradient id="chartBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:var(--primary-color);stop-opacity:0.1" />
-      <stop offset="100%" style="stop-color:var(--secondary-color);stop-opacity:0.1" />
-    </linearGradient>
-    <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:var(--primary-color);stop-opacity:0.8" />
-      <stop offset="50%" style="stop-color:var(--secondary-color);stop-opacity:1" />
-      <stop offset="100%" style="stop-color:var(--accent-color);stop-opacity:0.8" />
-    </linearGradient>
-    <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:var(--primary-color);stop-opacity:0.4" />
-      <stop offset="100%" style="stop-color:var(--primary-color);stop-opacity:0.1" />
-    </linearGradient>
-  </defs>
+  <!-- Subtle paper grain overlay -->
+  <rect width="200" height="120" fill="none" stroke="none" opacity="0.02" filter="url(#roughPaper)"/>
 </svg>

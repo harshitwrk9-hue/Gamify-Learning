@@ -211,17 +211,40 @@
 }
 
 .badge-card {
-  background: var(--card-background);
+  background: var(--card-bg);
   padding: 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-color);
   text-align: center;
   transition: all 0.3s ease;
 }
 
 .badge-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-floating);
+  border-color: var(--border-accent);
+  background: var(--hover-bg);
+}
+
+.badge-card:hover h4 {
+  color: var(--primary-color);
+  transition: color 0.3s ease;
+}
+
+.badge-card:hover p {
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.badge-card:hover .badge-icon {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.badge-card:hover .badge-rarity {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
 }
 
 .badge-icon {
@@ -249,23 +272,47 @@
 }
 
 .badge-rarity.common {
-  background: #f3f4f6;
-  color: #6b7280;
+  background: rgba(107, 114, 128, 0.1);
+  color: var(--text-secondary);
+  border: 1px solid rgba(107, 114, 128, 0.2);
 }
 
 .badge-rarity.uncommon {
-  background: #dbeafe;
+  background: rgba(59, 130, 246, 0.1);
   color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
 .badge-rarity.rare {
-  background: #fef3c7;
+  background: rgba(245, 158, 11, 0.1);
   color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.2);
 }
 
 .badge-rarity.epic {
-  background: #ede9fe;
+  background: rgba(139, 92, 246, 0.1);
   color: #8b5cf6;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+[data-theme="dark"] .badge-rarity.common {
+  background: rgba(107, 114, 128, 0.2);
+  color: #9ca3af;
+}
+
+[data-theme="dark"] .badge-rarity.uncommon {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+}
+
+[data-theme="dark"] .badge-rarity.rare {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+}
+
+[data-theme="dark"] .badge-rarity.epic {
+  background: rgba(139, 92, 246, 0.2);
+  color: #a78bfa;
 }
 
 .achievements-list {
@@ -275,10 +322,11 @@
 }
 
 .achievement-item {
-  background: var(--card-background);
+  background: var(--card-bg);
   padding: 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -287,7 +335,36 @@
 
 .achievement-item:hover {
   transform: translateX(4px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-floating);
+  border-color: var(--border-accent);
+  background: var(--hover-bg);
+}
+
+.achievement-item:hover .achievement-info h4 {
+  color: var(--primary-color);
+  transition: color 0.3s ease;
+}
+
+.achievement-item:hover .achievement-info p {
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.achievement-item:hover .achievement-date {
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.achievement-item:hover .achievement-icon {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+.achievement-item:hover .achievement-xp {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
 }
 
 .achievement-icon {

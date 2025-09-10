@@ -99,7 +99,6 @@ const LandingPage = () => {
             className="hero-image"
           >
             <div className="hero-illustration">
-              <img src={HeroIllustration} alt="Learning Journey" className="hero-svg" />
             </div>
             <div className="hero-card">
               <div className="card-header">

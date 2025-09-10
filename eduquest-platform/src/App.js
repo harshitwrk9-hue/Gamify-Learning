@@ -5,41 +5,69 @@ import './App.css';
 
 // Components
 import Navbar from './components/Navbar';
+import ProtectedRoute from './components/ProtectedRoute';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { AuthProvider } from './contexts/AuthContext';
 import LandingPage from './pages/LandingPage';
+import Auth from './pages/Auth';
 import Dashboard from './pages/Dashboard';
 import CourseCatalog from './pages/CourseCatalog';
 import CourseDetail from './pages/CourseDetail';
 import LearningModule from './pages/LearningModule';
 import Leaderboard from './pages/Leaderboard';
-
 import Profile from './pages/Profile';
 
 function App() {
   return (
-    <ThemeProvider>
-      <Router>
-        <div className="App">
-          <Navbar />
-          <motion.main
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/courses" element={<CourseCatalog />} />
-              <Route path="/course/:id" element={<CourseDetail />} />
-              <Route path="/learn/:courseId/:lessonId" element={<LearningModule />} />
-              <Route path="/leaderboard" element={<Leaderboard />} />
-
-              <Route path="/profile" element={<Profile />} />
-            </Routes>
-          </motion.main>
-        </div>
-      </Router>
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider>
+        <Router>
+          <div className="App">
+            <Navbar />
+            <motion.main
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/dashboard" element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                } />
+                <Route path="/courses" element={
+                  <ProtectedRoute>
+                    <CourseCatalog />
+                  </ProtectedRoute>
+                } />
+                <Route path="/course/:id" element={
+                  <ProtectedRoute>
+                    <CourseDetail />
+                  </ProtectedRoute>
+                } />
+                <Route path="/learn/:courseId/:lessonId" element={
+                  <ProtectedRoute>
+                    <LearningModule />
+                  </ProtectedRoute>
+                } />
+                <Route path="/leaderboard" element={
+                  <ProtectedRoute>
+                    <Leaderboard />
+                  </ProtectedRoute>
+                } />
+                <Route path="/profile" element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                } />
+              </Routes>
+            </motion.main>
+          </div>
+        </Router>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 

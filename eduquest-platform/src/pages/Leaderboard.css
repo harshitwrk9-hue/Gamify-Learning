@@ -1,7 +1,20 @@
 .leaderboard {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--gradient-primary);
   padding: 2rem 0;
+  position: relative;
+}
+
+.leaderboard::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient-organic);
+  pointer-events: none;
+  opacity: 0.4;
 }
 
 .leaderboard-container {
@@ -10,14 +23,28 @@
   padding: 0 2rem;
 }
 
-/* Header */
+/* Header with Organic Styling */
 .leaderboard-header {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  border-radius: 25px;
+  background: var(--card-background);
+  backdrop-filter: var(--blur-strong);
+  border-radius: 12px 11px 13px 10px / 10px 13px 11px 12px;
+  border: var(--border-sketch);
   padding: 2rem;
   margin-bottom: 2rem;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-organic);
+  position: relative;
+  transform: rotate(0.1deg);
+}
+
+.leaderboard-header::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 1px solid var(--border-accent);
+  border-radius: inherit;
+  opacity: 0.3;
+  transform: rotate(-0.15deg) translate(0.3px, -0.2px);
+  pointer-events: none;
 }
 
 .header-content {
@@ -54,16 +81,29 @@
 }
 
 .stat-card {
-  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+  background: var(--card-background);
   padding: 1.5rem;
-  border-radius: 20px;
+  border-radius: 12px 11px 13px 10px / 10px 13px 11px 12px;
+  border: var(--border-sketch);
   display: flex;
   align-items: center;
   gap: 1rem;
   min-width: 140px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border: 2px solid transparent;
+  box-shadow: var(--shadow-organic);
   transition: all 0.3s ease;
+  position: relative;
+  transform: rotate(0.2deg);
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 1px solid var(--accent-color);
+  border-radius: inherit;
+  opacity: 0.2;
+  transform: rotate(-0.1deg) translate(0.2px, -0.1px);
+  pointer-events: none;
 }
 
 .stat-card:hover {
@@ -74,13 +114,26 @@
 .stat-icon {
   width: 50px;
   height: 50px;
-  background: linear-gradient(45deg, #667eea, #764ba2);
-  border-radius: 15px;
+  background: var(--gradient-primary);
+  border-radius: 47% 53% 52% 48% / 48% 52% 48% 52%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 1.2rem;
+  position: relative;
+  transform: rotate(0.1deg);
+}
+
+.stat-icon::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: var(--gradient-organic);
+  opacity: 0.4;
+  transform: rotate(-0.2deg) scale(1.05);
+  z-index: -1;
 }
 
 .stat-number {
@@ -97,17 +150,31 @@
   letter-spacing: 0.5px;
 }
 
-/* Navigation */
+/* Navigation with Organic Styling */
 .leaderboard-nav {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
+  background: var(--card-background);
+  backdrop-filter: var(--blur-medium);
+  border-radius: 12px 11px 13px 10px / 10px 13px 11px 12px;
+  border: var(--border-sketch);
   padding: 1.5rem;
   margin-bottom: 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-organic);
+  position: relative;
+  transform: rotate(-0.1deg);
+}
+
+.leaderboard-nav::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 1px solid var(--border-accent);
+  border-radius: inherit;
+  opacity: 0.2;
+  transform: rotate(0.1deg) translate(-0.2px, 0.3px);
+  pointer-events: none;
 }
 
 .nav-tabs {

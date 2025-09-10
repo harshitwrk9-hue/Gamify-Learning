@@ -289,7 +289,7 @@ const Leaderboard = ({
                 </div>
                 
                 <div className="item-avatar">
-                  <span className="avatar-emoji">{user.avatar}</span>
+                  <img src={user.avatar} alt={user.name} className="avatar-image" />
                   {user.streak > 0 && (
                     <div className="streak-indicator">
                       <FaFire className="streak-icon" />

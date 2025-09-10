@@ -1,0 +1,279 @@
+.instant-rewards-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+/* Level Up Animation */
+.level-up-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+}
+
+.level-up-content {
+  text-align: center;
+  color: #FFD700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 3px solid #FFD700;
+}
+
+.level-up-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 0 20px #FFD700);
+}
+
+.level-up-content h2 {
+  font-size: 3rem;
+  margin: 0.5rem 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(45deg, #FFD700, #FFA500);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.level-up-content p {
+  font-size: 1.5rem;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* Combo Display */
+.combo-display {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #9B59B6, #8E44AD);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  box-shadow: 0 8px 16px rgba(155, 89, 182, 0.3);
+  border: 2px solid #FFD700;
+  animation: pulse-glow 1s infinite alternate;
+}
+
+.combo-icon {
+  font-size: 1.2rem;
+  color: #FFD700;
+}
+
+@keyframes pulse-glow {
+  from {
+    box-shadow: 0 8px 16px rgba(155, 89, 182, 0.3);
+  }
+  to {
+    box-shadow: 0 8px 20px rgba(155, 89, 182, 0.6), 0 0 20px rgba(255, 215, 0, 0.4);
+  }
+}
+
+/* Floating Rewards */
+.rewards-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.floating-reward {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+}
+
+.reward-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 0.8rem 1.2rem;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  border: 2px solid currentColor;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.reward-icon {
+  font-size: 1.5rem;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.reward-text {
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.reward-amount {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: currentColor;
+  text-shadow: 0 0 10px currentColor;
+}
+
+.reward-message {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-top: 0.2rem;
+}
+
+.reward-multiplier {
+  font-size: 0.8rem;
+  color: #FFD700;
+  font-weight: bold;
+  margin-top: 0.2rem;
+}
+
+/* Mini XP Bar */
+.mini-xp-bar {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 300px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.8rem;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  pointer-events: all;
+}
+
+.xp-info {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.xp-progress {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.xp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4CAF50, #8BC34A, #FFD700);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.xp-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .level-up-content {
+    padding: 2rem;
+    margin: 1rem;
+  }
+  
+  .level-up-content h2 {
+    font-size: 2rem;
+  }
+  
+  .level-up-icon {
+    font-size: 3rem;
+  }
+  
+  .combo-display {
+    top: 10px;
+    right: 10px;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+  }
+  
+  .mini-xp-bar {
+    bottom: 10px;
+    left: 10px;
+    width: calc(100% - 20px);
+    max-width: 300px;
+  }
+  
+  .reward-content {
+    padding: 0.6rem 1rem;
+  }
+  
+  .reward-icon {
+    font-size: 1.2rem;
+  }
+  
+  .reward-amount {
+    font-size: 1rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .floating-reward,
+  .level-up-content,
+  .combo-display {
+    animation: none;
+    transition: none;
+  }
+  
+  .xp-fill::after {
+    animation: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .reward-content {
+    background: black;
+    border-width: 3px;
+  }
+  
+  .mini-xp-bar {
+    background: black;
+    border: 2px solid white;
+  }
+  
+  .level-up-overlay {
+    background: black;
+  }
+}

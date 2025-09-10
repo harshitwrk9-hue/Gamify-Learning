@@ -186,10 +186,10 @@ const RegisterForm = ({ onSuccess, onSwitchToLogin }) => {
                   <span className={`strength-text strength-${passwordStrengthInfo.score}`}>
                     {passwordStrengthInfo.level}
                   </span>
-                  {passwordStrengthInfo.suggestions.length > 0 && (
+                  {passwordStrengthInfo.feedback && passwordStrengthInfo.feedback.length > 0 && passwordStrengthInfo.feedback[0] !== 'Password strength is good' && (
                     <div className="strength-suggestions">
                       <FaExclamationTriangle className="suggestion-icon" />
-                      <span>{passwordStrengthInfo.suggestions[0]}</span>
+                      <span>{passwordStrengthInfo.feedback[0]}</span>
                     </div>
                   )}
                   {passwordStrengthInfo.score >= 3 && (

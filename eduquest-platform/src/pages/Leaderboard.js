@@ -15,7 +15,9 @@ import {
   FaSearch,
   FaArrowUp,
   FaArrowDown,
-  FaMinus
+  FaMinus,
+  FaMapMarkerAlt,
+  FaEye
 } from 'react-icons/fa';
 import { leaderboard, currentUser, badges, achievements } from '../data/mockData';
 import './Leaderboard.css';
@@ -25,12 +27,15 @@ const Leaderboard = () => {
   const [timeFilter, setTimeFilter] = useState('all-time');
   const [searchTerm, setSearchTerm] = useState('');
   const [sortedLeaderboard, setSortedLeaderboard] = useState([]);
+  const [nearbyRankings, setNearbyRankings] = useState([]);
   const [userRank, setUserRank] = useState(null);
   const [showFilters, setShowFilters] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState(new Date());
+  const [leaderboardData, setLeaderboardData] = useState(leaderboard);
 
   useEffect(() => {
     // Sort and filter leaderboard data
-    let filteredData = [...leaderboard];
+    let filteredData = [...leaderboardData];
     
     // Apply search filter
     if (searchTerm) {
@@ -39,14 +44,26 @@ const Leaderboard = () => {
       );
     }
     
+    // Apply time filter (simulate different data for different periods)
+    if (timeFilter !== 'all-time') {
+      // In a real app, this would filter by actual time periods
+      // For demo, we'll just show different subsets
+      const multiplier = timeFilter === 'this-week' ? 0.8 : timeFilter === 'this-month' ? 0.9 : timeFilter === 'today' ? 0.6 : 1;
+      filteredData = filteredData.map(user => ({
+        ...user,
+        xp: Math.floor(user.xp * multiplier)
+      }));
+    }
+    
     // Sort by XP (descending)
     filteredData.sort((a, b) => b.xp - a.xp);
     
-    // Add rank to each user
+    // Add global rank to each user
     filteredData = filteredData.map((user, index) => ({
       ...user,
+      globalRank: index + 1,
       rank: index + 1,
-      change: Math.floor(Math.random() * 21) - 10 // Random rank change for demo
+      change: user.rankChange || Math.floor(Math.random() * 21) - 10
     }));
     
     setSortedLeaderboard(filteredData);
@@ -54,7 +71,44 @@ const Leaderboard = () => {
     // Find current user's rank
     const currentUserRank = filteredData.findIndex(u => u.id === currentUser.id) + 1;
     setUserRank(currentUserRank || null);
-  }, [searchTerm, timeFilter]);
+    
+    // Generate nearby rankings (±5 positions from current user)
+    if (currentUserRank > 0) {
+      const nearbyStart = Math.max(0, currentUserRank - 6);
+      const nearbyEnd = Math.min(filteredData.length, currentUserRank + 5);
+      setNearbyRankings(filteredData.slice(nearbyStart, nearbyEnd));
+    }
+    
+    // Update timestamp for real-time indicator
+    setLastUpdated(new Date());
+  }, [searchTerm, timeFilter, leaderboardData]);
+  
+  // Simulate real-time updates
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Simulate small XP changes for random users
+      const updatedLeaderboard = leaderboardData.map(user => {
+        if (Math.random() < 0.3) { // 30% chance of XP change
+          const xpChange = Math.floor(Math.random() * 50) - 25; // ±25 XP
+          return {
+            ...user,
+            xp: Math.max(0, user.xp + xpChange),
+            lastActive: new Date().toISOString(),
+            rankChange: Math.floor(Math.random() * 21) - 10 // Random rank change
+          };
+        }
+        return user;
+      });
+      
+      // Update the leaderboard data state
+      setLeaderboardData(updatedLeaderboard);
+      
+      // Trigger re-render by updating the timestamp
+      setLastUpdated(new Date());
+    }, 15000); // Update every 15 seconds
+    
+    return () => clearInterval(interval);
+  }, [leaderboardData]);
 
   const getRankIcon = (rank) => {
     switch (rank) {
@@ -93,10 +147,31 @@ const Leaderboard = () => {
 
   const tabs = [
     { id: 'global', label: 'Global', icon: FaGlobeAmericas },
+    { id: 'nearby', label: 'Nearby', icon: FaMapMarkerAlt },
     { id: 'friends', label: 'Friends', icon: FaUsers },
     { id: 'weekly', label: 'Weekly', icon: FaCalendarWeek },
     { id: 'daily', label: 'Daily', icon: FaCalendarDay }
   ];
+  
+  const getDisplayData = () => {
+    switch (activeTab) {
+      case 'nearby':
+        return nearbyRankings;
+      case 'global':
+      default:
+        return sortedLeaderboard;
+    }
+  };
+  
+  const getTimeAgo = (date) => {
+    const now = new Date();
+    const diffInSeconds = Math.floor((now - date) / 1000);
+    
+    if (diffInSeconds < 60) return 'Just now';
+    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
+    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
+    return `${Math.floor(diffInSeconds / 86400)}d ago`;
+  };
 
   const timeFilters = [
     { id: 'all-time', label: 'All Time' },
@@ -225,213 +300,191 @@ const Leaderboard = () => {
           )}
         </AnimatePresence>
 
-        {/* Top 3 Podium */}
-        <div className="podium-section">
-          <h2>Top Performers</h2>
-          <div className="podium">
-            {sortedLeaderboard.slice(0, 3).map((user, index) => (
-              <motion.div 
-                key={user.id}
-                className={`podium-place place-${index + 1}`}
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: index * 0.2 }}
-              >
-                <div className="podium-user">
-                  <div className="user-avatar">
-                    <img src={user.avatar} alt={user.name} />
-                    <div className="rank-badge">
-                      {getRankIcon(index + 1)}
-                    </div>
-                  </div>
-                  
-                  <div className="user-info">
-                    <h3>{user.name}</h3>
-                    <div className="user-level">Level {getLevel(user.xp)}</div>
-                    <div className="user-xp">{user.xp.toLocaleString()} XP</div>
-                  </div>
-                  
-                  <div className="user-badges">
-                    {user.badges?.slice(0, 3).map((badgeId, badgeIndex) => {
-                      const badge = badges.find(b => b.id === badgeId);
-                      return badge ? (
-                        <div key={badgeIndex} className="mini-badge" title={badge.name}>
-                          {badge.icon}
-                        </div>
-                      ) : null;
-                    })}
-                  </div>
+        {/* Unified Leaderboard Section */}
+        <motion.div 
+          className="unified-leaderboard"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="section-header">
+            <h2>
+              <FaTrophy className="section-icon" />
+              {activeTab === 'nearby' ? 'Nearby Rankings' : 
+               activeTab === 'global' ? 'Global Rankings' :
+               activeTab === 'friends' ? 'Friends Rankings' :
+               activeTab === 'weekly' ? 'Weekly Rankings' :
+               activeTab === 'daily' ? 'Daily Rankings' : 'Rankings'}
+            </h2>
+            <div className="section-stats">
+              <span className="total-users">
+                {getDisplayData().length} 
+                {activeTab === 'nearby' ? 'nearby competitors' : 'learners competing'}
+              </span>
+              <div className="live-indicator">
+                <div className="pulse-dot"></div>
+                <span>Updated {getTimeAgo(lastUpdated)}</span>
+              </div>
+              {activeTab === 'nearby' && userRank && (
+                <div className="user-position">
+                  <FaEye className="position-icon" />
+                  <span>Your position: #{userRank}</span>
                 </div>
-                
-                <div className={`podium-base base-${index + 1}`}>
-                  <div className="base-number">{index + 1}</div>
-                </div>
-              </motion.div>
-            ))}
+              )}
+            </div>
           </div>
-        </div>
 
-        {/* Leaderboard List */}
-        <div className="leaderboard-list">
-          <div className="list-header">
-            <h2>All Rankings</h2>
-            <div className="list-stats">
-              <span>{sortedLeaderboard.length} learners</span>
-            </div>
-          </div>
-          
-          <div className="list-container">
-            <div className="list-headers">
-              <div className="header-rank">Rank</div>
-              <div className="header-user">User</div>
-              <div className="header-level">Level</div>
-              <div className="header-xp">XP</div>
-              <div className="header-change">Change</div>
-              <div className="header-badges">Badges</div>
-            </div>
-            
-            <div className="list-items">
-              {sortedLeaderboard.map((listUser, index) => (
+          {/* Top 3 Highlight - Only show for global tab */}
+          {activeTab === 'global' && (
+            <div className="top-performers">
+              {sortedLeaderboard.slice(0, 3).map((user, index) => (
                 <motion.div 
-                  key={listUser.id}
-                  className={`list-item ${listUser.id === currentUser.id ? 'current-user' : ''}`}
-                  initial={{ x: -50, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: index * 0.05 }}
+                  key={user.id}
+                  className={`top-performer rank-${index + 1}`}
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: index * 0.15 }}
+                  whileHover={{ scale: 1.02 }}
                 >
-                  <div className="item-rank">
-                    {getRankIcon(listUser.rank)}
+                  <div className="performer-rank">{getRankIcon(index + 1)}</div>
+                  <div className="performer-avatar">
+                    <img src={user.avatar} alt={user.name} />
+                    {user.isOnline && <div className="online-status"></div>}
                   </div>
-                  
-                  <div className="item-user">
-                    <div className="user-avatar-small">
-                      <img src={listUser.avatar} alt={listUser.name} />
-                      {listUser.isOnline && <div className="online-indicator" />}
+                  <div className="performer-info">
+                    <h4>{user.name}</h4>
+                    <div className="performer-stats">
+                      <span className="level">Lv.{getLevel(user.xp)}</span>
+                      <span className="xp">{user.xp.toLocaleString()} XP</span>
                     </div>
-                    <div className="user-details">
-                      <div className="user-name">{listUser.name}</div>
-                      <div className="user-country">{listUser.country}</div>
-                    </div>
-                  </div>
-                  
-                  <div className="item-level">
-                    <div className="level-info">
-                      <span className="level-number">Level {getLevel(listUser.xp)}</span>
-                      <div className="level-progress">
-                        <div 
-                          className="level-progress-fill"
-                          style={{ width: `${getXPProgress(listUser.xp)}%` }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="item-xp">
-                    <span className="xp-amount">{listUser.xp.toLocaleString()}</span>
-                    <span className="xp-label">XP</span>
-                  </div>
-                  
-                  <div className="item-change">
-                    {getRankChangeIcon(listUser.change)}
-                    <span className={`change-number ${
-                      listUser.change > 0 ? 'positive' : 
-                      listUser.change < 0 ? 'negative' : 'neutral'
-                    }`}>
-                      {Math.abs(listUser.change)}
-                    </span>
-                  </div>
-                  
-                  <div className="item-badges">
-                    <div className="badges-count">
-                      <FaMedal className="badges-icon" />
-                      <span>{listUser.badges?.length || 0}</span>
-                    </div>
-                    <div className="badges-preview">
-                      {listUser.badges?.slice(0, 3).map((badgeId, badgeIndex) => {
+                    <div className="performer-badges">
+                      {user.badges?.slice(0, 2).map((badgeId, badgeIndex) => {
                         const badge = badges.find(b => b.id === badgeId);
                         return badge ? (
-                          <div key={badgeIndex} className="badge-mini" title={badge.name}>
+                          <div key={badgeIndex} className="top-badge" title={badge.name}>
                             {badge.icon}
                           </div>
                         ) : null;
                       })}
-                      {listUser.badges?.length > 3 && (
-                        <div className="badges-more">+{listUser.badges.length - 3}</div>
+                      {user.badges?.length > 2 && (
+                        <span className="badge-count">+{user.badges.length - 2}</span>
                       )}
                     </div>
                   </div>
                 </motion.div>
               ))}
             </div>
-          </div>
-        </div>
+          )}
 
-        {/* Achievements Showcase */}
-        <div className="achievements-section">
-          <h2>Recent Achievements</h2>
-          <div className="achievements-grid">
-            {achievements.slice(0, 6).map((achievement, index) => (
-              <motion.div 
-                key={achievement.id}
-                className="achievement-card"
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <div className="achievement-icon">
-                  {achievement.icon}
-                </div>
-                <div className="achievement-info">
-                  <h4>{achievement.title}</h4>
-                  <p>{achievement.description}</p>
-                  <div className="achievement-reward">
-                    <FaStar className="reward-icon" />
-                    <span>+{achievement.xpReward} XP</span>
+          {/* Complete Rankings */}
+          <div className="rankings-container">
+            <div className="rankings-header">
+              <div className="col-rank">Rank</div>
+              <div className="col-user">User</div>
+              <div className="col-progress">Progress</div>
+              <div className="col-achievements">Achievements</div>
+              <div className="col-trend">Trend</div>
+            </div>
+            
+            <div className="rankings-list">
+              {getDisplayData().map((user, index) => {
+                const displayRank = activeTab === 'nearby' ? user.globalRank : index + 1;
+                const isTopThree = activeTab === 'global' && index < 3;
+                
+                const rankClass = displayRank <= 3 ? `rank-${displayRank}` : '';
+                
+                return (
+                  <motion.div 
+                    key={user.id}
+                    className={`ranking-item ${user.id === currentUser.id ? 'current-user' : ''} ${isTopThree ? 'top-three' : ''} ${rankClass}`}
+                    initial={{ x: -30, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: index * 0.03 }}
+                    whileHover={{ backgroundColor: 'rgba(255,255,255,0.05)' }}
+                  >
+                    <div className="rank-cell">
+                      <span className="rank-number">#{displayRank}</span>
+                      {isTopThree && <div className="rank-highlight"></div>}
+                      {activeTab === 'nearby' && user.id === currentUser.id && (
+                        <div className="you-indicator">YOU</div>
+                      )}
+                    </div>
+                  
+                  <div className="user-cell">
+                    <div className="user-avatar-mini">
+                      <img src={user.avatar} alt={user.name} />
+                      {user.isOnline && <div className="online-indicator"></div>}
+                    </div>
+                    <div className="user-info">
+                      <h3>
+                        {user.name}
+                        {user.id === currentUser.id && activeTab === 'nearby' && (
+                          <span className="you-indicator">YOU</span>
+                        )}
+                      </h3>
+                      <div className="user-location">
+                        <FaMapMarkerAlt />
+                        {user.country}
+                        {user.isOnline && <span className="online-indicator"></span>}
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="achievement-rarity">
-                  <span className={`rarity-badge ${achievement.rarity}`}>
-                    {achievement.rarity}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Competition Info */}
-        <div className="competition-section">
-          <div className="competition-card">
-            <div className="competition-header">
-              <FaTrophy className="competition-icon" />
-              <div>
-                <h3>Weekly Challenge</h3>
-                <p>Compete for the top spot this week!</p>
-              </div>
+                  
+                  <div className="progress-cell">
+                    <div className="level-badge">Lv.{getLevel(user.xp)}</div>
+                    <div className="xp-info">
+                      <div className="user-xp">
+                        <span className="xp-amount">{user.xp.toLocaleString()}</span>
+                        {user.xpChange && (
+                          <span className={`xp-change ${user.xpChange > 0 ? 'positive' : 'negative'}`}>
+                            {user.xpChange > 0 ? <FaArrowUp /> : <FaArrowDown />}
+                            {Math.abs(user.xpChange)}
+                          </span>
+                        )}
+                      </div>
+                      <div className="xp-bar">
+                        <div 
+                          className="xp-fill"
+                          style={{ width: `${getXPProgress(user.xp)}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="achievements-cell">
+                    <div className="achievement-summary">
+                      <FaMedal className="medal-icon" />
+                      <span className="badge-total">{user.badges?.length || 0}</span>
+                    </div>
+                    <div className="recent-achievements">
+                      {achievements.slice(0, 1).map((achievement, achIndex) => (
+                        <div key={achIndex} className="mini-achievement" title={achievement.title}>
+                          {achievement.icon}
+                          <span className="achievement-xp">+{achievement.xpReward}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="trend-cell">
+                    <div className={`trend-indicator ${
+                      user.change > 0 ? 'trending-up' : 
+                      user.change < 0 ? 'trending-down' : 'stable'
+                    }`}>
+                      {getRankChangeIcon(user.change)}
+                      <span className="trend-value">{Math.abs(user.change)}</span>
+                    </div>
+                    <div className="competition-status">
+                      <FaFire className="competition-icon" />
+                      <span className="competition-text">Active</span>
+                    </div>
+                  </div>
+                  </motion.div>
+                );
+              })}
             </div>
-            
-            <div className="competition-stats">
-              <div className="stat">
-                <span className="stat-number">2,847</span>
-                <span className="stat-label">Participants</span>
-              </div>
-              <div className="stat">
-                <span className="stat-number">3d 12h</span>
-                <span className="stat-label">Time Left</span>
-              </div>
-              <div className="stat">
-                <span className="stat-number">5,000 XP</span>
-                <span className="stat-label">Prize Pool</span>
-              </div>
-            </div>
-            
-            <button className="join-competition-btn">
-              <FaFire className="btn-icon" />
-              Join Competition
-            </button>
           </div>
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );

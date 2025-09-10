@@ -1,6 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { hashPassword, verifyPassword } from '../utils/auth';
-import { rateLimiter, sanitizeInput, sessionSecurity, securityLogger } from '../utils/security';
+import { 
+  rateLimiter, 
+  sanitizeInput, 
+  sessionSecurity, 
+  securityLogger,
+  csrfProtection
+} from '../utils/security';
 
 const AuthContext = createContext();
 
@@ -18,9 +24,25 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState('');
   const [sessionRefreshTimer, setSessionRefreshTimer] = useState(null);
 
+  // Initialize context
+  useEffect(() => {
+    // Set up initial security measures
+    securityLogger.log('auth_context_initialized', {
+      timestamp: Date.now()
+    });
+    
+    // Generate initial CSRF token
+    if (!csrfProtection.getToken()) {
+      csrfProtection.generateToken();
+      securityLogger.log('csrf_token_generated', {
+        timestamp: Date.now()
+      });
+    }
+  }, []);
+
   // Check for existing session on app load
   useEffect(() => {
-    const validateSession = () => {
+    const validateSession = async () => {
       try {
         const storedUser = localStorage.getItem('eduquest_user');
         const storedSession = localStorage.getItem('eduquest_session');
@@ -29,49 +51,47 @@ export const AuthProvider = ({ children }) => {
           const user = JSON.parse(storedUser);
           const session = JSON.parse(storedSession);
           
-          // Validate session token format
-          if (!sessionSecurity.isValidTokenFormat(session.token)) {
+          // Verify JWT token
+          const tokenPayload = sessionSecurity.verifyToken(session.token);
+          if (!tokenPayload) {
             securityLogger.log('session_invalid_token', {
               username: user.username,
-              reason: 'invalid_token_format'
+              reason: 'invalid_or_expired_token'
             });
-            throw new Error('Invalid session token format');
+            throw new Error('Invalid or expired session token');
           }
           
-          // Check if session is still valid
-          if (sessionSecurity.isSessionValid(session.timestamp)) {
-            // Check if session should be refreshed
-            if (sessionSecurity.shouldRefreshSession(session.timestamp)) {
-              // Refresh session with new token and timestamp
-              const newSessionData = {
-                ...session,
-                token: sessionSecurity.generateSecureToken(),
-                timestamp: Date.now()
-              };
-              
-              localStorage.setItem('eduquest_session', JSON.stringify(newSessionData));
-              
-              securityLogger.log('session_refreshed', {
-                username: user.username,
-                oldToken: session.token.substring(0, 8) + '...',
-                newToken: newSessionData.token.substring(0, 8) + '...'
-              });
-            }
-            
-            setCurrentUser(user);
-            
-            securityLogger.log('session_validated', {
-              username: user.username,
-              sessionAge: Math.round((Date.now() - session.timestamp) / 1000 / 60) // minutes
+          // Verify token payload matches session data
+          if (tokenPayload.userId !== session.userId) {
+            securityLogger.log('session_mismatch_detected', {
+              tokenUserId: tokenPayload.userId,
+              sessionUserId: session.userId,
+              username: user.username
             });
-          } else {
-            // Session expired
-            securityLogger.log('session_expired', {
-              username: user.username,
-              sessionAge: Math.round((Date.now() - session.timestamp) / 1000 / 60) // minutes
-            });
-            throw new Error('Session expired');
+            throw new Error('Session data mismatch');
           }
+          
+          // Check if token should be refreshed (2 hours before expiration)
+          const timeUntilExpiry = tokenPayload.exp - Date.now();
+          const refreshThreshold = 2 * 60 * 60 * 1000; // 2 hours
+          
+          if (timeUntilExpiry > 0 && timeUntilExpiry < refreshThreshold) {
+            await refreshSession();
+          }
+          
+          // Restore user session with token payload data
+          setCurrentUser({
+            ...user,
+            role: tokenPayload.role || 'student',
+            permissions: tokenPayload.permissions || ['read']
+          });
+          
+          securityLogger.log('session_validated', {
+            username: user.username,
+            tokenId: tokenPayload.jti,
+            refreshCount: tokenPayload.refreshCount || 0,
+            sessionAge: Math.round((Date.now() - session.timestamp) / 1000 / 60) // minutes
+          });
         }
       } catch (error) {
         console.error('Session validation error:', error);
@@ -102,6 +122,12 @@ export const AuthProvider = ({ children }) => {
         return false;
       }
 
+      // Verify current token
+      const tokenPayload = sessionSecurity.verifyToken(sessionData.token);
+      if (!tokenPayload) {
+        throw new Error('Invalid token for refresh');
+      }
+
       // Check if session needs refresh based on session type
        const timeUntilExpiry = sessionData.expiresAt - Date.now();
        const isPersistent = sessionData.rememberMe || sessionData.persistent;
@@ -109,9 +135,14 @@ export const AuthProvider = ({ children }) => {
        const shouldRefresh = timeUntilExpiry < refreshThreshold;
        
        if (shouldRefresh && timeUntilExpiry > 0) {
-         // Generate new session token with appropriate duration
-         const newToken = sessionSecurity.generateToken();
+         // Refresh JWT token with updated payload
          const sessionDuration = isPersistent ? (30 * 24 * 60 * 60 * 1000) : (24 * 60 * 60 * 1000);
+         const newToken = sessionSecurity.refreshToken(sessionData.token, sessionDuration);
+         
+         if (!newToken) {
+           throw new Error('Failed to refresh JWT token');
+         }
+         
          const newExpiresAt = Date.now() + sessionDuration;
         
         const refreshedSession = {
@@ -124,10 +155,13 @@ export const AuthProvider = ({ children }) => {
         
         localStorage.setItem('eduquest_session', JSON.stringify(refreshedSession));
         
+        // Verify new token
+        const newTokenPayload = sessionSecurity.verifyToken(newToken);
+        
         securityLogger.log('session_refreshed', {
            username: userData.username,
-           oldToken: sessionData.token.substring(0, 8) + '...',
-           newToken: newToken.substring(0, 8) + '...',
+           oldTokenId: tokenPayload.jti,
+           newTokenId: newTokenPayload?.jti,
            sessionType: isPersistent ? 'persistent' : 'regular',
            refreshCount: refreshedSession.refreshCount
          });
@@ -141,6 +175,13 @@ export const AuthProvider = ({ children }) => {
       securityLogger.log('session_refresh_error', {
         error: error.message
       });
+      
+      // Clear session on refresh failure
+      localStorage.removeItem('eduquest_user');
+      localStorage.removeItem('eduquest_session');
+      setCurrentUser(null);
+      setError('Session refresh failed. Please log in again.');
+      
       return false;
     }
   };
@@ -258,11 +299,21 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async (username, password, rememberMe = false) => {
+  const login = async (username, password, rememberMe = false, csrfToken = null) => {
     setError('');
     setLoading(true);
 
     try {
+      // Validate CSRF token
+      if (!csrfToken || !csrfProtection.validateToken(csrfToken)) {
+        securityLogger.log('login_csrf_validation_failed', {
+          username: sanitizeInput.username(username),
+          hasToken: !!csrfToken,
+          timestamp: Date.now()
+        });
+        throw new Error('Invalid security token. Please refresh the page and try again.');
+      }
+
       // Sanitize inputs
       const sanitizedUsername = sanitizeInput.username(username);
       const sanitizedPassword = sanitizeInput.password(password);
@@ -328,30 +379,53 @@ export const AuthProvider = ({ children }) => {
       // Clear failed attempts on successful login
       rateLimiter.clearAttempts(sanitizedUsername);
 
+      // Create JWT-like token with user payload
+      const tokenPayload = {
+        userId: user.id,
+        username: user.username,
+        role: user.role || 'student',
+        permissions: user.permissions || ['read'],
+        rememberMe,
+        csrfToken: csrfProtection.getToken()
+      };
+
+      const expirationTime = rememberMe ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000; // 30 days or 24 hours
+      const sessionToken = sessionSecurity.generateToken(tokenPayload, expirationTime);
+
       // Create secure session
-      const sessionDuration = rememberMe ? (30 * 24 * 60 * 60 * 1000) : (24 * 60 * 60 * 1000); // 30 days or 24 hours
-      const sessionToken = sessionSecurity.generateSecureToken();
       const sessionData = {
         token: sessionToken,
         userId: user.id,
         timestamp: new Date().getTime(),
-        expiresAt: Date.now() + sessionDuration,
+        expiresAt: Date.now() + expirationTime,
         rememberMe: rememberMe,
-        persistent: rememberMe
+        persistent: rememberMe,
+        tokenPayload,
+        csrfToken: csrfProtection.getToken()
       };
       
       localStorage.setItem('eduquest_session', JSON.stringify(sessionData));
       localStorage.setItem('eduquest_user', JSON.stringify(user));
+      
+      // Generate new CSRF token for the session
+      csrfProtection.generateToken();
       
       securityLogger.log('login_success', {
         username: sanitizedUsername,
         sessionToken: sessionToken.substring(0, 8) + '...', // Log partial token for debugging
         loginTime: new Date().toISOString(),
         rememberMe: rememberMe,
-        sessionDuration: rememberMe ? '30 days' : '24 hours'
+        sessionDuration: rememberMe ? '30 days' : '24 hours',
+        tokenId: tokenPayload.jti,
+        userAgent: navigator.userAgent?.substring(0, 100) || 'unknown',
+        csrfTokenPresent: true
       });
       
-      setCurrentUser(user);
+      setCurrentUser({
+        ...user,
+        role: user.role || 'student',
+        permissions: user.permissions || ['read']
+      });
       return { success: true, user };
       
     } catch (error) {
@@ -368,21 +442,28 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    const user = currentUser;
+    // Get current session info for logging
+    const storedToken = localStorage.getItem('eduquest_session');
+    let logData = { timestamp: Date.now() };
     
-    // Log logout event
-    if (user) {
-      securityLogger.log('logout', {
-        username: user.username,
-        sessionDuration: (() => {
-          try {
-            const session = JSON.parse(localStorage.getItem('eduquest_session') || '{}');
-            return session.timestamp ? Math.round((Date.now() - session.timestamp) / 1000 / 60) : 0;
-          } catch {
-            return 0;
+    if (storedToken && currentUser) {
+      try {
+        const sessionData = JSON.parse(storedToken);
+        if (sessionData.token) {
+          const tokenPayload = sessionSecurity.verifyToken(sessionData.token);
+          if (tokenPayload) {
+            logData = {
+              ...logData,
+              userId: tokenPayload.userId,
+              username: tokenPayload.username,
+              tokenId: tokenPayload.jti,
+              sessionDuration: Math.round((Date.now() - (tokenPayload.iat || sessionData.timestamp)) / 1000 / 60) // minutes
+            };
           }
-        })()
-      });
+        }
+      } catch (error) {
+        console.error('Error parsing session data during logout:', error);
+      }
     }
     
     // Clear session refresh timer
@@ -391,11 +472,19 @@ export const AuthProvider = ({ children }) => {
       setSessionRefreshTimer(null);
     }
     
-    // Clear session data
+    // Clear all session data
     localStorage.removeItem('eduquest_user');
     localStorage.removeItem('eduquest_session');
+    localStorage.removeItem('userSession');
+    localStorage.removeItem('sessionToken');
+    sessionStorage.removeItem('userSession');
+    sessionStorage.removeItem('sessionToken');
+    
     setCurrentUser(null);
     setError('');
+    
+    // Log security event
+    securityLogger.log('user_logout', logData);
   };
 
   const clearError = () => {

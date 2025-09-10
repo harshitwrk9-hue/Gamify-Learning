@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { FaUser, FaLock, FaEye, FaEyeSlash, FaSpinner, FaExclamationTriangle, FaShieldAlt } from 'react-icons/fa';
-import { rateLimiter, sanitizeInput } from '../utils/security';
+import { rateLimiter, sanitizeInput, csrfProtection } from '../utils/security';
+import ForgotPassword from './ForgotPassword';
 import './LoginForm.css';
 
 const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
@@ -18,6 +19,10 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
     lockoutTime: 0
   });
   const [rememberMe, setRememberMe] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [securityWarnings, setSecurityWarnings] = useState([]);
+  const [localError, setLocalError] = useState('');
   
   const { login, error, loading } = useAuth();
 
@@ -48,28 +53,107 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
       [name]: value
     }));
     
-    // Clear validation error for this field
-    if (validationErrors[name]) {
-      setValidationErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
+    // Clear error message when user starts typing
+    if (error || localError) {
+      setLocalError('');
     }
+    
+    // Real-time validation with debounce
+    clearTimeout(window.validationTimeout);
+    window.validationTimeout = setTimeout(() => {
+      validateField(name, value);
+    }, 300);
   };
 
   const validateForm = () => {
     const errors = {};
+    const warnings = [];
     
+    // Enhanced username validation with security checks
     if (!formData.username.trim()) {
-      errors.username = 'Username is required';
+      errors.username = 'Username or email is required';
+    } else if (formData.username.trim().length < 3) {
+      errors.username = 'Username must be at least 3 characters long';
+    } else if (formData.username.includes('@')) {
+      // Email validation with additional security checks
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.username)) {
+        errors.username = 'Please enter a valid email address';
+      }
+      // Check for suspicious email patterns
+      if (formData.username.includes('..') || formData.username.startsWith('.') || formData.username.endsWith('.')) {
+        warnings.push('Email format appears suspicious');
+      }
+    } else {
+      // Username security checks
+      if (/[<>"'&]/.test(formData.username)) {
+        errors.username = 'Username contains invalid characters';
+      }
+      if (formData.username.length > 50) {
+        errors.username = 'Username is too long (maximum 50 characters)';
+      }
     }
     
+    // Enhanced password validation
     if (!formData.password) {
       errors.password = 'Password is required';
+    } else if (formData.password.length < 6) {
+      errors.password = 'Password must be at least 6 characters long';
+    } else {
+      // Additional password security checks
+      if (formData.password.length > 128) {
+        errors.password = 'Password is too long (maximum 128 characters)';
+      }
+      if (formData.password === formData.username) {
+        warnings.push('Password should not be the same as username');
+      }
+      if (/^(password|123456|qwerty|admin)$/i.test(formData.password)) {
+        warnings.push('Password appears to be commonly used');
+      }
     }
     
     setValidationErrors(errors);
+    setSecurityWarnings(warnings);
     return Object.keys(errors).length === 0;
+  };
+  
+  // Real-time validation on input change
+  const validateField = (name, value) => {
+    const errors = { ...validationErrors };
+    
+    switch (name) {
+      case 'username':
+        if (!value.trim()) {
+          errors.username = 'Email or username is required';
+        } else if (value.trim().length < 3) {
+          errors.username = 'Username must be at least 3 characters long';
+        } else if (value.includes('@')) {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(value)) {
+            errors.username = 'Please enter a valid email address';
+          } else {
+            delete errors.username;
+          }
+        } else {
+          delete errors.username;
+        }
+        break;
+        
+      case 'password':
+        if (!value) {
+          errors.password = 'Password is required';
+        } else if (value.length < 6) {
+          errors.password = 'Password must be at least 6 characters long';
+        } else {
+          delete errors.password;
+        }
+        break;
+        
+      default:
+        break;
+    }
+    
+    setValidationErrors(errors);
   };
 
   const handleSubmit = async (e) => {
@@ -82,16 +166,53 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
     setIsSubmitting(true);
     
     try {
-      const result = await login(formData.username, formData.password, rememberMe);
+      // Get CSRF token for secure login
+      const csrfToken = csrfProtection.getToken();
+      const result = await login(formData.username, formData.password, rememberMe, csrfToken);
       
       if (result.success) {
+        // Clear any previous errors
+        setValidationErrors({});
+        setLocalError('');
+        setSuccessMessage('Login successful! Redirecting...');
+        
+        // Clear success message after a short delay
+        setTimeout(() => setSuccessMessage(''), 2000);
+        
         onSuccess && onSuccess(result.user);
+      } else {
+        // Handle specific error cases
+        if (result.error) {
+          // Handle rate limiting errors
+          if (result.error.includes('locked') || result.error.includes('Too many')) {
+            setSecurityStatus({
+              isLocked: true,
+              attemptsRemaining: 0,
+              lockoutTime: extractLockoutTime(result.error)
+            });
+          }
+        }
       }
     } catch (error) {
       console.error('Login error:', error);
+      
+      // Handle network errors
+      if (error.name === 'NetworkError' || error.message.includes('fetch')) {
+        setLocalError('Network connection error. Please check your internet connection and try again.');
+      } else if (error.message.includes('timeout')) {
+        setLocalError('Request timed out. Please try again.');
+      } else {
+        setLocalError(error.message || 'An unexpected error occurred. Please try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }
+  };
+  
+  // Helper function to extract lockout time from error message
+  const extractLockoutTime = (errorMessage) => {
+    const match = errorMessage.match(/(\d+)\s+minutes?/);
+    return match ? parseInt(match[1]) : 5;
   };
 
   return (
@@ -102,10 +223,31 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
           <p>Sign in to continue your learning journey</p>
         </div>
         
-        {error && (
+        {(error || localError) && (
           <div className="error-message">
             <FaExclamationTriangle className="error-icon" />
-            <span>{error}</span>
+            <span>{error || localError}</span>
+          </div>
+        )}
+        
+        {successMessage && (
+          <div className="success-message">
+            <FaShieldAlt className="success-icon" />
+            <span>{successMessage}</span>
+          </div>
+        )}
+        
+        {securityWarnings.length > 0 && (
+          <div className="security-warnings">
+            <FaExclamationTriangle className="warning-icon" />
+            <div className="warnings-content">
+              <strong>Security Notice:</strong>
+              <ul>
+                {securityWarnings.map((warning, index) => (
+                  <li key={index}>{warning}</li>
+                ))}
+              </ul>
+            </div>
           </div>
         )}
         
@@ -131,7 +273,7 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
         
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">Email or Username</label>
             <div className="input-wrapper">
               <FaUser className="input-icon" />
               <input
@@ -140,10 +282,10 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
                 name="username"
                 value={formData.username}
                 onChange={handleInputChange}
-                placeholder="Enter your username"
+                placeholder="Enter your email or username"
                 className={validationErrors.username ? 'error' : ''}
                 disabled={loading || isSubmitting}
-                autoComplete="username"
+                autoComplete="username email"
               />
             </div>
             {validationErrors.username && (
@@ -217,6 +359,16 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
         </form>
         
         <div className="form-footer">
+          <div className="forgot-password-link">
+            <button 
+              type="button" 
+              className="link-btn forgot-link"
+              onClick={() => setShowForgotPassword(true)}
+              disabled={loading || isSubmitting}
+            >
+              Forgot your password?
+            </button>
+          </div>
           <p>
             Don't have an account?{' '}
             <button 
@@ -229,6 +381,12 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
             </button>
           </p>
         </div>
+        
+        <ForgotPassword 
+          isOpen={showForgotPassword}
+          onClose={() => setShowForgotPassword(false)}
+          onBackToLogin={() => setShowForgotPassword(false)}
+        />
       </div>
     </div>
   );

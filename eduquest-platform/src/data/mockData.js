@@ -56,7 +56,7 @@ export const courses = [
     instructor: "Sarah Chen",
     rating: 4.8,
     students: 1250,
-    thumbnail: "/api/placeholder/300/200",
+    thumbnail: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250&q=80",
     color: "#3B82F6",
     xpReward: 500
   },
@@ -73,7 +73,7 @@ export const courses = [
     instructor: "Mike Rodriguez",
     rating: 4.9,
     students: 890,
-    thumbnail: "/api/placeholder/300/200",
+    thumbnail: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250&q=80",
     color: "#10B981",
     xpReward: 800
   },
@@ -90,7 +90,7 @@ export const courses = [
     instructor: "Dr. Emily Watson",
     rating: 4.7,
     students: 2100,
-    thumbnail: "/api/placeholder/300/200",
+    thumbnail: "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250&q=80",
     color: "#8B5CF6",
     xpReward: 700
   },
@@ -107,7 +107,7 @@ export const courses = [
     instructor: "Prof. David Kim",
     rating: 4.6,
     students: 1580,
-    thumbnail: "/api/placeholder/300/200",
+    thumbnail: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250&q=80",
     color: "#F59E0B",
     xpReward: 900
   },
@@ -124,7 +124,7 @@ export const courses = [
     instructor: "Lisa Park",
     rating: 4.8,
     students: 950,
-    thumbnail: "/api/placeholder/300/200",
+    thumbnail: "https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250&q=80",
     color: "#EF4444",
     xpReward: 600
   },
@@ -141,7 +141,7 @@ export const courses = [
     instructor: "Dr. Robert Taylor",
     rating: 4.5,
     students: 1200,
-    thumbnail: "/api/placeholder/300/200",
+    thumbnail: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=250&q=80",
     color: "#06B6D4",
     xpReward: 800
   }

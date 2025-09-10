@@ -128,8 +128,15 @@ const Dashboard = () => {
                   key={course.id}
                   className="course-card"
                 >
-                  <div className="course-thumbnail" style={{ background: course.color }}>
-                    <span className="course-category">{course.category}</span>
+                  <div className="course-thumbnail">
+                    <img 
+                      src={course.thumbnail} 
+                      alt={course.title}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px' }}
+                    />
+                    <div className="course-category-overlay">
+                      <span className="course-category">{course.category}</span>
+                    </div>
                   </div>
                   <div className="course-info">
                     <h3>{course.title}</h3>

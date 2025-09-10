@@ -211,7 +211,12 @@ const CourseCatalog = () => {
                   whileHover={{ y: -10 }}
                   className={`course-card ${progressStatus} animate-fade-in-scale border-glow`}
                 >
-                  <div className="course-image" style={{ background: course.color }}>
+                  <div className="course-image">
+                    <img 
+                      src={course.thumbnail} 
+                      alt={course.title}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
                     <div className="course-overlay">
                       <Link to={`/course/${course.id}`} className="play-button">
                         {progressStatus === 'completed' ? <FaCheck /> : <FaPlay />}

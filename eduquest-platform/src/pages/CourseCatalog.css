@@ -243,8 +243,14 @@
 /* Courses Grid */
 .courses-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 2.5rem;
+  align-items: start;
+  justify-content: center;
+  padding: 1rem 0;
+  /* Enhanced grid alignment */
+  grid-auto-rows: minmax(auto, max-content);
+  place-items: stretch;
 }
 
 .course-card {
@@ -254,6 +260,12 @@
   box-shadow: 0 10px 30px var(--shadow-light);
   transition: all 0.3s ease;
   border: 2px solid transparent;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  /* Enhanced card structure */
+  min-height: 500px;
+  position: relative;
 }
 
 .course-card:hover {
@@ -358,6 +370,12 @@
 /* Course Content */
 .course-content {
   padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 0.75rem;
+  /* Enhanced content structure */
+  justify-content: space-between;
 }
 
 .course-category {
@@ -392,10 +410,15 @@
 
 .course-meta {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0.5rem 0;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
+  /* Enhanced meta layout */
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .meta-item {
@@ -439,6 +462,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: auto;
+  padding-top: 1rem;
+  /* Enhanced footer positioning */
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .xp-reward {
@@ -461,9 +489,17 @@
   transition: all 0.3s ease;
 }
 
-.course-button:hover {
+.course-button:hover,
+.course-button:focus {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+.course-card:focus-within {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 4px;
 }
 
 /* No Results */
@@ -487,13 +523,25 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+  .courses-grid {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+}
+
 @media (max-width: 1024px) {
   .courses-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
   }
 
   .categories-grid {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .course-card {
+    min-height: 480px;
   }
 }
 
@@ -522,6 +570,22 @@
 
   .courses-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0.5rem 0;
+  }
+
+  .course-card {
+    min-height: 450px;
+  }
+
+  .course-content {
+    padding: 1.25rem;
+    gap: 0.5rem;
+  }
+
+  .course-meta {
+    justify-content: space-between;
+    gap: 0.5rem;
   }
 
   .categories-grid {

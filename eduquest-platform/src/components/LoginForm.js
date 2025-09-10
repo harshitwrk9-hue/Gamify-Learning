@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { FaUser, FaLock, FaEye, FaEyeSlash, FaSpinner } from 'react-icons/fa';
+import { FaUser, FaLock, FaEye, FaEyeSlash, FaSpinner, FaExclamationTriangle, FaShieldAlt } from 'react-icons/fa';
+import { rateLimiter, sanitizeInput } from '../utils/security';
 import './LoginForm.css';
 
 const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
@@ -11,8 +12,34 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [securityStatus, setSecurityStatus] = useState({
+    attemptsRemaining: null,
+    isLocked: false,
+    lockoutTime: 0
+  });
+  const [rememberMe, setRememberMe] = useState(false);
   
   const { login, error, loading } = useAuth();
+
+  // Check security status when username changes
+  useEffect(() => {
+    if (formData.username.trim()) {
+      const sanitizedUsername = sanitizeInput.username(formData.username);
+      const rateLimitCheck = rateLimiter.checkRateLimit(sanitizedUsername);
+      
+      setSecurityStatus({
+        attemptsRemaining: rateLimitCheck.attemptsRemaining || 0,
+        isLocked: !rateLimitCheck.allowed,
+        lockoutTime: rateLimitCheck.remainingTime || 0
+      });
+    } else {
+      setSecurityStatus({
+        attemptsRemaining: null,
+        isLocked: false,
+        lockoutTime: 0
+      });
+    }
+  }, [formData.username]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -55,7 +82,7 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
     setIsSubmitting(true);
     
     try {
-      const result = await login(formData.username, formData.password);
+      const result = await login(formData.username, formData.password, rememberMe);
       
       if (result.success) {
         onSuccess && onSuccess(result.user);
@@ -77,7 +104,28 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
         
         {error && (
           <div className="error-message">
+            <FaExclamationTriangle className="error-icon" />
             <span>{error}</span>
+          </div>
+        )}
+        
+        {securityStatus.isLocked && (
+          <div className="security-warning locked">
+            <FaShieldAlt className="security-icon" />
+            <div className="security-content">
+              <strong>Account Temporarily Locked</strong>
+              <p>Too many failed login attempts. Please try again in {securityStatus.lockoutTime} minutes.</p>
+            </div>
+          </div>
+        )}
+        
+        {!securityStatus.isLocked && securityStatus.attemptsRemaining !== null && securityStatus.attemptsRemaining <= 2 && (
+          <div className="security-warning attempts">
+            <FaExclamationTriangle className="security-icon" />
+            <div className="security-content">
+              <strong>Security Notice</strong>
+              <p>{securityStatus.attemptsRemaining} login attempts remaining before temporary lockout.</p>
+            </div>
           </div>
         )}
         
@@ -133,12 +181,31 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
             )}
           </div>
           
+          <div className="form-group remember-me-group">
+            <label className="remember-me-label">
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                disabled={loading || isSubmitting}
+                className="remember-me-checkbox"
+              />
+              <span className="checkmark"></span>
+              <span className="remember-me-text">Remember me for 30 days</span>
+            </label>
+          </div>
+          
           <button 
             type="submit" 
             className="submit-btn"
-            disabled={loading || isSubmitting}
+            disabled={loading || isSubmitting || securityStatus.isLocked}
           >
-            {(loading || isSubmitting) ? (
+            {securityStatus.isLocked ? (
+              <>
+                <FaShieldAlt />
+                Account Locked
+              </>
+            ) : (loading || isSubmitting) ? (
               <>
                 <FaSpinner className="spinner" />
                 Signing In...

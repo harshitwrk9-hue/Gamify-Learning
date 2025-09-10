@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { validateUsername, validatePassword } from '../utils/auth';
-import { FaUser, FaLock, FaEye, FaEyeSlash, FaSpinner } from 'react-icons/fa';
+import { sanitizeInput, passwordStrength, securityLogger } from '../utils/security';
+import { FaUser, FaLock, FaEye, FaEyeSlash, FaSpinner, FaExclamationTriangle, FaCheckCircle } from 'react-icons/fa';
 import './RegisterForm.css';
 
 const RegisterForm = ({ onSuccess, onSwitchToLogin }) => {
@@ -14,15 +15,33 @@ const RegisterForm = ({ onSuccess, onSwitchToLogin }) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [passwordStrengthInfo, setPasswordStrengthInfo] = useState(null);
   
   const { register, error, loading } = useAuth();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    
+    // Sanitize input based on field type
+    let sanitizedValue;
+    if (name === 'username') {
+      sanitizedValue = sanitizeInput.username(value);
+    } else if (name === 'password' || name === 'confirmPassword') {
+      sanitizedValue = sanitizeInput.password(value);
+    } else {
+      sanitizedValue = sanitizeInput.text(value);
+    }
+    
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: sanitizedValue
     }));
+    
+    // Update password strength analysis
+    if (name === 'password') {
+      const strength = passwordStrength.analyze(sanitizedValue);
+      setPasswordStrengthInfo(strength);
+    }
     
     // Clear validation error for this field
     if (validationErrors[name]) {
@@ -67,29 +86,32 @@ const RegisterForm = ({ onSuccess, onSwitchToLogin }) => {
     setIsSubmitting(true);
     
     try {
+      // Log registration attempt
+      securityLogger.log('registration_attempt', {
+        username: formData.username,
+        passwordStrength: passwordStrengthInfo?.level || 'unknown'
+      });
+      
       const result = await register(formData.username, formData.password);
       
       if (result.success) {
+        securityLogger.log('registration_success', {
+          username: formData.username
+        });
         onSuccess && onSuccess(result.user);
       }
     } catch (error) {
       console.error('Registration error:', error);
+      securityLogger.log('registration_error', {
+        username: formData.username,
+        error: error.message
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const getPasswordStrength = (password) => {
-    const validation = validatePassword(password);
-    const strength = validation.messages.length;
-    
-    if (password.length === 0) return { level: 0, text: '' };
-    if (strength >= 4) return { level: 1, text: 'Weak' };
-    if (strength >= 2) return { level: 2, text: 'Medium' };
-    return { level: 3, text: 'Strong' };
-  };
 
-  const passwordStrength = getPasswordStrength(formData.password);
 
   return (
     <div className="register-form-container">
@@ -152,17 +174,31 @@ const RegisterForm = ({ onSuccess, onSwitchToLogin }) => {
             {validationErrors.password && (
               <span className="field-error">{validationErrors.password}</span>
             )}
-            {formData.password && (
+            {passwordStrengthInfo && formData.password && (
               <div className="password-strength">
                 <div className="strength-bar">
                   <div 
-                    className={`strength-fill strength-${passwordStrength.level}`}
-                    style={{ width: `${(passwordStrength.level / 3) * 100}%` }}
+                    className={`strength-fill strength-${passwordStrengthInfo.score}`}
+                    style={{ width: `${(passwordStrengthInfo.score / 4) * 100}%` }}
                   />
                 </div>
-                <span className={`strength-text strength-${passwordStrength.level}`}>
-                  {passwordStrength.text}
-                </span>
+                <div className="strength-details">
+                  <span className={`strength-text strength-${passwordStrengthInfo.score}`}>
+                    {passwordStrengthInfo.level}
+                  </span>
+                  {passwordStrengthInfo.suggestions.length > 0 && (
+                    <div className="strength-suggestions">
+                      <FaExclamationTriangle className="suggestion-icon" />
+                      <span>{passwordStrengthInfo.suggestions[0]}</span>
+                    </div>
+                  )}
+                  {passwordStrengthInfo.score >= 3 && (
+                    <div className="strength-good">
+                      <FaCheckCircle className="check-icon" />
+                      <span>Strong password!</span>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>

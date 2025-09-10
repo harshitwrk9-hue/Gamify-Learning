@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { FaHome, FaBook, FaTrophy, FaUser, FaBars, FaTimes, FaSignOutAlt, FaSignInAlt } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
 import { currentUser } from '../data/mockData';
+import { ReactComponent as ShikshaLogo } from '../assets/shiksha-logo.svg';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -47,8 +48,8 @@ const Navbar = () => {
             whileTap={{ scale: 0.95 }}
             className="logo-container"
           >
-            <span className="logo-icon">🎓</span>
-            <span className="logo-text">EduQuest</span>
+            <ShikshaLogo className="logo-icon" />
+            <span className="logo-text">Shiksha</span>
           </motion.div>
         </Link>
 

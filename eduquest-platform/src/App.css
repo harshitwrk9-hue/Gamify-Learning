@@ -1,3 +1,8 @@
+/* Import Interactive Enhancements */
+@import './styles/InteractiveEnhancements.css';
+@import './styles/ComponentEnhancements.css';
+@import './styles/ResponsiveNavigation.css';
+
 /* CSS Variables for Enhanced Theme Support with Organic Aesthetics */
 :root {
   /* Light Theme Variables - Organic & Hand-crafted */

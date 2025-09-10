@@ -68,7 +68,7 @@ const LandingPage = () => {
               <span className="gradient-text"> Journey</span>
             </h1>
             <p className="hero-subtitle">
-              Join thousands of learners on EduQuest - the gamified learning platform 
+              Join thousands of learners on Shiksha - the gamified learning platform 
               that makes education engaging, interactive, and rewarding.
             </p>
             
@@ -105,7 +105,7 @@ const LandingPage = () => {
                 <div className="user-info">
                   <div className="avatar"></div>
                   <div className="user-details">
-                    <h4>Alex Johnson</h4>
+                    <h1>User</h1>
                     <p>Level 12 • 2,850 XP</p>
                   </div>
                 </div>
@@ -169,7 +169,7 @@ const LandingPage = () => {
             transition={{ duration: 0.8 }}
             className="section-header"
           >
-            <h2 className="section-title">Why Choose EduQuest?</h2>
+            <h2 className="section-title">Why Choose Shiksha?</h2>
             <p className="section-subtitle">
               Discover the features that make learning engaging and effective
             </p>
@@ -216,7 +216,7 @@ const LandingPage = () => {
             </div>
             <h2 className="cta-title">Ready to Start Your Learning Adventure?</h2>
             <p className="cta-subtitle">
-              Join thousands of learners who are already transforming their skills with EduQuest
+              Join thousands of learners who are already transforming their skills with Shiksha
             </p>
             <Link to="/dashboard" className="btn btn-cta">
               <motion.span

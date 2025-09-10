@@ -35,7 +35,19 @@
 }
 
 .logo-icon {
-  font-size: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.logo-icon svg {
+  width: 100%;
+  height: 100%;
+  max-width: 40px;
+  max-height: 40px;
 }
 
 .logo-text {
@@ -201,13 +213,13 @@
 }
 
 .avatar-image {
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  border: 3px solid rgba(255, 255, 255, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.4);
   object-fit: cover;
   transition: all 0.3s ease;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .user-avatar:hover .avatar-image {
@@ -463,8 +475,8 @@
   }
   
   .avatar-image {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
   }
   
   .logout-btn {
@@ -490,7 +502,13 @@
   }
 
   .logo-icon {
-    font-size: 1.5rem;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .logo-icon svg {
+    max-width: 32px;
+    max-height: 32px;
   }
 }
 

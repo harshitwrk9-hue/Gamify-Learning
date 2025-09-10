@@ -1,10 +1,11 @@
-// Mock data for EduQuest platform
+// Mock data for Shiksha platform
+import userAvatar from '../assets/user-avatar.svg';
 
 export const currentUser = {
   id: 1,
-  name: "Alex Johnson",
-  email: "alex.johnson@email.com",
-  avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&h=100&q=80",
+  name: "Sarah Mitchell",
+  email: "sarah.mitchell@email.com",
+  avatar: userAvatar,
   level: 12,
   xp: 2850,
   xpToNextLevel: 3000,
@@ -321,7 +322,7 @@ export const badges = [
 export const leaderboard = [
   {
     id: 1,
-    name: "Alex Johnson",
+    name: "Sarah Mitchell",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&h=50&q=80",
     xp: 2850,
     level: 12,
@@ -340,7 +341,7 @@ export const leaderboard = [
   {
     id: 3,
     name: "Michael Chen",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&h=50&q=80",
+    avatar: userAvatar,
     xp: 2950,
     level: 13,
     streak: 5,
@@ -396,7 +397,7 @@ export const leaderboard = [
 export const achievements = [
   {
     id: 1,
-    title: "Welcome to EduQuest!",
+    title: "Welcome to Shiksha!",
     description: "You've successfully created your account",
     date: "2024-01-15",
     xpEarned: 50,

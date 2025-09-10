@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import './App.css';
+import { initializeInteractiveEnhancements } from './utils/interactiveUtils';
 
 // Components
 import Navbar from './components/Navbar';
@@ -18,6 +19,11 @@ import Leaderboard from './pages/Leaderboard';
 import Profile from './pages/Profile';
 
 function App() {
+  useEffect(() => {
+    // Initialize interactive enhancements after component mounts
+    initializeInteractiveEnhancements();
+  }, []);
+
   return (
     <AuthProvider>
       <ThemeProvider>

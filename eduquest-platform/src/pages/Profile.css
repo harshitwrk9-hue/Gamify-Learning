@@ -18,6 +18,9 @@
 
 .profile-avatar {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .profile-avatar img {
@@ -26,6 +29,15 @@
   border-radius: 50%;
   object-fit: cover;
   border: 4px solid var(--primary-color);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  background: var(--card-background);
+}
+
+.profile-avatar img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  border-color: var(--secondary-color);
 }
 
 .level-badge {

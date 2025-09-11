@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/Gamify-Learning/static/css/main.20e9bebe.css",
+    "main.js": "/Gamify-Learning/static/js/main.78477e5d.js",
+    "static/js/578.285e3232.chunk.js": "/Gamify-Learning/static/js/578.285e3232.chunk.js",
+    "static/js/582.592347e8.chunk.js": "/Gamify-Learning/static/js/582.592347e8.chunk.js",
+    "static/js/444.10f5344d.chunk.js": "/Gamify-Learning/static/js/444.10f5344d.chunk.js",
+    "static/js/453.a7a66cdd.chunk.js": "/Gamify-Learning/static/js/453.a7a66cdd.chunk.js",
+    "static/media/learning-progress.svg": "/Gamify-Learning/static/media/learning-progress.c5139392300944692303cebdd849d0fa.svg",
+    "static/media/shiksha-logo.svg": "/Gamify-Learning/static/media/shiksha-logo.693b3c8a021b795b169b4405e7cd5637.svg",
+    "index.html": "/Gamify-Learning/index.html",
+    "static/media/user-avatar.svg": "/Gamify-Learning/static/media/user-avatar.fb2385de3f865c1d811825f86e507e66.svg",
+    "main.20e9bebe.css.map": "/Gamify-Learning/static/css/main.20e9bebe.css.map",
+    "main.78477e5d.js.map": "/Gamify-Learning/static/js/main.78477e5d.js.map",
+    "578.285e3232.chunk.js.map": "/Gamify-Learning/static/js/578.285e3232.chunk.js.map",
+    "582.592347e8.chunk.js.map": "/Gamify-Learning/static/js/582.592347e8.chunk.js.map",
+    "444.10f5344d.chunk.js.map": "/Gamify-Learning/static/js/444.10f5344d.chunk.js.map",
+    "453.a7a66cdd.chunk.js.map": "/Gamify-Learning/static/js/453.a7a66cdd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.20e9bebe.css",
+    "static/js/main.78477e5d.js"
+  ]
+}

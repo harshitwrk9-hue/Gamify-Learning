@@ -1,0 +1,41 @@
+<svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Book base -->
+  <path d="M15 70 Q15 75 20 75 L80 75 Q85 75 85 70 L85 65 Q85 60 80 60 L20 60 Q15 60 15 65 Z" fill="#2c5530" stroke="#1a3d1f" stroke-width="1"/>
+  
+  <!-- Book pages -->
+  <path d="M20 60 L80 60 Q82 58 82 55 L82 50 Q82 47 80 45 L20 45 Q18 47 18 50 L18 55 Q18 58 20 60 Z" fill="#f8f9fa" stroke="#e9ecef" stroke-width="0.5"/>
+  <path d="M22 58 L78 58 Q79 57 79 56 L79 52 Q79 51 78 50 L22 50 Q21 51 21 52 L21 56 Q21 57 22 58 Z" fill="#e9ecef"/>
+  
+  <!-- Tree trunk -->
+  <rect x="47" y="25" width="6" height="25" fill="#2c5530" rx="1"/>
+  
+  <!-- Tree leaves -->
+  <g fill="#4a7c59">
+    <!-- Main canopy -->
+    <ellipse cx="50" cy="20" rx="18" ry="12" fill="#5d8a6b"/>
+    <ellipse cx="50" cy="18" rx="15" ry="10" fill="#6b9b7a"/>
+    
+    <!-- Individual leaves -->
+    <ellipse cx="42" cy="15" rx="3" ry="6" fill="#7cb88a" transform="rotate(-20 42 15)"/>
+    <ellipse cx="58" cy="15" rx="3" ry="6" fill="#7cb88a" transform="rotate(20 58 15)"/>
+    <ellipse cx="35" cy="22" rx="2.5" ry="5" fill="#6b9b7a" transform="rotate(-35 35 22)"/>
+    <ellipse cx="65" cy="22" rx="2.5" ry="5" fill="#6b9b7a" transform="rotate(35 65 22)"/>
+    <ellipse cx="40" cy="28" rx="2" ry="4" fill="#5d8a6b" transform="rotate(-15 40 28)"/>
+    <ellipse cx="60" cy="28" rx="2" ry="4" fill="#5d8a6b" transform="rotate(15 60 28)"/>
+    
+    <!-- Top leaves -->
+    <ellipse cx="45" cy="10" rx="2" ry="4" fill="#8bc99e" transform="rotate(-10 45 10)"/>
+    <ellipse cx="55" cy="10" rx="2" ry="4" fill="#8bc99e" transform="rotate(10 55 10)"/>
+    <ellipse cx="50" cy="8" rx="1.5" ry="3" fill="#9dd4b0"/>
+    
+    <!-- Side accent leaves -->
+    <ellipse cx="32" cy="18" rx="1.5" ry="3" fill="#4a7c59" transform="rotate(-45 32 18)"/>
+    <ellipse cx="68" cy="18" rx="1.5" ry="3" fill="#4a7c59" transform="rotate(45 68 18)"/>
+  </g>
+  
+  <!-- Book spine detail -->
+  <line x1="50" y1="45" x2="50" y2="75" stroke="#1a3d1f" stroke-width="1" opacity="0.3"/>
+  
+  <!-- Subtle shadow -->
+  <ellipse cx="50" cy="77" rx="25" ry="3" fill="#000000" opacity="0.1"/>
+</svg>

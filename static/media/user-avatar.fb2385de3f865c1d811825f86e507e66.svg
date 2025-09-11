@@ -1,0 +1,13 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="60" cy="60" r="60" fill="#f8f9fa"/>
+  
+  <!-- Head -->
+  <circle cx="60" cy="45" r="18" fill="#6c757d"/>
+  
+  <!-- Body -->
+  <path d="M30 120 Q30 85 60 85 Q90 85 90 120 Z" fill="#6c757d"/>
+  
+  <!-- Simple styling for professional look -->
+  <circle cx="60" cy="60" r="59" fill="none" stroke="#dee2e6" stroke-width="2"/>
+</svg>

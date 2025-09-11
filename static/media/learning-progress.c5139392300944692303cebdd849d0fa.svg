@@ -1,0 +1,71 @@
+<svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="300" height="200" fill="url(#progressGradient)" rx="10"/>
+  
+  <!-- Progress Chart -->
+  <g transform="translate(50, 50)">
+    <!-- Chart Bars -->
+    <rect x="0" y="80" width="20" height="40" fill="#74b9ff" rx="2">
+      <animate attributeName="height" values="20;40;20" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="100;80;100" dur="2s" repeatCount="indefinite"/>
+    </rect>
+    
+    <rect x="30" y="60" width="20" height="60" fill="#fd79a8" rx="2">
+      <animate attributeName="height" values="40;60;40" dur="2.5s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="80;60;80" dur="2.5s" repeatCount="indefinite"/>
+    </rect>
+    
+    <rect x="60" y="40" width="20" height="80" fill="#55a3ff" rx="2">
+      <animate attributeName="height" values="60;80;60" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="60;40;60" dur="3s" repeatCount="indefinite"/>
+    </rect>
+    
+    <rect x="90" y="20" width="20" height="100" fill="#00b894" rx="2">
+      <animate attributeName="height" values="80;100;80" dur="3.5s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="40;20;40" dur="3.5s" repeatCount="indefinite"/>
+    </rect>
+    
+    <rect x="120" y="30" width="20" height="90" fill="#fdcb6e" rx="2">
+      <animate attributeName="height" values="70;90;70" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="50;30;50" dur="4s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+  
+  <!-- Trending Arrow -->
+  <g transform="translate(200, 80)">
+    <path d="M 0 20 L 30 0 L 25 5 M 30 0 L 25 -5" stroke="#00b894" stroke-width="3" fill="none">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  
+  <!-- Achievement Stars -->
+  <g transform="translate(220, 40)">
+    <polygon points="15,0 18,9 27,9 21,15 24,24 15,18 6,24 9,15 3,9 12,9" fill="#fdcb6e">
+      <animateTransform attributeName="transform" type="rotate" values="0 15 12;360 15 12" dur="4s" repeatCount="indefinite"/>
+    </polygon>
+  </g>
+  
+  <g transform="translate(250, 60)">
+    <polygon points="10,0 12,6 18,6 14,10 16,16 10,12 4,16 6,10 2,6 8,6" fill="#fd79a8">
+      <animateTransform attributeName="transform" type="rotate" values="0 10 8;-360 10 8" dur="5s" repeatCount="indefinite"/>
+    </polygon>
+  </g>
+  
+  <!-- Progress Circle -->
+  <g transform="translate(200, 120)">
+    <circle cx="25" cy="25" r="20" fill="none" stroke="#ddd" stroke-width="4"/>
+    <circle cx="25" cy="25" r="20" fill="none" stroke="#00b894" stroke-width="4" 
+            stroke-dasharray="75.4" stroke-dashoffset="18.85" transform="rotate(-90 25 25)">
+      <animate attributeName="stroke-dashoffset" values="75.4;0;75.4" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <text x="25" y="30" text-anchor="middle" fill="#2d3436" font-size="12" font-weight="bold">75%</text>
+  </g>
+  
+  <!-- Definitions -->
+  <defs>
+    <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#f8f9fa;stop-opacity:0.9" />
+    </linearGradient>
+  </defs>
+</svg>

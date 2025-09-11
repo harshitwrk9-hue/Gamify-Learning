@@ -111,7 +111,7 @@ const RegisterForm = ({ onSuccess, onSwitchToLogin }) => {
       <div className="register-form">
         <div className="form-header">
           <h2>Create Account</h2>
-          <p>Join Shiksha and start your learning journey!</p>
+          <p>Join VidhyaSaathi and start your learning journey!</p>
         </div>
         
         {error && (

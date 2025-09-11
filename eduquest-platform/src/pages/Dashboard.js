@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaFire, FaTrophy, FaStar, FaBook, FaArrowRight, FaClock, FaBolt, FaGem, FaCheckCircle, FaPlay } from 'react-icons/fa';
-
+import { useLanguage } from '../contexts/LanguageContext';
 
 import { currentUser, courses, badges } from '../data/mockData';
 import './Dashboard.css';
 
 const DailyChallenges = () => {
+  const { t } = useLanguage();
   const [challenges, setChallenges] = useState([
     {
       id: 1,
-      title: "Complete 3 Lessons",
-      description: "Finish any 3 lessons today",
+      title: t('dashboard.challenges.complete'),
+      description: t('dashboard.challenges.completeDesc'),
       progress: 2,
       target: 3,
       reward: { xp: 150, coins: 75 },
@@ -21,8 +22,8 @@ const DailyChallenges = () => {
     },
     {
       id: 2,
-      title: "Perfect Quiz Score",
-      description: "Get 100% on any quiz",
+      title: t('dashboard.challenges.quiz'),
+      description: t('dashboard.challenges.quizDesc'),
       progress: 0,
       target: 1,
       reward: { xp: 200, gems: 2 },
@@ -32,8 +33,8 @@ const DailyChallenges = () => {
     },
     {
       id: 3,
-      title: "Study Streak",
-      description: "Maintain your learning streak",
+      title: t('dashboard.challenges.streak'),
+      description: t('dashboard.challenges.streakDesc'),
       progress: 1,
       target: 1,
       reward: { xp: 100, coins: 50 },
@@ -81,7 +82,7 @@ const DailyChallenges = () => {
   return (
     <div className="content-section daily-challenges">
       <div className="section-header">
-        <h3>Daily Challenges</h3>
+        <h3>{t('dashboard.challenges.title')}</h3>
         <div className="challenge-timer">
           <FaClock className="timer-icon" />
           <span>{String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}</span>
@@ -159,17 +160,17 @@ const DailyChallenges = () => {
       <div className="challenges-summary">
         <div className="summary-stat">
           <span className="stat-number">{challenges.filter(c => c.completed).length}</span>
-          <span className="stat-label">Completed</span>
+          <span className="stat-label">{t('dashboard.challenges.completed')}</span>
         </div>
         <div className="summary-stat">
           <span className="stat-number">{challenges.length - challenges.filter(c => c.completed).length}</span>
-          <span className="stat-label">Remaining</span>
+          <span className="stat-label">{t('dashboard.challenges.pending')}</span>
         </div>
         <div className="summary-stat">
           <span className="stat-number">
             {challenges.reduce((total, c) => total + (c.completed ? c.reward.xp || 0 : 0), 0)}
           </span>
-          <span className="stat-label">XP Earned</span>
+          <span className="stat-label">{t('dashboard.challenges.xpEarned')}</span>
         </div>
       </div>
     </div>
@@ -177,6 +178,7 @@ const DailyChallenges = () => {
 };
 
 const Dashboard = () => {
+  const { t } = useLanguage();
   const userBadges = badges.filter(badge => currentUser.badges.includes(badge.id));
   const currentCourses = courses.filter(course => currentUser.currentCourses.includes(course.id));
 
@@ -191,14 +193,14 @@ const Dashboard = () => {
       <div className="dashboard-container">
         <div className="welcome-header">
           <div className="welcome-text">
-            <h1>Welcome back, {currentUser.name}! 👋</h1>
-            <p>Ready to continue your learning journey?</p>
+            <h1>{t('dashboard.welcome', { name: currentUser.name })} 👋</h1>
+            <p>{t('dashboard.readyToContinue')}</p>
           </div>
           <div className="streak-counter">
             <FaFire className="streak-icon" />
             <div className="streak-info">
               <span className="streak-number">{currentUser.streak}</span>
-              <span className="streak-label">Day Streak</span>
+              <span className="streak-label">{t('dashboard.dayStreak')}</span>
             </div>
           </div>
         </div>
@@ -210,7 +212,7 @@ const Dashboard = () => {
 
             </div>
             <div className="stat-content">
-              <h3>Level {currentUser.level}</h3>
+              <h3>{t('dashboard.level')} {currentUser.level}</h3>
               <div className="level-title">{currentUser.currentTitle}</div>
               <div className="xp-progress">
                 <div className="xp-bar">
@@ -232,8 +234,8 @@ const Dashboard = () => {
             </div>
             <div className="stat-content">
               <h3>{currentUser.completedCourses.length}</h3>
-              <p>Courses Completed</p>
-              <span className="stat-detail">{currentUser.currentCourses.length} in progress</span>
+              <p>{t('dashboard.stats.coursesCompleted')}</p>
+              <span className="stat-detail">{t('dashboard.stats.inProgress', { count: currentUser.currentCourses.length })}</span>
             </div>
           </div>
 
@@ -243,8 +245,8 @@ const Dashboard = () => {
             </div>
             <div className="stat-content">
               <h3>{userBadges.length}</h3>
-              <p>Badges Earned</p>
-              <span className="stat-detail">{badges.length - userBadges.length} remaining</span>
+              <p>{t('dashboard.stats.badgesEarned')}</p>
+              <span className="stat-detail">{t('dashboard.stats.remaining', { count: badges.length - userBadges.length })}</span>
             </div>
           </div>
 
@@ -254,7 +256,7 @@ const Dashboard = () => {
             </div>
             <div className="stat-content">
               <h3>{currentUser.weeklyProgress}/{currentUser.weeklyGoal}</h3>
-              <p>Weekly Goal</p>
+              <p>{t('dashboard.stats.weeklyGoal')}</p>
               <div className="weekly-progress">
                 <div
                   className="weekly-bar"
@@ -268,9 +270,9 @@ const Dashboard = () => {
         <div className="main-content">
           <div className="content-section current-courses">
             <div className="section-header">
-              <h2>Continue Learning</h2>
+              <h2>{t('dashboard.continueLearning')}</h2>
               <Link to="/courses" className="view-all-link">
-                View All <FaArrowRight />
+                {t('common.viewAll')} <FaArrowRight />
               </Link>
             </div>
             <div className="courses-list">
@@ -301,12 +303,12 @@ const Dashboard = () => {
                           style={{ width: `${course.progress}%`, background: course.color }}
                         />
                       </div>
-                      <span className="progress-text">{course.progress}% complete</span>
+                      <span className="progress-text">{t('dashboard.courseProgress', { progress: course.progress })}</span>
                     </div>
                     <div className="course-meta">
-                      <span><FaClock /> {course.completedLessons}/{course.lessons} lessons</span>
+                      <span><FaClock /> {t('dashboard.lessonsProgress', { completed: course.completedLessons, total: course.lessons })}</span>
                       <div className="continue-btn" onClick={(e) => e.preventDefault()}>
-                        Continue
+                        {t('dashboard.continue')}
                       </div>
                     </div>
                   </div>

@@ -34,7 +34,7 @@
   
   <!-- Date and Signature Area -->
   <text x="80" y="175" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="8">Date: ___________</text>
-  <text x="220" y="175" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="8">Shiksha Platform</text>
+  <text x="220" y="175" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="8">VidhyaSaathi Platform</text>
   
   <!-- Seal/Badge -->
   <circle cx="250" cy="50" r="20" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.4)" stroke-width="2">

@@ -6,6 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { currentUser } from '../data/mockData';
 import { ReactComponent as ShikshaLogo } from '../assets/shiksha-logo.svg';
 import { ReactComponent as UserAvatar } from '../assets/user-avatar.svg';
+import LanguageSwitcher from './LanguageSwitcher/LanguageSwitcher';
 
 import './Navbar.css';
 
@@ -51,7 +52,7 @@ const Navbar = () => {
             className="logo-container"
           >
             <ShikshaLogo className="logo-icon" />
-            <span className="logo-text">Shiksha</span>
+            <span className="logo-text">VidhyaSaathi</span>
           </motion.div>
         </Link>
 
@@ -80,6 +81,7 @@ const Navbar = () => {
 
 
         <div className="navbar-right">
+          <LanguageSwitcher className="navbar-language-switcher" showLabel={false} />
           {authUser ? (
             <motion.div className="auth-buttons">
               <motion.button
@@ -139,6 +141,10 @@ const Navbar = () => {
             );
           })}
 
+          <div className="mobile-language-switcher">
+            <LanguageSwitcher showLabel={true} />
+          </div>
+          
           {authUser ? (
             <>
               <div className="mobile-user-info">

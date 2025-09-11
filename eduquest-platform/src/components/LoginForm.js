@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { FaUser, FaLock, FaEye, FaEyeSlash, FaSpinner, FaExclamationTriangle, FaShieldAlt } from 'react-icons/fa';
 import { rateLimiter, sanitizeInput, csrfProtection } from '../utils/security';
 import ForgotPassword from './ForgotPassword';
@@ -25,6 +26,7 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
   const [localError, setLocalError] = useState('');
   
   const { login, error, loading } = useAuth();
+  const { t } = useLanguage();
 
 
   useEffect(() => {
@@ -71,44 +73,44 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
     
   
     if (!formData.username.trim()) {
-      errors.username = 'Username or email is required';
+      errors.username = t('auth.validation.usernameRequired');
     } else if (formData.username.trim().length < 3) {
-      errors.username = 'Username must be at least 3 characters long';
+      errors.username = t('auth.validation.usernameMinLength');
     } else if (formData.username.includes('@')) {
     
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formData.username)) {
-        errors.username = 'Please enter a valid email address';
+        errors.username = t('auth.validation.invalidEmail');
       }
     
       if (formData.username.includes('..') || formData.username.startsWith('.') || formData.username.endsWith('.')) {
-        warnings.push('Email format appears suspicious');
+        warnings.push(t('auth.security.suspiciousEmail'));
       }
     } else {
     
       if (/[<>"'&]/.test(formData.username)) {
-        errors.username = 'Username contains invalid characters';
+        errors.username = t('auth.validation.invalidCharacters');
       }
       if (formData.username.length > 50) {
-        errors.username = 'Username is too long (maximum 50 characters)';
+        errors.username = t('auth.validation.usernameTooLong');
       }
     }
     
   
     if (!formData.password) {
-      errors.password = 'Password is required';
+      errors.password = t('auth.validation.passwordRequired');
     } else if (formData.password.length < 6) {
-      errors.password = 'Password must be at least 6 characters long';
+      errors.password = t('auth.validation.passwordMinLength');
     } else {
     
       if (formData.password.length > 128) {
-        errors.password = 'Password is too long (maximum 128 characters)';
+        errors.password = t('auth.validation.passwordTooLong');
       }
       if (formData.password === formData.username) {
-        warnings.push('Password should not be the same as username');
+        warnings.push(t('auth.security.passwordSameAsUsername'));
       }
       if (/^(password|123456|qwerty|admin)$/i.test(formData.password)) {
-        warnings.push('Password appears to be commonly used');
+        warnings.push(t('auth.security.commonPassword'));
       }
     }
     
@@ -124,13 +126,13 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
     switch (name) {
       case 'username':
         if (!value.trim()) {
-          errors.username = 'Email or username is required';
+          errors.username = t('auth.validation.usernameRequired');
         } else if (value.trim().length < 3) {
-          errors.username = 'Username must be at least 3 characters long';
+          errors.username = t('auth.validation.usernameMinLength');
         } else if (value.includes('@')) {
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (!emailRegex.test(value)) {
-            errors.username = 'Please enter a valid email address';
+            errors.username = t('auth.validation.invalidEmail');
           } else {
             delete errors.username;
           }
@@ -141,9 +143,9 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
         
       case 'password':
         if (!value) {
-          errors.password = 'Password is required';
+          errors.password = t('auth.validation.passwordRequired');
         } else if (value.length < 6) {
-          errors.password = 'Password must be at least 6 characters long';
+          errors.password = t('auth.validation.passwordMinLength');
         } else {
           delete errors.password;
         }
@@ -174,7 +176,7 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
     
         setValidationErrors({});
         setLocalError('');
-        setSuccessMessage('Login successful! Redirecting...');
+        setSuccessMessage(t('auth.loginSuccess'));
         
     
         setTimeout(() => setSuccessMessage(''), 2000);
@@ -198,11 +200,11 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
       
   
       if (error.name === 'NetworkError' || error.message.includes('fetch')) {
-        setLocalError('Network connection error. Please check your internet connection and try again.');
+        setLocalError(t('auth.errors.networkError'));
       } else if (error.message.includes('timeout')) {
-        setLocalError('Request timed out. Please try again.');
+        setLocalError(t('auth.errors.timeout'));
       } else {
-        setLocalError(error.message || 'An unexpected error occurred. Please try again.');
+        setLocalError(error.message || t('auth.errors.unexpected'));
       }
     } finally {
       setIsSubmitting(false);
@@ -219,8 +221,8 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
     <div className="login-form-container">
       <div className="login-form">
         <div className="form-header">
-          <h2>Welcome Back</h2>
-          <p>Sign in to continue your learning journey</p>
+          <h2>{t('auth.welcomeBack')}</h2>
+          <p>{t('auth.signInSubtitle')}</p>
         </div>
         
         {(error || localError) && (
@@ -273,7 +275,7 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
         
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
-            <label htmlFor="username">Email or Username</label>
+            <label htmlFor="username">{t('auth.emailOrUsername')}</label>
             <div className="input-wrapper">
               <FaUser className="input-icon" />
               <input
@@ -282,7 +284,7 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
                 name="username"
                 value={formData.username}
                 onChange={handleInputChange}
-                placeholder="Enter your email or username"
+                placeholder={t('auth.placeholders.emailOrUsername')}
                 className={validationErrors.username ? 'error' : ''}
                 disabled={loading || isSubmitting}
                 autoComplete="username email"
@@ -294,7 +296,7 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
           </div>
           
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">{t('auth.password')}</label>
             <div className="input-wrapper">
               <FaLock className="input-icon" />
               <input
@@ -303,7 +305,7 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                placeholder="Enter your password"
+                placeholder={t('auth.placeholders.password')}
                 className={validationErrors.password ? 'error' : ''}
                 disabled={loading || isSubmitting}
                 autoComplete="current-password"
@@ -313,7 +315,7 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
                 className="password-toggle"
                 onClick={() => setShowPassword(!showPassword)}
                 disabled={loading || isSubmitting}
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                aria-label={showPassword ? t('auth.hidePassword') : t('auth.showPassword')}
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
@@ -333,7 +335,7 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
                 className="remember-me-checkbox"
               />
               <span className="checkmark"></span>
-              <span className="remember-me-text">Remember me for 30 days</span>
+              <span className="remember-me-text">{t('auth.rememberMe')}</span>
             </label>
           </div>
           
@@ -353,7 +355,7 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
                 Signing In...
               </>
             ) : (
-              'Sign In'
+              t('auth.signIn')
             )}
           </button>
         </form>
@@ -366,18 +368,18 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
               onClick={() => setShowForgotPassword(true)}
               disabled={loading || isSubmitting}
             >
-              Forgot your password?
+              {t('auth.forgotPassword')}
             </button>
           </div>
           <p>
-            Don't have an account?{' '}
+            {t('auth.noAccount')}{' '}
             <button 
               type="button" 
               className="link-btn"
               onClick={onSwitchToRegister}
               disabled={loading || isSubmitting}
             >
-              Create Account
+              {t('auth.createAccount')}
             </button>
           </p>
         </div>

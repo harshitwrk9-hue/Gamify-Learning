@@ -1,0 +1,399 @@
+const englishTranslations = {
+  // Navigation
+  nav: {
+    home: 'Home',
+    courses: 'Courses',
+    dashboard: 'Dashboard',
+    profile: 'Profile',
+    settings: 'Settings',
+    logout: 'Logout',
+    login: 'Login',
+    signup: 'Sign Up'
+  },
+
+  // Common UI Elements
+  common: {
+    loading: 'Loading...',
+    error: 'Error',
+    success: 'Success',
+    cancel: 'Cancel',
+    save: 'Save',
+    edit: 'Edit',
+    delete: 'Delete',
+    confirm: 'Confirm',
+    back: 'Back',
+    next: 'Next',
+    previous: 'Previous',
+    search: 'Search',
+    filter: 'Filter',
+    sort: 'Sort',
+    viewAll: 'View All',
+    showMore: 'Show More',
+    showLess: 'Show Less',
+    user: 'User'
+  },
+
+  // Home Page
+  home: {
+    title: 'Transform Your Learning',
+    titleHighlight: 'Journey',
+    subtitle: 'Gamified Learning Platform',
+    description: 'Join thousands of learners on VidhyaSaathi - the gamified learning platform that makes education engaging, interactive, and rewarding.',
+    getStarted: 'Start Learning',
+    getStartedNow: 'Get Started Now',
+    learnMore: 'Learn More',
+    browseCourses: 'Browse Courses',
+    featuredCourses: 'Featured Courses',
+    whyChooseUs: 'Why Choose VidhyaSaathi?',
+    featuresDescription: 'Discover the features that make learning engaging and effective',
+    ctaTitle: 'Ready to Start Your Learning Adventure?',
+    ctaSubtitle: 'Join thousands of learners who are already transforming their skills with VidhyaSaathi',
+    userLevel: 'Level {{level}} • {{xp}} XP',
+    dayStreak: '{{days}} day streak',
+    currentProgress: 'Current Progress',
+    reactMastery: 'React Mastery',
+    javascriptAdvanced: 'JavaScript Advanced',
+    recentBadges: 'Recent Badges',
+    stats: {
+      activeLearners: 'Active Learners',
+      coursesAvailable: 'Courses Available',
+      completionRate: 'Completion Rate',
+      averageRating: 'Average Rating'
+    },
+    features: {
+      gamification: {
+        title: 'Gamified Experience',
+        description: 'Earn XP points, unlock badges, and climb leaderboards while mastering new skills.'
+      },
+      interactive: {
+        title: 'Interactive Learning',
+        description: 'Engage with dynamic content, quizzes, and hands-on exercises that make learning fun and effective.'
+      },
+      personalized: {
+        title: 'Personalized Path',
+        description: 'AI-powered recommendations adapt to your learning style and pace for optimal results.'
+      },
+      progress: {
+        title: 'Progress Tracking',
+        description: 'Monitor your learning journey with detailed analytics and achievement milestones.'
+      },
+      challenges: {
+        title: 'Fun Challenges',
+        description: 'Complete daily and weekly challenges to stay motivated and earn bonus rewards.'
+      }
+    }
+  },
+
+  // Course Catalog
+  courses: {
+    title: 'Course Catalog',
+    subtitle: 'Explore our comprehensive collection of courses',
+    searchPlaceholder: 'Search courses...',
+    categories: 'Categories',
+    allCategories: 'All Categories',
+    difficulty: {
+      beginner: 'Beginner',
+      intermediate: 'Intermediate',
+      advanced: 'Advanced'
+    },
+    duration: {
+      short: 'Short (< 2 hours)',
+      medium: 'Medium (2-10 hours)',
+      long: 'Long (> 10 hours)'
+    },
+    rating: 'Rating',
+    enrollNow: 'Enroll Now',
+    viewDetails: 'View Details',
+    enrolled: 'Enrolled',
+    completed: 'Completed',
+    inProgress: 'In Progress'
+  },
+
+  // Course Catalog Page
+  courseCatalog: {
+    title: 'Course Catalog',
+    subtitle: 'Discover amazing courses to boost your skills',
+    browseByCategory: 'Browse by Category',
+    searchPlaceholder: 'Search courses...',
+    coursesCount: 'courses',
+    coursesWithCount: 'Courses ({{count}})',
+    clearFilters: 'Clear Filters',
+    instructorBy: 'by {{instructor}}',
+    lessonsCompleted: '{{completed}}/{{total}} lessons completed',
+    stats: {
+      courses: 'Courses',
+      categories: 'Categories'
+    },
+    filters: {
+      category: 'Category',
+      allCategories: 'All Categories',
+      difficulty: 'Difficulty',
+      allLevels: 'All Levels',
+      sortBy: 'Sort by'
+    },
+    sortOptions: {
+      popular: 'Most Popular',
+      rating: 'Highest Rated',
+      newest: 'Newest',
+      progress: 'My Progress'
+    },
+    difficulty: {
+      beginner: 'Beginner',
+      intermediate: 'Intermediate',
+      advanced: 'Advanced'
+    },
+    courseStatus: {
+      completed: 'Completed'
+    },
+    courseActions: {
+      start: 'Start Course',
+      continue: 'Continue',
+      review: 'Review'
+    },
+    noResults: {
+      title: 'No courses found',
+      description: 'Try adjusting your search criteria or browse different categories.'
+    }
+  },
+
+  // Dashboard
+  dashboard: {
+    title: 'Dashboard',
+    welcome: 'Welcome back, {{name}}!',
+    readyToContinue: 'Ready to continue your learning journey?',
+    dayStreak: 'Day Streak',
+    level: 'Level',
+    continueLearning: 'Continue Learning',
+    continue: 'Continue',
+    courseProgress: '{{progress}}% complete',
+    lessonsProgress: '{{completed}}/{{total}} lessons',
+    overview: 'Overview',
+    myProgress: 'My Progress',
+    recentActivity: 'Recent Activity',
+    achievements: 'Achievements',
+    dailyChallenges: 'Daily Challenges',
+    stats: {
+      coursesCompleted: 'Courses Completed',
+      totalPoints: 'Total Points',
+      currentStreak: 'Current Streak',
+      badgesEarned: 'Badges Earned',
+      weeklyGoal: 'Weekly Goal',
+      inProgress: '{{count}} in progress',
+      remaining: '{{count}} remaining'
+    },
+    challenges: {
+      title: 'Daily Challenges',
+      complete: 'Complete 3 Lessons',
+      completeDesc: 'Finish any 3 lessons today',
+      quiz: 'Perfect Quiz Score',
+      quizDesc: 'Get 100% on any quiz',
+      streak: 'Study Streak',
+      streakDesc: 'Maintain your learning streak',
+      project: 'Submit a project',
+      forum: 'Participate in forum',
+      completed: 'Completed',
+      pending: 'Remaining',
+      xpEarned: 'XP Earned',
+      reward: 'Reward',
+      points: '{{points}} points'
+    }
+  },
+
+  // Course Detail
+  courseDetail: {
+    notFound: {
+      title: 'Course not found',
+      message: "The course you're looking for doesn't exist."
+    },
+    meta: {
+      students: 'students'
+    },
+    actions: {
+      starting: 'Starting...',
+      continue: 'Continue Learning',
+      start: 'Start Course',
+      saved: 'Saved',
+      save: 'Save'
+    },
+    content: {
+      title: 'Course Content',
+      lesson: 'Lesson',
+      duration: 'Duration'
+    },
+    instructor: {
+      title: 'Instructor',
+      expert: 'Expert Instructor'
+    },
+    stats: {
+      title: 'Course Statistics',
+      progress: 'Progress',
+      xpReward: 'XP Reward',
+      difficulty: 'Difficulty'
+    },
+    overview: 'Overview',
+    curriculum: 'Curriculum',
+    reviews: 'Reviews',
+    prerequisites: 'Prerequisites',
+    whatYouWillLearn: 'What You Will Learn',
+    courseIncludes: 'This Course Includes',
+    enrollNow: 'Enroll Now',
+    price: 'Price',
+    free: 'Free',
+    level: 'Level',
+    language: 'Language',
+    certificate: 'Certificate',
+    lastUpdated: 'Last Updated'
+  },
+
+  // Profile
+  profile: {
+    title: 'Profile',
+    personalInfo: 'Personal Information',
+    accountSettings: 'Account Settings',
+    learningPreferences: 'Learning Preferences',
+    achievements: 'Achievements',
+    certificates: 'Certificates',
+    firstName: 'First Name',
+    lastName: 'Last Name',
+    email: 'Email',
+    phone: 'Phone',
+    bio: 'Bio',
+    location: 'Location',
+    website: 'Website',
+    socialMedia: 'Social Media',
+    changePassword: 'Change Password',
+    updateProfile: 'Update Profile'
+  },
+
+  // Settings
+  settings: {
+    title: 'Settings',
+    general: 'General',
+    notifications: 'Notifications',
+    privacy: 'Privacy',
+    language: 'Language',
+    theme: 'Theme',
+    account: 'Account',
+    selectLanguage: 'Select Language',
+    darkMode: 'Dark Mode',
+    emailNotifications: 'Email Notifications',
+    pushNotifications: 'Push Notifications',
+    courseUpdates: 'Course Updates',
+    achievements: 'Achievement Notifications',
+    marketing: 'Marketing Communications'
+  },
+
+  // Authentication
+  auth: {
+    login: {
+      title: 'Login',
+      subtitle: 'Welcome back to VidhyaSaathi',
+      email: 'Email Address',
+      password: 'Password',
+      rememberMe: 'Remember Me',
+      forgotPassword: 'Forgot Password?',
+      loginButton: 'Login',
+      noAccount: 'Don\'t have an account?',
+      signUpLink: 'Sign up here'
+    },
+    signup: {
+      title: 'Sign Up',
+      subtitle: 'Join VidhyaSaathi today',
+      firstName: 'First Name',
+      lastName: 'Last Name',
+      email: 'Email Address',
+      password: 'Password',
+      confirmPassword: 'Confirm Password',
+      agreeTerms: 'I agree to the Terms of Service and Privacy Policy',
+      signUpButton: 'Sign Up',
+      hasAccount: 'Already have an account?',
+      loginLink: 'Login here'
+    },
+    register: 'Register',
+    logout: 'Logout',
+    confirmPassword: 'Confirm Password',
+    rememberMeExtended: 'Remember me for 30 days',
+    loginSuccess: 'Login successful! Redirecting...',
+    registerSuccess: 'Registration successful!',
+    invalidCredentials: 'Invalid email or password',
+    emailRequired: 'Email is required',
+    passwordRequired: 'Password is required',
+    passwordTooShort: 'Password must be at least 6 characters',
+    emailInvalid: 'Please enter a valid email address',
+    welcomeBack: 'Welcome Back',
+    signInSubtitle: 'Sign in to continue your learning journey',
+    emailOrUsername: 'Email or Username',
+    signIn: 'Sign In',
+    noAccount: "Don't have an account?",
+    createAccount: 'Create Account',
+    togglePasswordVisibility: 'Toggle password visibility',
+    showPassword: 'Show password',
+    hidePassword: 'Hide password',
+    placeholders: {
+      emailOrUsername: 'Enter your email or username',
+      password: 'Enter your password'
+    },
+    validation: {
+      usernameRequired: 'Username or email is required',
+      usernameMinLength: 'Username must be at least 3 characters long',
+      invalidEmail: 'Please enter a valid email address',
+      invalidCharacters: 'Username contains invalid characters',
+      usernameTooLong: 'Username is too long (maximum 50 characters)',
+      passwordRequired: 'Password is required',
+      passwordMinLength: 'Password must be at least 6 characters long',
+      passwordTooLong: 'Password is too long (maximum 128 characters)'
+    },
+    security: {
+      suspiciousEmail: 'Email format appears suspicious',
+      passwordSameAsUsername: 'Password should not be the same as username',
+      commonPassword: 'Password appears to be commonly used'
+    },
+    errors: {
+      networkError: 'Network connection error. Please check your internet connection and try again.',
+      timeout: 'Request timed out. Please try again.',
+      unexpected: 'An unexpected error occurred. Please try again.'
+    }
+  },
+
+  // Errors and Messages
+  errors: {
+    general: 'Something went wrong. Please try again.',
+    network: 'Network error. Please check your connection.',
+    notFound: 'Page not found.',
+    unauthorized: 'You are not authorized to access this page.',
+    validation: {
+      required: 'This field is required',
+      email: 'Please enter a valid email address',
+      password: 'Password must be at least 8 characters long',
+      passwordMatch: 'Passwords do not match'
+    }
+  },
+
+  // Success Messages
+  success: {
+    profileUpdated: 'Profile updated successfully',
+    passwordChanged: 'Password changed successfully',
+    courseEnrolled: 'Successfully enrolled in course',
+    lessonCompleted: 'Lesson completed successfully',
+    achievementUnlocked: 'Achievement unlocked!'
+  },
+
+  // Language Switcher
+  languageSwitcher: {
+    selectLanguage: 'Select Language',
+    currentLanguage: 'Current Language'
+  },
+
+  // Footer
+  footer: {
+    aboutUs: 'About Us',
+    contactUs: 'Contact Us',
+    privacyPolicy: 'Privacy Policy',
+    termsOfService: 'Terms of Service',
+    help: 'Help',
+    support: 'Support',
+    copyright: '© 2024 VidhyaSaathi. All rights reserved.'
+  }
+};
+
+export default englishTranslations;

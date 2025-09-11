@@ -250,11 +250,11 @@
 
 .courses-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
   align-items: start;
   justify-content: center;
-  padding: 1.5rem 0;
+  padding: 1rem 0;
   max-width: 1200px;
   margin: 0 auto;
 
@@ -272,21 +272,21 @@
 
 .course-card {
   background: var(--card-bg);
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 8px 25px var(--shadow-light), 0 3px 10px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 15px var(--shadow-light), 0 2px 6px rgba(0, 0, 0, 0.06);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 2px solid transparent;
   display: flex;
   flex-direction: column;
   height: 100%;
   
-  min-height: 380px;
-  max-height: 420px;
+  min-height: 280px;
+  max-height: 320px;
   position: relative;
   backdrop-filter: blur(10px);
-  padding: 1rem;
-  gap: 0.75rem;
+  padding: 0.75rem;
+  gap: 0.5rem;
   text-align: left;
   align-items: flex-start;
   cursor: pointer;
@@ -315,14 +315,14 @@
 
 .course-image {
   position: relative;
-  height: 140px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-  margin: -1rem -1rem 0 -1rem;
-  border-radius: 16px 16px 0 0;
+  margin: -0.75rem -0.75rem 0 -0.75rem;
+  border-radius: 12px 12px 0 0;
 }
 
 .course-overlay {
@@ -375,9 +375,9 @@
 .difficulty-badge {
   background: #10B981;
   color: white;
-  padding: 0.25rem 0.75rem;
+  padding: 0.2rem 0.6rem;
   border-radius: 15px;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 600;
 }
 
@@ -421,11 +421,11 @@
 }
 
 .course-title {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin: 0 0 0.75rem 0;
-  line-height: 1.4;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.3;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   letter-spacing: -0.02em;
   background: linear-gradient(135deg, var(--text-primary), #667eea);
@@ -438,14 +438,14 @@
   overflow: hidden;
   text-align: left;
   width: 100%;
-  min-height: 2.8rem;
+  min-height: 2.4rem;
 }
 
 .course-description {
   color: var(--text-secondary);
-  font-size: 0.85rem;
-  line-height: 1.6;
-  margin: 0 0 1rem 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin: 0 0 0.75rem 0;
   font-weight: 400;
   letter-spacing: 0.01em;
   display: -webkit-box;
@@ -454,7 +454,7 @@
   overflow: hidden;
   text-align: left;
   width: 100%;
-  min-height: 2.4rem;
+  min-height: 2.2rem;
 }
 
 .course-instructor {
@@ -472,11 +472,11 @@
   justify-content: space-around;
   align-items: center;
   margin: 0.5rem 0;
-  padding: 0.75rem;
+  padding: 0.5rem;
   background: rgba(102, 126, 234, 0.05);
   border-radius: 8px;
   border: 1px solid rgba(102, 126, 234, 0.1);
-  gap: 0.75rem;
+  gap: 0.25rem;
   flex-wrap: wrap;
 }
 
@@ -491,6 +491,15 @@
   flex: 1;
   justify-content: center;
   min-width: fit-content;
+}
+
+.course-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .meta-icon {
@@ -643,17 +652,18 @@
 
 @media (max-width: 1200px) {
   .courses-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
-    max-width: 800px;
+    max-width: 900px;
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 900px) {
   .courses-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
+    gap: 1rem;
     max-width: 700px;
+    padding: 1rem;
   }
 
   .categories-grid {
@@ -734,6 +744,20 @@
 
   .course-description {
     font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .courses-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+  
+  .course-card {
+    max-width: 100%;
+    min-height: 260px;
+    max-height: 300px;
   }
 }
 

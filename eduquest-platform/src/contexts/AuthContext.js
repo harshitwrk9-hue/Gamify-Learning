@@ -44,8 +44,8 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const validateSession = async () => {
       try {
-        const storedUser = localStorage.getItem('eduquest_user');
-        const storedSession = localStorage.getItem('eduquest_session');
+        const storedUser = localStorage.getItem('vidhyasaathi_user');
+     const storedSession = localStorage.getItem('vidhyasaathi_session');
         
         if (storedUser && storedSession) {
           const user = JSON.parse(storedUser);
@@ -96,8 +96,8 @@ export const AuthProvider = ({ children }) => {
           error: error.message
         });
         
-        localStorage.removeItem('eduquest_user');
-        localStorage.removeItem('eduquest_session');
+        localStorage.removeItem('vidhyasaathi_user');
+         localStorage.removeItem('vidhyasaathi_session');
         setCurrentUser(null);
       } finally {
         setLoading(false);
@@ -110,8 +110,8 @@ export const AuthProvider = ({ children }) => {
 
   const refreshSession = async () => {
     try {
-      const sessionData = JSON.parse(localStorage.getItem('eduquest_session') || '{}');
-      const userData = JSON.parse(localStorage.getItem('eduquest_user') || '{}');
+      const sessionData = JSON.parse(localStorage.getItem('vidhyasaathi_session') || '{}');
+       const userData = JSON.parse(localStorage.getItem('vidhyasaathi_user') || '{}');
       
       if (!sessionData.token || !userData.username) {
         return false;
@@ -148,7 +148,7 @@ export const AuthProvider = ({ children }) => {
            refreshCount: (sessionData.refreshCount || 0) + 1
          };
         
-        localStorage.setItem('eduquest_session', JSON.stringify(refreshedSession));
+        localStorage.setItem('vidhyasaathi_session', JSON.stringify(refreshedSession));
         
     
         const newTokenPayload = sessionSecurity.verifyToken(newToken);
@@ -172,8 +172,8 @@ export const AuthProvider = ({ children }) => {
       });
       
   
-      localStorage.removeItem('eduquest_user');
-      localStorage.removeItem('eduquest_session');
+      localStorage.removeItem('vidhyasaathi_user');
+       localStorage.removeItem('vidhyasaathi_session');
       setCurrentUser(null);
       setError('Session refresh failed. Please log in again.');
       
@@ -194,7 +194,7 @@ export const AuthProvider = ({ children }) => {
         const refreshed = await refreshSession();
         if (!refreshed) {
       
-          const sessionData = JSON.parse(localStorage.getItem('eduquest_session') || '{}');
+          const sessionData = JSON.parse(localStorage.getItem('vidhyasaathi_session') || '{}');
           if (sessionData.expiresAt && sessionData.expiresAt <= Date.now()) {
         
             logout();
@@ -230,7 +230,7 @@ export const AuthProvider = ({ children }) => {
 
     try {
 
-      const existingUsers = JSON.parse(localStorage.getItem('eduquest_users') || '[]');
+      const existingUsers = JSON.parse(localStorage.getItem('vidhyasaathi_users') || '[]');
       const userExists = existingUsers.find(user => user.username === username);
       
       if (userExists) {
@@ -270,7 +270,7 @@ export const AuthProvider = ({ children }) => {
 
 
       existingUsers.push(newUser);
-      localStorage.setItem('eduquest_users', JSON.stringify(existingUsers));
+      localStorage.setItem('vidhyasaathi_users', JSON.stringify(existingUsers));
       
 
       const sessionData = {
@@ -278,8 +278,8 @@ export const AuthProvider = ({ children }) => {
         timestamp: new Date().getTime()
       };
       
-      localStorage.setItem('eduquest_session', JSON.stringify(sessionData));
-      localStorage.setItem('eduquest_user', JSON.stringify(newUser));
+      localStorage.setItem('vidhyasaathi_session', JSON.stringify(sessionData));
+       localStorage.setItem('vidhyasaathi_user', JSON.stringify(newUser));
       
       setCurrentUser(newUser);
       return { success: true, user: newUser };

@@ -4,11 +4,12 @@ import { motion } from 'framer-motion';
 import './App.css';
 import { initializeInteractiveEnhancements } from './utils/interactiveUtils';
 
-
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
+import SEOLanguageHead from './components/SEOLanguageHead/SEOLanguageHead';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 import LandingPage from './pages/LandingPage';
 import Auth from './pages/Auth';
 import Dashboard from './pages/Dashboard';
@@ -25,16 +26,18 @@ function App() {
   }, []);
 
   return (
-    <AuthProvider>
-      <ThemeProvider>
-        <Router>
-          <div className="App">
-            <Navbar />
-            <motion.main
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
+    <LanguageProvider>
+      <AuthProvider>
+        <ThemeProvider>
+          <Router>
+            <div className="App">
+              <SEOLanguageHead />
+              <Navbar />
+              <motion.main
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/auth" element={<Auth />} />
@@ -69,11 +72,12 @@ function App() {
                   </ProtectedRoute>
                 } />
               </Routes>
-            </motion.main>
-          </div>
-        </Router>
-      </ThemeProvider>
-    </AuthProvider>
+              </motion.main>
+            </div>
+          </Router>
+        </ThemeProvider>
+      </AuthProvider>
+    </LanguageProvider>
   );
 }
 

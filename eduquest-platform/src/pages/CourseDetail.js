@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaPlay, FaClock, FaUsers, FaStar, FaBookmark, FaSpinner, FaRocket } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import { courses } from '../data/mockData';
 import './CourseDetail.css';
 
 const CourseDetail = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const course = courses.find(c => c.id === parseInt(id));
@@ -53,8 +55,8 @@ const CourseDetail = () => {
     return (
       <div className="course-detail-container">
         <div className="course-not-found">
-          <h2>Course not found</h2>
-          <p>The course you're looking for doesn't exist.</p>
+          <h2>{t('courseDetail.notFound.title')}</h2>
+          <p>{t('courseDetail.notFound.message')}</p>
         </div>
       </div>
     );
@@ -86,7 +88,7 @@ const CourseDetail = () => {
             </div>
             <div className="meta-item">
               <FaUsers className="meta-icon" />
-              <span>{course.students} students</span>
+              <span>{course.students} {t('courseDetail.meta.students')}</span>
             </div>
             <div className="meta-item">
               <FaStar className="meta-icon" />
@@ -106,19 +108,19 @@ const CourseDetail = () => {
               {isStarting ? (
                 <>
                   <FaSpinner className="spinner" />
-                  Starting...
+                  {t('courseDetail.actions.starting')}
                 </>
               ) : (
                 <>
                   {course.progress > 0 ? (
                     <>
                       <FaPlay className="btn-icon" />
-                      Continue Learning
+                      {t('courseDetail.actions.continue')}
                     </>
                   ) : (
                     <>
                       <FaRocket className="btn-icon" />
-                      Start Course
+                      {t('courseDetail.actions.start')}
                     </>
                   )}
                 </>
@@ -131,7 +133,7 @@ const CourseDetail = () => {
               whileTap={{ scale: 0.98 }}
             >
               <FaBookmark className={isBookmarked ? 'bookmarked-icon' : ''} /> 
-              {isBookmarked ? 'Saved' : 'Save'}
+              {isBookmarked ? t('courseDetail.actions.saved') : t('courseDetail.actions.save')}
             </motion.button>
           </div>
         </div>
@@ -139,14 +141,14 @@ const CourseDetail = () => {
       
       <div className="course-content">
         <div className="course-lessons">
-          <h3>Course Content</h3>
+          <h3>{t('courseDetail.content.title')}</h3>
           <div className="lessons-list">
             {Array.from({ length: course.lessons }, (_, index) => (
               <div key={index} className="lesson-item">
                 <div className="lesson-number">{index + 1}</div>
                 <div className="lesson-info">
-                  <h4>Lesson {index + 1}</h4>
-                  <p>Duration: 25 min</p>
+                  <h4>{t('courseDetail.content.lesson')} {index + 1}</h4>
+                  <p>{t('courseDetail.content.duration')}: 25 min</p>
                 </div>
                 <div className="lesson-status">
                   {index < course.completedLessons ? (
@@ -162,30 +164,30 @@ const CourseDetail = () => {
         
         <div className="course-sidebar">
           <div className="instructor-info">
-            <h4>Instructor</h4>
+            <h4>{t('courseDetail.instructor.title')}</h4>
             <div className="instructor">
               <div className="instructor-avatar">
                 <img src="/api/placeholder/60/60" alt={course.instructor} />
               </div>
               <div className="instructor-details">
                 <h5>{course.instructor}</h5>
-                <p>Expert Instructor</p>
+                <p>{t('courseDetail.instructor.expert')}</p>
               </div>
             </div>
           </div>
           
           <div className="course-stats">
-            <h4>Course Statistics</h4>
+            <h4>{t('courseDetail.stats.title')}</h4>
             <div className="stat-item">
-              <span>Progress</span>
+              <span>{t('courseDetail.stats.progress')}</span>
               <span>{course.progress}%</span>
             </div>
             <div className="stat-item">
-              <span>XP Reward</span>
+              <span>{t('courseDetail.stats.xpReward')}</span>
               <span>{course.xpReward} XP</span>
             </div>
             <div className="stat-item">
-              <span>Difficulty</span>
+              <span>{t('courseDetail.stats.difficulty')}</span>
               <span>{course.difficulty}</span>
             </div>
           </div>

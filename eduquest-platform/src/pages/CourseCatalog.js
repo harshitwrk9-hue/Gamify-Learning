@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaSearch, FaFilter, FaStar, FaUsers, FaClock, FaPlay, FaCheck } from 'react-icons/fa';
+import { FaSearch, FaStar, FaClock, FaPlay, FaCheck, FaUsers } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { courses, categories } from '../data/mockData';
+import { useLanguage } from '../contexts/LanguageContext';
 import './CourseCatalog.css';
 
 const CourseCatalog = () => {
+  const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedDifficulty, setSelectedDifficulty] = useState('All');
@@ -13,10 +15,10 @@ const CourseCatalog = () => {
 
   const difficulties = ['All', 'Beginner', 'Intermediate', 'Advanced'];
   const sortOptions = [
-    { value: 'popular', label: 'Most Popular' },
-    { value: 'rating', label: 'Highest Rated' },
-    { value: 'newest', label: 'Newest' },
-    { value: 'progress', label: 'My Progress' }
+    { value: 'popular', label: t('courseCatalog.sortOptions.popular') },
+    { value: 'rating', label: t('courseCatalog.sortOptions.rating') },
+    { value: 'newest', label: t('courseCatalog.sortOptions.newest') },
+    { value: 'progress', label: t('courseCatalog.sortOptions.progress') }
   ];
 
 
@@ -67,17 +69,17 @@ const CourseCatalog = () => {
           className="catalog-header animate-fade-in-up"
         >
           <div className="header-content">
-            <h1>Course Catalog</h1>
-            <p>Discover amazing courses to boost your skills</p>
+            <h1>{t('courseCatalog.title')}</h1>
+            <p>{t('courseCatalog.subtitle')}</p>
           </div>
           <div className="header-stats">
             <div className="stat">
               <span className="stat-number">{courses.length}</span>
-              <span className="stat-label">Courses</span>
+              <span className="stat-label">{t('courseCatalog.stats.courses')}</span>
             </div>
             <div className="stat">
               <span className="stat-number">{categories.length}</span>
-              <span className="stat-label">Categories</span>
+              <span className="stat-label">{t('courseCatalog.stats.categories')}</span>
             </div>
           </div>
         </motion.div>
@@ -89,7 +91,7 @@ const CourseCatalog = () => {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="categories-section animate-slide-in-left"
         >
-          <h2>Browse by Category</h2>
+          <h2>{t('courseCatalog.browseByCategory')}</h2>
           <div className="categories-grid">
             {categories.map((category, index) => (
               <motion.div
@@ -107,7 +109,7 @@ const CourseCatalog = () => {
                   {category.icon}
                 </div>
                 <h3>{category.name}</h3>
-                <p>{category.courseCount} courses</p>
+                <p>{category.courseCount} {t('courseCatalog.coursesCount')}</p>
               </motion.div>
             ))}
           </div>
@@ -124,7 +126,7 @@ const CourseCatalog = () => {
             <FaSearch className="search-icon" />
             <input
               type="text"
-              placeholder="Search courses..."
+              placeholder={t('courseCatalog.searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -132,12 +134,12 @@ const CourseCatalog = () => {
 
           <div className="filters">
             <div className="filter-group">
-              <label>Category</label>
+              <label>{t('courseCatalog.filters.category')}</label>
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >
-                <option value="All">All Categories</option>
+                <option value="All">{t('courseCatalog.filters.allCategories')}</option>
                 {categories.map(category => (
                   <option key={category.id} value={category.name}>
                     {category.name}
@@ -147,21 +149,21 @@ const CourseCatalog = () => {
             </div>
 
             <div className="filter-group">
-              <label>Difficulty</label>
+              <label>{t('courseCatalog.filters.difficulty')}</label>
               <select
                 value={selectedDifficulty}
                 onChange={(e) => setSelectedDifficulty(e.target.value)}
               >
                 {difficulties.map(difficulty => (
                   <option key={difficulty} value={difficulty}>
-                    {difficulty === 'All' ? 'All Levels' : difficulty}
+                    {difficulty === 'All' ? t('courseCatalog.filters.allLevels') : t(`courseCatalog.difficulty.${difficulty.toLowerCase()}`)}
                   </option>
                 ))}
               </select>
             </div>
 
             <div className="filter-group">
-              <label>Sort by</label>
+              <label>{t('courseCatalog.filters.sortBy')}</label>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
@@ -184,7 +186,7 @@ const CourseCatalog = () => {
           className="results-section animate-fade-in-up"
         >
           <div className="results-header">
-            <h2>Courses ({filteredCourses.length})</h2>
+            <h2>{t('courseCatalog.coursesWithCount', { count: filteredCourses.length })}</h2>
             {(searchTerm || selectedCategory !== 'All' || selectedDifficulty !== 'All') && (
               <button
                 className="clear-filters"
@@ -194,7 +196,7 @@ const CourseCatalog = () => {
                   setSelectedDifficulty('All');
                 }}
               >
-                Clear Filters
+                {t('courseCatalog.clearFilters')}
               </button>
             )}
           </div>
@@ -235,7 +237,7 @@ const CourseCatalog = () => {
                       </span>
                       {progressStatus === 'completed' && (
                         <span className="completed-badge">
-                          <FaCheck /> Completed
+                          <FaCheck /> {t('courseCatalog.courseStatus.completed')}
                         </span>
                       )}
                       {progressStatus === 'in-progress' && (
@@ -251,7 +253,7 @@ const CourseCatalog = () => {
                   <p className="course-description">{course.description}</p>
 
                   <div className="course-instructor">
-                    <span>by {course.instructor}</span>
+                    <span>{t('courseCatalog.instructorBy', { instructor: course.instructor })}</span>
                   </div>
 
                   <div className="course-meta">
@@ -281,7 +283,7 @@ const CourseCatalog = () => {
                         />
                       </div>
                       <span className="progress-text">
-                        {course.completedLessons}/{course.lessons} lessons completed
+                        {t('courseCatalog.lessonsCompleted', { completed: course.completedLessons, total: course.lessons })}
                       </span>
                     </div>
                   )}
@@ -291,8 +293,8 @@ const CourseCatalog = () => {
                       <span>+{course.xpReward} XP</span>
                     </div>
                     <div className="course-button" onClick={(e) => e.preventDefault()}>
-                        {progressStatus === 'completed' ? 'Review' :
-                         progressStatus === 'in-progress' ? 'Continue' : 'Start Course'}
+                        {progressStatus === 'completed' ? t('courseCatalog.courseActions.review') :
+                         progressStatus === 'in-progress' ? t('courseCatalog.courseActions.continue') : t('courseCatalog.courseActions.start')}
                     </div>
                   </div>
                   </motion.div>
@@ -307,8 +309,8 @@ const CourseCatalog = () => {
               animate={{ opacity: 1 }}
               className="no-results"
             >
-              <h3>No courses found</h3>
-              <p>Try adjusting your search criteria or browse different categories.</p>
+              <h3>{t('courseCatalog.noResults.title')}</h3>
+              <p>{t('courseCatalog.noResults.description')}</p>
             </motion.div>
           )}
         </motion.div>

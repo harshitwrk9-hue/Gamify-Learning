@@ -634,7 +634,7 @@ export const leaderboard = [
 export const achievements = [
   {
     id: 1,
-    title: "Welcome to Shiksha!",
+    title: "Welcome to VidhyaSaathi!",
     description: "You've successfully created your account",
     date: "2024-01-15",
     xpEarned: 50,

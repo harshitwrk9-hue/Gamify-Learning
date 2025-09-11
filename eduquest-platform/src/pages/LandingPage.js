@@ -2,46 +2,48 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaRocket, FaTrophy, FaBrain, FaChartLine, FaGamepad, FaUser } from 'react-icons/fa';
+import { useLanguage } from '../contexts/LanguageContext';
 
 import LearningProgress from '../assets/learning-progress.svg';
 
 import './LandingPage.css';
 
 const LandingPage = () => {
+  const { t } = useLanguage();
+  
   const features = [
     {
       icon: FaRocket,
-      title: 'Interactive Learning',
-      description: 'Engage with dynamic content, quizzes, and hands-on exercises that make learning fun and effective.'
+      title: t('home.features.interactive.title'),
+      description: t('home.features.interactive.description')
     },
     {
       icon: FaTrophy,
-      title: 'Gamified Experience',
-      description: 'Earn XP points, unlock badges, and climb leaderboards while mastering new skills.'
+      title: t('home.features.gamification.title'),
+      description: t('home.features.gamification.description')
     },
-
     {
       icon: FaBrain,
-      title: 'Personalized Path',
-      description: 'AI-powered recommendations adapt to your learning style and pace for optimal results.'
+      title: t('home.features.personalized.title'),
+      description: t('home.features.personalized.description')
     },
     {
       icon: FaChartLine,
-      title: 'Progress Tracking',
-      description: 'Monitor your learning journey with detailed analytics and achievement milestones.'
+      title: t('home.features.progress.title'),
+      description: t('home.features.progress.description')
     },
     {
       icon: FaGamepad,
-      title: 'Fun Challenges',
-      description: 'Complete daily and weekly challenges to stay motivated and earn bonus rewards.'
+      title: t('home.features.challenges.title'),
+      description: t('home.features.challenges.description')
     }
   ];
 
   const stats = [
-    { number: '10K+', label: 'Active Learners' },
-    { number: '500+', label: 'Courses Available' },
-    { number: '95%', label: 'Completion Rate' },
-    { number: '4.9★', label: 'Average Rating' }
+    { number: '10K+', label: t('home.stats.activeLearners') },
+    { number: '500+', label: t('home.stats.coursesAvailable') },
+    { number: '95%', label: t('home.stats.completionRate') },
+    { number: '4.9★', label: t('home.stats.averageRating') }
   ];
 
   return (
@@ -64,12 +66,11 @@ const LandingPage = () => {
             className="hero-text"
           >
             <h1 className="hero-title">
-              Transform Your Learning
-              <span className="gradient-text"> Journey</span>
+              {t('home.title')}
+              <span className="gradient-text"> {t('home.titleHighlight')}</span>
             </h1>
             <p className="hero-subtitle">
-              Join thousands of learners on Shiksha - the gamified learning platform 
-              that makes education engaging, interactive, and rewarding.
+              {t('home.description')}
             </p>
             
             <div className="hero-buttons">
@@ -78,7 +79,7 @@ const LandingPage = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Start Learning
+                  {t('home.getStarted')}
                 </motion.span>
               </Link>
               <Link to="/courses" className="btn btn-secondary">
@@ -86,7 +87,7 @@ const LandingPage = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Browse Courses
+                  {t('home.browseCourses')}
                 </motion.span>
               </Link>
             </div>
@@ -105,29 +106,29 @@ const LandingPage = () => {
                 <div className="user-info">
 
                   <div className="user-details">
-                    <h1>User</h1>
-                    <p>Level 12 • 2,850 XP</p>
+                    <h1>{t('common.user')}</h1>
+                    <p>{t('home.userLevel', { level: '12', xp: '2,850' })}</p>
                   </div>
                 </div>
-                <div className="streak">🔥 7 day streak</div>
+                <div className="streak">🔥 {t('home.dayStreak', { days: '7' })}</div>
               </div>
               <div className="progress-section">
-                <h5>Current Progress</h5>
+                <h5>{t('home.currentProgress')}</h5>
                 <div className="progress-item">
-                  <span>React Mastery</span>
+                  <span>{t('home.reactMastery')}</span>
                   <div className="progress-bar">
                     <div className="progress-fill" style={{width: '75%'}}></div>
                   </div>
                 </div>
                 <div className="progress-item">
-                  <span>JavaScript Advanced</span>
+                  <span>{t('home.javascriptAdvanced')}</span>
                   <div className="progress-bar">
                     <div className="progress-fill" style={{width: '45%'}}></div>
                   </div>
                 </div>
               </div>
               <div className="badges-section">
-                <h5>Recent Badges</h5>
+                <h5>{t('home.recentBadges')}</h5>
                 <div className="badges">
                   <span className="badge">🏆</span>
                   <span className="badge">⚡</span>
@@ -169,9 +170,9 @@ const LandingPage = () => {
             transition={{ duration: 0.8 }}
             className="section-header"
           >
-            <h2 className="section-title">Why Choose Shiksha?</h2>
+            <h2 className="section-title">{t('home.whyChooseUs')}</h2>
             <p className="section-subtitle">
-              Discover the features that make learning engaging and effective
+              {t('home.featuresDescription')}
             </p>
             <div className="section-illustration">
               <img src={LearningProgress} alt="Learning Progress" className="progress-svg" />
@@ -214,16 +215,16 @@ const LandingPage = () => {
             <div className="cta-illustration">
               <img src={LearningProgress} alt="Learning Progress" className="progress-svg" />
             </div>
-            <h2 className="cta-title">Ready to Start Your Learning Adventure?</h2>
+            <h2 className="cta-title">{t('home.ctaTitle')}</h2>
             <p className="cta-subtitle">
-              Join thousands of learners who are already transforming their skills with Shiksha
+              {t('home.ctaSubtitle')}
             </p>
             <Link to="/dashboard" className="btn btn-cta">
               <motion.span
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Get Started Now
+                {t('home.getStartedNow')}
               </motion.span>
             </Link>
           </motion.div>

@@ -275,10 +275,12 @@ const Dashboard = () => {
             </div>
             <div className="courses-list">
               {currentCourses.map((course, index) => (
-                <div
+                <Link
                   key={course.id}
-                  className="course-card"
+                  to={`/course/${course.id}`}
+                  className="course-card-link"
                 >
+                  <div className="course-card">
                   <div className="course-thumbnail">
                     <img 
                       src={course.thumbnail} 
@@ -303,12 +305,13 @@ const Dashboard = () => {
                     </div>
                     <div className="course-meta">
                       <span><FaClock /> {course.completedLessons}/{course.lessons} lessons</span>
-                      <Link to={`/course/${course.id}`} className="continue-btn">
+                      <div className="continue-btn" onClick={(e) => e.preventDefault()}>
                         Continue
-                      </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
+                  </div>
+                </Link>
               ))}
             </div>
           </div>

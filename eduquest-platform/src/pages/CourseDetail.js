@@ -1,13 +1,53 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FaPlay, FaClock, FaUsers, FaStar, FaBookmark } from 'react-icons/fa';
+import { FaPlay, FaClock, FaUsers, FaStar, FaBookmark, FaSpinner, FaRocket } from 'react-icons/fa';
 import { courses } from '../data/mockData';
 import './CourseDetail.css';
 
 const CourseDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const course = courses.find(c => c.id === parseInt(id));
+  const [isStarting, setIsStarting] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  // Check if course is bookmarked on component mount
+  useEffect(() => {
+    const bookmarks = JSON.parse(localStorage.getItem('bookmarkedCourses') || '[]');
+    setIsBookmarked(bookmarks.includes(course?.id));
+  }, [course?.id]);
+
+  const handleStartCourse = async () => {
+    setIsStarting(true);
+    
+    // Simulate course initialization
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Navigate to course learning interface or first lesson
+    if (course.progress > 0) {
+      // Continue from where user left off
+      navigate(`/course/${course.id}/lesson/${course.completedLessons + 1}`);
+    } else {
+      // Start from the beginning
+      navigate(`/course/${course.id}/lesson/1`);
+    }
+    
+    setIsStarting(false);
+  };
+
+  const handleBookmark = () => {
+    setIsBookmarked(!isBookmarked);
+    // Here you would typically save to localStorage or send to backend
+    const bookmarks = JSON.parse(localStorage.getItem('bookmarkedCourses') || '[]');
+    if (!isBookmarked) {
+      bookmarks.push(course.id);
+      localStorage.setItem('bookmarkedCourses', JSON.stringify(bookmarks));
+    } else {
+      const updatedBookmarks = bookmarks.filter(id => id !== course.id);
+      localStorage.setItem('bookmarkedCourses', JSON.stringify(updatedBookmarks));
+    }
+  };
 
   if (!course) {
     return (
@@ -55,12 +95,44 @@ const CourseDetail = () => {
           </div>
           
           <div className="course-actions">
-            <button className="btn-primary">
-              {course.progress > 0 ? 'Continue Learning' : 'Start Course'}
-            </button>
-            <button className="btn-secondary">
-              <FaBookmark /> Save
-            </button>
+            <motion.button 
+              className={`btn-primary start-course-btn ${isStarting ? 'loading' : ''}`}
+              onClick={handleStartCourse}
+              disabled={isStarting}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+              {isStarting ? (
+                <>
+                  <FaSpinner className="spinner" />
+                  Starting...
+                </>
+              ) : (
+                <>
+                  {course.progress > 0 ? (
+                    <>
+                      <FaPlay className="btn-icon" />
+                      Continue Learning
+                    </>
+                  ) : (
+                    <>
+                      <FaRocket className="btn-icon" />
+                      Start Course
+                    </>
+                  )}
+                </>
+              )}
+            </motion.button>
+            <motion.button 
+              className={`btn-secondary ${isBookmarked ? 'bookmarked' : ''}`}
+              onClick={handleBookmark}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <FaBookmark className={isBookmarked ? 'bookmarked-icon' : ''} /> 
+              {isBookmarked ? 'Saved' : 'Save'}
+            </motion.button>
           </div>
         </div>
       </div>

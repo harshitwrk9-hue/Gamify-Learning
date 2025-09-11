@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaSearch, FaStar, FaUsers, FaClock, FaPlay, FaCheck } from 'react-icons/fa';
+import { FaSearch, FaFilter, FaStar, FaUsers, FaClock, FaPlay, FaCheck } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import { courses, categories } from '../data/mockData';
 import './CourseCatalog.css';
 
@@ -203,14 +203,18 @@ const CourseCatalog = () => {
             {filteredCourses.map((course, index) => {
               const progressStatus = getProgressStatus(course.progress);
               return (
-                <motion.div
+                <Link 
+                  to={`/course/${course.id}`} 
                   key={course.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1 + index * 0.05 }}
-                  whileHover={{ y: -10 }}
-                  className={`course-card ${progressStatus} animate-fade-in-scale border-glow`}
+                  className="course-card-link"
                 >
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.1 + index * 0.05 }}
+                    whileHover={{ y: -10 }}
+                    className={`course-card ${progressStatus} animate-fade-in-scale border-glow`}
+                  >
                   <div className="course-image">
                     <img 
                       src={course.thumbnail} 
@@ -286,12 +290,13 @@ const CourseCatalog = () => {
                     <div className="xp-reward">
                       <span>+{course.xpReward} XP</span>
                     </div>
-                    <Link to={`/course/${course.id}`} className="course-button">
+                    <div className="course-button" onClick={(e) => e.preventDefault()}>
                         {progressStatus === 'completed' ? 'Review' :
                          progressStatus === 'in-progress' ? 'Continue' : 'Start Course'}
-                      </Link>
                     </div>
-                </motion.div>
+                  </div>
+                  </motion.div>
+                </Link>
               );
             })}
           </div>

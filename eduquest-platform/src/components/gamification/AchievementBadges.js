@@ -31,9 +31,9 @@ const AchievementBadges = ({
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [showDetails, setShowDetails] = useState(null);
 
-  // Badge definitions with unlock conditions
+
   const badgeDefinitions = {
-    // Learning Badges
+
     firstSteps: {
       id: 'firstSteps',
       name: 'First Steps',
@@ -65,7 +65,7 @@ const AchievementBadges = ({
       reward: { xp: 500, coins: 250, gems: 1 }
     },
     
-    // Performance Badges
+
     perfectScore: {
       id: 'perfectScore',
       name: 'Perfect Score',
@@ -97,7 +97,7 @@ const AchievementBadges = ({
       reward: { xp: 200, coins: 100 }
     },
     
-    // Streak Badges
+
     onFire: {
       id: 'onFire',
       name: 'On Fire',
@@ -119,7 +119,7 @@ const AchievementBadges = ({
       reward: { xp: 2000, coins: 1000, gems: 5 }
     },
     
-    // Special Badges
+
     nightOwl: {
       id: 'nightOwl',
       name: 'Night Owl',
@@ -151,7 +151,7 @@ const AchievementBadges = ({
       reward: { xp: 250, coins: 125 }
     },
     
-    // Mastery Badges
+
     mathMaster: {
       id: 'mathMaster',
       name: 'Math Master',
@@ -192,7 +192,7 @@ const AchievementBadges = ({
     legendary: '#f39c12'
   };
 
-  // Check for newly unlocked badges
+
   useEffect(() => {
     const newUnlocks = [];
     
@@ -214,7 +214,7 @@ const AchievementBadges = ({
         setTimeout(() => setRecentUnlocks([]), 4000);
       }
 
-      // Trigger callback for each unlock
+  
       newUnlocks.forEach(badge => {
         if (onBadgeUnlock) {
           onBadgeUnlock(badge);
@@ -223,16 +223,16 @@ const AchievementBadges = ({
     }
   }, [userStats, unlockedBadges, showUnlockAnimation, onBadgeUnlock]);
 
-  // Filter badges by category
+
   const filteredBadges = Object.values(badgeDefinitions).filter(badge => 
     selectedCategory === 'all' || badge.category === selectedCategory
   );
 
-  // Calculate progress for locked badges
+
   const getBadgeProgress = (badge) => {
     if (unlockedBadges.has(badge.id)) return 100;
     
-    // Custom progress calculation based on badge type
+
     switch (badge.id) {
       case 'quickLearner':
         return Math.min((userStats.quizzesCompleted || 0) / 10 * 100, 100);
@@ -255,7 +255,7 @@ const AchievementBadges = ({
 
   return (
     <div className="achievement-badges">
-      {/* Unlock Animations */}
+
       <AnimatePresence>
         {recentUnlocks.map((badge, index) => (
           <motion.div
@@ -308,7 +308,7 @@ const AchievementBadges = ({
         ))}
       </AnimatePresence>
 
-      {/* Category Filter */}
+
       <div className="category-filter">
         {Object.entries(categories).map(([key, label]) => (
           <button
@@ -321,7 +321,7 @@ const AchievementBadges = ({
         ))}
       </div>
 
-      {/* Badge Grid */}
+
       <div className="badges-grid">
         {filteredBadges.map((badge, index) => {
           const isUnlocked = unlockedBadges.has(badge.id);
@@ -399,7 +399,7 @@ const AchievementBadges = ({
         })}
       </div>
 
-      {/* Badge Details Modal */}
+
       <AnimatePresence>
         {showDetails && (
           <motion.div
@@ -480,7 +480,7 @@ const AchievementBadges = ({
         )}
       </AnimatePresence>
 
-      {/* Stats Summary */}
+
       <div className="badges-summary">
         <div className="summary-stat">
           <FaTrophy className="summary-icon" />

@@ -1,38 +1,194 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaFire, FaTrophy, FaStar, FaBook, FaChartLine, FaArrowRight, FaClock } from 'react-icons/fa';
-import BeginnerBadge from '../assets/badge-beginner.svg';
-import IntermediateBadge from '../assets/badge-intermediate.svg';
-import AdvancedBadge from '../assets/badge-advanced.svg';
+import { FaFire, FaTrophy, FaStar, FaBook, FaArrowRight, FaClock, FaBolt, FaGem, FaCheckCircle, FaPlay } from 'react-icons/fa';
 
-import { currentUser, courses, badges, achievements, challenges } from '../data/mockData';
+
+import { currentUser, courses, badges } from '../data/mockData';
 import './Dashboard.css';
+
+const DailyChallenges = () => {
+  const [challenges, setChallenges] = useState([
+    {
+      id: 1,
+      title: "Complete 3 Lessons",
+      description: "Finish any 3 lessons today",
+      progress: 2,
+      target: 3,
+      reward: { xp: 150, coins: 75 },
+      icon: FaBook,
+      type: "daily",
+      completed: false
+    },
+    {
+      id: 2,
+      title: "Perfect Quiz Score",
+      description: "Get 100% on any quiz",
+      progress: 0,
+      target: 1,
+      reward: { xp: 200, gems: 2 },
+      icon: FaTrophy,
+      type: "daily",
+      completed: false
+    },
+    {
+      id: 3,
+      title: "Study Streak",
+      description: "Maintain your learning streak",
+      progress: 1,
+      target: 1,
+      reward: { xp: 100, coins: 50 },
+      icon: FaFire,
+      type: "daily",
+      completed: true
+    }
+  ]);
+
+  const [timeLeft, setTimeLeft] = useState({
+    hours: 14,
+    minutes: 32,
+    seconds: 45
+  });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev.seconds > 0) {
+          return { ...prev, seconds: prev.seconds - 1 };
+        } else if (prev.minutes > 0) {
+          return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+        } else if (prev.hours > 0) {
+          return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 };
+        }
+        return prev;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const completeChallenge = (challengeId) => {
+    setChallenges(prev => prev.map(challenge => 
+      challenge.id === challengeId 
+        ? { ...challenge, completed: true, progress: challenge.target }
+        : challenge
+    ));
+  };
+
+  const getProgressPercentage = (progress, target) => {
+    return Math.min((progress / target) * 100, 100);
+  };
+
+  return (
+    <div className="content-section daily-challenges">
+      <div className="section-header">
+        <h3>Daily Challenges</h3>
+        <div className="challenge-timer">
+          <FaClock className="timer-icon" />
+          <span>{String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}</span>
+        </div>
+      </div>
+      
+      <div className="challenges-list">
+        {challenges.map((challenge) => {
+          const IconComponent = challenge.icon;
+          const progressPercentage = getProgressPercentage(challenge.progress, challenge.target);
+          
+          return (
+            <div
+              key={challenge.id}
+              className={`challenge-item ${challenge.completed ? 'completed' : ''}`}
+            >
+              <div className="challenge-icon">
+                <IconComponent />
+                {challenge.completed && (
+                  <div className="completion-badge">
+                    <FaCheckCircle />
+                  </div>
+                )}
+              </div>
+              
+              <div className="challenge-content">
+                <div className="challenge-header">
+                  <h4>{challenge.title}</h4>
+                  <div className="challenge-progress-text">
+                    {challenge.progress}/{challenge.target}
+                  </div>
+                </div>
+                
+                <p className="challenge-description">{challenge.description}</p>
+                
+                <div className="challenge-progress-bar">
+                  <div 
+                    className="progress-fill"
+                    style={{ width: `${progressPercentage}%` }}
+                  />
+                </div>
+                
+                <div className="challenge-rewards">
+                  {challenge.reward.xp && (
+                    <span className="reward-item xp">
+                      <FaStar /> +{challenge.reward.xp} XP
+                    </span>
+                  )}
+                  {challenge.reward.coins && (
+                    <span className="reward-item coins">
+                      <FaBolt /> +{challenge.reward.coins}
+                    </span>
+                  )}
+                  {challenge.reward.gems && (
+                    <span className="reward-item gems">
+                      <FaGem /> +{challenge.reward.gems}
+                    </span>
+                  )}
+                </div>
+              </div>
+              
+              {!challenge.completed && challenge.progress < challenge.target && (
+                <button 
+                  className="challenge-action-btn"
+                  onClick={() => completeChallenge(challenge.id)}
+                >
+                  <FaPlay />
+                </button>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      
+      <div className="challenges-summary">
+        <div className="summary-stat">
+          <span className="stat-number">{challenges.filter(c => c.completed).length}</span>
+          <span className="stat-label">Completed</span>
+        </div>
+        <div className="summary-stat">
+          <span className="stat-number">{challenges.length - challenges.filter(c => c.completed).length}</span>
+          <span className="stat-label">Remaining</span>
+        </div>
+        <div className="summary-stat">
+          <span className="stat-number">
+            {challenges.reduce((total, c) => total + (c.completed ? c.reward.xp || 0 : 0), 0)}
+          </span>
+          <span className="stat-label">XP Earned</span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Dashboard = () => {
   const userBadges = badges.filter(badge => currentUser.badges.includes(badge.id));
   const currentCourses = courses.filter(course => currentUser.currentCourses.includes(course.id));
-  const recentAchievements = achievements.slice(-3);
-  const activeChallenges = challenges.filter(challenge => !challenge.completed);
+
 
   const xpProgress = (currentUser.xp / currentUser.xpToNextLevel) * 100;
   const weeklyProgress = (currentUser.weeklyProgress / currentUser.weeklyGoal) * 100;
 
-  // Helper function to get badge SVG based on badge name or type
-  const getBadgeSVG = (badgeName) => {
-    if (badgeName.toLowerCase().includes('beginner') || badgeName.toLowerCase().includes('first')) {
-      return BeginnerBadge;
-    } else if (badgeName.toLowerCase().includes('intermediate') || badgeName.toLowerCase().includes('streak')) {
-      return IntermediateBadge;
-    } else if (badgeName.toLowerCase().includes('advanced') || badgeName.toLowerCase().includes('master')) {
-      return AdvancedBadge;
-    }
-    return BeginnerBadge; // Default fallback
-  };
+
 
   return (
     <div className="dashboard">
       <div className="dashboard-container">
-        {/* Welcome Header */}
         <div className="welcome-header">
           <div className="welcome-text">
             <h1>Welcome back, {currentUser.name}! 👋</h1>
@@ -47,14 +203,11 @@ const Dashboard = () => {
           </div>
         </div>
 
-
-
-        {/* Stats Cards */}
         <div className="stats-grid">
           <div className="stat-card level-card">
             <div className="stat-icon level-icon">
               <FaStar />
-              <div className="level-badge">{currentUser.level}</div>
+
             </div>
             <div className="stat-content">
               <h3>Level {currentUser.level}</h3>
@@ -112,9 +265,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Main Content Grid */}
         <div className="main-content">
-          {/* Current Courses */}
           <div className="content-section current-courses">
             <div className="section-header">
               <h2>Continue Learning</h2>
@@ -162,31 +313,8 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Sidebar */}
           <div className="sidebar">
-            {/* Recent Achievements */}
-            <div className="content-section recent-achievements">
-              <div className="section-header">
-                <h3>Recent Achievements</h3>
-              </div>
-              <div className="achievements-list">
-                {recentAchievements.map((achievement, index) => (
-                  <div
-                    key={achievement.id}
-                    className="achievement-item"
-                  >
-                    <div className="achievement-icon">
-                      <FaChartLine />
-                    </div>
-                    <div className="achievement-info">
-                      <h4>{achievement.title}</h4>
-                      <p>{achievement.description}</p>
-                      <span className="achievement-xp">+{achievement.xpEarned} XP</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <DailyChallenges />
           </div>
         </div>
       </div>

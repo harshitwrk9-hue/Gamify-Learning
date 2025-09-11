@@ -12,14 +12,14 @@ import { csrfProtection, securityHeaders } from './security';
  * @returns {Promise} - Fetch response
  */
 export const secureFetch = async (url, options = {}) => {
-  // Get security headers
+  
   const headers = {
     'Content-Type': 'application/json',
     ...securityHeaders.getApiHeaders(),
     ...options.headers
   };
 
-  // Add CSRF token for state-changing requests
+  
   const isStateChanging = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(
     (options.method || 'GET').toUpperCase()
   );
@@ -31,17 +31,17 @@ export const secureFetch = async (url, options = {}) => {
     }
   }
 
-  // Prepare fetch options
+  
   const fetchOptions = {
     ...options,
     headers,
-    credentials: 'same-origin' // Include cookies for same-origin requests
+    credentials: 'same-origin'
   };
 
   try {
     const response = await fetch(url, fetchOptions);
     
-    // Validate response headers for security
+    
     if (response.ok) {
       const isValidResponse = securityHeaders.validateResponseHeaders(response.headers);
       if (!isValidResponse) {
@@ -145,7 +145,7 @@ export const addAuthInterceptor = (getToken) => {
   const originalFetch = window.fetch;
   
   window.fetch = async (url, options = {}) => {
-    // Add authentication token
+    
     const token = getToken() || sessionStorage.getItem('authToken') || localStorage.getItem('authToken');
     if (token) {
       options.headers = {
@@ -154,7 +154,7 @@ export const addAuthInterceptor = (getToken) => {
       };
     }
     
-    // Add CSRF token for state-changing requests
+    
     if (['POST', 'PUT', 'PATCH', 'DELETE'].includes((options.method || 'GET').toUpperCase())) {
       const csrfToken = csrfProtection.getToken();
       if (csrfToken) {
@@ -165,7 +165,7 @@ export const addAuthInterceptor = (getToken) => {
       }
     }
     
-    // Add security headers
+    
     const apiHeaders = securityHeaders.getApiHeaders();
     options.headers = {
       ...options.headers,
@@ -187,7 +187,7 @@ export const addResponseInterceptor = (onUnauthorized, onForbidden) => {
   window.fetch = async (...args) => {
     const response = await originalFetch(...args);
     
-    // Validate security headers in response
+    
     if (response.ok) {
       try {
         const isValidResponse = securityHeaders.validateResponseHeaders(response.headers);
@@ -199,12 +199,12 @@ export const addResponseInterceptor = (onUnauthorized, onForbidden) => {
       }
     }
     
-    // Handle different error scenarios
+    
     const status = response.status;
     
     switch (status) {
       case 401:
-        // Handle unauthorized access
+    
         localStorage.removeItem('authToken');
         sessionStorage.removeItem('authToken');
         localStorage.removeItem('sessionData');
@@ -219,7 +219,7 @@ export const addResponseInterceptor = (onUnauthorized, onForbidden) => {
         break;
         
       case 403:
-        // Handle forbidden access (CSRF, permissions, etc.)
+    
         const errorData = await response.clone().json().catch(() => ({}));
         if (errorData?.code === 'CSRF_TOKEN_INVALID') {
           csrfProtection.clearToken();
@@ -232,7 +232,7 @@ export const addResponseInterceptor = (onUnauthorized, onForbidden) => {
         break;
         
       case 429:
-        // Handle rate limiting
+    
         console.warn('Rate limit exceeded. Please slow down requests.');
         break;
         
@@ -240,7 +240,7 @@ export const addResponseInterceptor = (onUnauthorized, onForbidden) => {
       case 502:
       case 503:
       case 504:
-        // Handle server errors
+    
         console.error('Server error occurred:', status);
         break;
     }

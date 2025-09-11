@@ -51,7 +51,7 @@ const AnimatedCounter = ({
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       
-      // Easing function for smooth animation
+    
       const easeOutCubic = 1 - Math.pow(1 - progress, 3);
       const currentValue = startValue + (change * easeOutCubic);
       

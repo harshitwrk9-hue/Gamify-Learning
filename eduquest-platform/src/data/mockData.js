@@ -1,4 +1,3 @@
-// Mock data for Shiksha platform
 import userAvatar from '../assets/user-avatar.svg';
 
 export const currentUser = {
@@ -16,7 +15,6 @@ export const currentUser = {
   badges: [1, 2, 3, 5, 7, 8],
   weeklyGoal: 5,
   weeklyProgress: 3,
-  // Gamification enhancements
   coins: 1250,
   gems: 45,
   powerUps: {
@@ -40,7 +38,6 @@ export const currentUser = {
     coursesCompleted: 5,
     certificatesEarned: 2
   },
-  // Enhanced for leaderboard
   country: "India",
   city: "Mumbai",
   isOnline: true,
@@ -156,7 +153,7 @@ export const courses = [
 ];
 
 export const lessons = {
-  2: [ // Advanced React Patterns course
+  2: [
     {
       id: 1,
       title: "Higher-Order Components",
@@ -197,7 +194,7 @@ export const lessons = {
 };
 
 export const quizzes = {
-  2: { // Advanced React Patterns course
+  2: {
     1: {
       id: 1,
       lessonId: 1,
@@ -328,70 +325,6 @@ export const badges = [
 ];
 
 export const leaderboard = [
-  {
-    id: 2,
-    name: "Priya Patel",
-    avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&h=50&q=80",
-    xp: 4850,
-    level: 19,
-    streak: 45,
-    coursesCompleted: 8,
-    country: "India",
-    city: "Bangalore",
-    isOnline: true,
-    badges: 25,
-    lastActive: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
-    rankChange: 0,
-    previousRank: 1
-  },
-  {
-    id: 3,
-    name: "Rajesh Kumar",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&h=50&q=80",
-    xp: 4650,
-    level: 18,
-    streak: 38,
-    coursesCompleted: 7,
-    country: "India",
-    city: "Delhi",
-    isOnline: false,
-    badges: 22,
-    lastActive: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-    rankChange: 1,
-    previousRank: 3
-  },
-  {
-    id: 4,
-    name: "Ananya Singh",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&h=50&q=80",
-    xp: 4200,
-    level: 17,
-    streak: 28,
-    coursesCompleted: 6,
-    country: "India",
-    city: "Pune",
-    isOnline: true,
-    badges: 19,
-    lastActive: new Date(Date.now() - 10 * 60 * 1000).toISOString(),
-    rankChange: -1,
-    previousRank: 2
-  },
-  {
-    id: 5,
-    name: "Vikram Reddy",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&h=50&q=80",
-    xp: 3950,
-    level: 16,
-    streak: 22,
-    coursesCompleted: 5,
-    country: "India",
-    city: "Hyderabad",
-    isOnline: true,
-    badges: 18,
-    lastActive: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
-    rankChange: 2,
-    previousRank: 6
-  },
   {
     id: 6,
     name: "Kavya Nair",
@@ -695,22 +628,6 @@ export const leaderboard = [
       lastActive: new Date(Date.now() - 10 * 60 * 1000).toISOString(),
       rankChange: -1,
       previousRank: 23
-    },
-    {
-      id: 25,
-      name: "Tanvi Shah",
-      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&h=50&q=80",
-      xp: 850,
-      level: 3,
-      streak: 6,
-      coursesCompleted: 0,
-      country: "India",
-      city: "Vadodara",
-      isOnline: true,
-      badges: 2,
-      lastActive: new Date(Date.now() - 28 * 60 * 1000).toISOString(),
-      rankChange: -2,
-      previousRank: 23
     }
   ];
 
@@ -871,7 +788,6 @@ export const challenges = [
   }
 ];
 
-// Daily Quests - Reset every day
 export const dailyQuests = [
   {
     id: 1,
@@ -909,14 +825,13 @@ export const dailyQuests = [
   }
 ];
 
-// Power-ups and boosters
 export const powerUps = [
   {
     id: 1,
     name: "XP Booster",
     description: "Double XP for next 3 lessons",
     icon: "⚡",
-    cost: 100, // coins
+    cost: 100,
     duration: "3 lessons",
     effect: "2x XP multiplier"
   },
@@ -949,7 +864,6 @@ export const powerUps = [
   }
 ];
 
-// Achievement tiers and rewards
 export const achievementTiers = {
   bronze: { multiplier: 1, color: "#CD7F32", icon: "🥉" },
   silver: { multiplier: 1.5, color: "#C0C0C0", icon: "🥈" },
@@ -957,7 +871,3 @@ export const achievementTiers = {
   platinum: { multiplier: 3, color: "#E5E4E2", icon: "💎" },
   legendary: { multiplier: 5, color: "#9966CC", icon: "👑" }
 };
-
-// Community features removed
-
-// All community data removed

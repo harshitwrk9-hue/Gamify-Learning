@@ -35,7 +35,7 @@ const InteractiveQuiz = ({
   const [confidenceLevel, setConfidenceLevel] = useState(50);
   const [timeWarning, setTimeWarning] = useState(false);
 
-  // Time warning effect
+
   useEffect(() => {
     if (timeLeft <= 30 && timeLeft > 0) {
       setTimeWarning(true);
@@ -44,9 +44,9 @@ const InteractiveQuiz = ({
     }
   }, [timeLeft]);
 
-  // Handle answer selection with immediate feedback
+
   const handleAnswerClick = (answerIndex) => {
-    if (selectedAnswer !== null) return; // Prevent multiple selections
+    if (selectedAnswer !== null) return;
     
     onAnswerSelect(answerIndex);
     
@@ -57,13 +57,13 @@ const InteractiveQuiz = ({
       correctIndex: question.correctAnswer
     });
 
-    // Trigger haptic feedback if available
+
     if (navigator.vibrate) {
       navigator.vibrate(correct ? [100] : [100, 50, 100]);
     }
   };
 
-  // Get difficulty-based styling
+
   const getDifficultyColor = () => {
     switch (difficulty.toLowerCase()) {
       case 'easy': return '#4CAF50';
@@ -73,7 +73,7 @@ const InteractiveQuiz = ({
     }
   };
 
-  // Get confidence-based bonus
+
   const getConfidenceBonus = () => {
     if (confidenceLevel >= 80) return 1.5;
     if (confidenceLevel >= 60) return 1.2;
@@ -81,7 +81,7 @@ const InteractiveQuiz = ({
     return 0.8;
   };
 
-  // Format time display
+
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -90,7 +90,7 @@ const InteractiveQuiz = ({
 
   return (
     <div className="interactive-quiz">
-      {/* Quiz Header */}
+  
       <div className="quiz-header">
         <div className="question-progress">
           <div className="progress-bar">
@@ -119,7 +119,7 @@ const InteractiveQuiz = ({
         </div>
       </div>
 
-      {/* Question Content */}
+  
       <motion.div 
         className="question-content"
         initial={{ opacity: 0, y: 20 }}
@@ -134,7 +134,7 @@ const InteractiveQuiz = ({
           </div>
         )}
 
-        {/* Confidence Slider */}
+  
         {selectedAnswer === null && (
           <motion.div 
             className="confidence-section"
@@ -165,7 +165,7 @@ const InteractiveQuiz = ({
         )}
       </motion.div>
 
-      {/* Answer Options */}
+
       <div className="answer-options">
         {question.options.map((option, index) => {
           let optionClass = 'answer-option';
@@ -205,7 +205,7 @@ const InteractiveQuiz = ({
         })}
       </div>
 
-      {/* Hint Section */}
+
       {question.hint && (
         <div className="hint-section">
           <button 
@@ -234,7 +234,7 @@ const InteractiveQuiz = ({
         </div>
       )}
 
-      {/* Explanation Section */}
+
       <AnimatePresence>
         {showExplanation && question.explanation && (
           <motion.div
@@ -280,7 +280,7 @@ const InteractiveQuiz = ({
         )}
       </AnimatePresence>
 
-      {/* Navigation */}
+
       <div className="quiz-navigation">
         <button 
           className="nav-button prev"

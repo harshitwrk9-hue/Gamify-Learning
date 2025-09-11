@@ -6,7 +6,7 @@ const ProtectedRoute = ({ children }) => {
   const { currentUser, loading } = useAuth();
   const location = useLocation();
 
-  // Show loading spinner while checking authentication
+
   if (loading) {
     return (
       <div className="loading-container">
@@ -18,12 +18,12 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  // If not authenticated, redirect to auth page with current location
+
   if (!currentUser) {
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 
-  // If authenticated, render the protected component
+
   return children;
 };
 

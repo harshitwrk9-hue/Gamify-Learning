@@ -11,23 +11,19 @@ const Auth = () => {
   const location = useLocation();
   const { currentUser, clearError } = useAuth();
   
-  // Get the intended destination from location state
   const from = location.state?.from?.pathname || '/dashboard';
 
   useEffect(() => {
-    // If user is already logged in, redirect to dashboard
     if (currentUser) {
       navigate(from, { replace: true });
     }
   }, [currentUser, navigate, from]);
 
   useEffect(() => {
-    // Clear any existing errors when switching between forms
     clearError();
   }, [isLogin, clearError]);
 
   const handleAuthSuccess = (user) => {
-    // Navigate to the intended destination or dashboard
     navigate(from, { replace: true });
   };
 
@@ -41,7 +37,6 @@ const Auth = () => {
     clearError();
   };
 
-  // Don't render if user is already authenticated
   if (currentUser) {
     return null;
   }

@@ -12,14 +12,13 @@ export const useTheme = () => {
 
 export const ThemeProvider = ({ children }) => {
   useEffect(() => {
-    // Permanently set dark theme on document root
-    document.documentElement.setAttribute('data-theme', 'dark');
+    // Set light mode as default theme
+    document.documentElement.setAttribute('data-theme', 'light');
   }, []);
 
-  // Provide static dark theme values
   const value = {
-    isDarkMode: true,
-    theme: 'dark'
+    isDarkMode: false,
+    theme: 'light'
   };
 
   return (

@@ -8,10 +8,10 @@ const FloatingElements = ({
 }) => {
   const [elements, setElements] = useState([]);
   
-  // Memoize the types array to prevent unnecessary re-renders
+
   const memoizedTypes = useMemo(() => types, [types.join(',')]);
   
-  // Memoize the generateElements function
+
   const generateElements = useCallback(() => {
     const newElements = [];
     for (let i = 0; i < elementCount; i++) {
@@ -21,9 +21,9 @@ const FloatingElements = ({
         type,
         left: Math.random() * 100,
         top: Math.random() * 100,
-        animationDuration: 4 + Math.random() * 4, // 4-8 seconds
-        animationDelay: Math.random() * 3, // 0-3 seconds delay
-        scale: 0.5 + Math.random() * 0.8 // 0.5-1.3 scale
+        animationDuration: 4 + Math.random() * 4,
+        animationDelay: Math.random() * 3,
+        scale: 0.5 + Math.random() * 0.8
       });
     }
     setElements(newElements);

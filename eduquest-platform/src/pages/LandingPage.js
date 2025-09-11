@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FaRocket, FaTrophy, FaBrain, FaChartLine, FaGamepad } from 'react-icons/fa';
-import HeroIllustration from '../assets/hero-illustration.svg';
+import { FaRocket, FaTrophy, FaBrain, FaChartLine, FaGamepad, FaUser } from 'react-icons/fa';
+
 import LearningProgress from '../assets/learning-progress.svg';
 
 import './LandingPage.css';
@@ -46,7 +46,7 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page">
-      {/* Hero Section */}
+
       <section className="hero-section">
         <div className="hero-background">
           <div className="hero-shapes">
@@ -103,7 +103,7 @@ const LandingPage = () => {
             <div className="hero-card">
               <div className="card-header">
                 <div className="user-info">
-                  <div className="avatar"></div>
+
                   <div className="user-details">
                     <h1>User</h1>
                     <p>Level 12 • 2,850 XP</p>
@@ -140,7 +140,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Stats Section */}
+
       <section className="stats-section">
         <div className="container">
           <div className="stats-grid">
@@ -160,7 +160,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Features Section */}
+
       <section className="features-section">
         <div className="container">
           <motion.div
@@ -202,7 +202,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+
       <section className="cta-section">
         <div className="container">
           <motion.div

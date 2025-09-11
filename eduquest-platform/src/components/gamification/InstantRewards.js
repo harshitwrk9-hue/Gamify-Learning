@@ -23,7 +23,7 @@ const InstantRewards = ({
   const [comboMultiplier, setComboMultiplier] = useState(1);
   const [comboCount, setComboCount] = useState(0);
 
-  // XP thresholds for levels
+
   const getXPForLevel = (level) => level * 100;
   const getCurrentLevelProgress = () => {
     const currentLevelXP = getXPForLevel(currentLevel - 1);
@@ -31,7 +31,7 @@ const InstantRewards = ({
     return ((currentXP - currentLevelXP) / (nextLevelXP - currentLevelXP)) * 100;
   };
 
-  // Reward types and their animations
+
   const rewardTypes = {
     xp: { icon: FaStar, color: '#FFD700', label: 'XP' },
     coins: { icon: FaCoins, color: '#FFA500', label: 'Coins' },
@@ -41,7 +41,7 @@ const InstantRewards = ({
     gem: { icon: FaGem, color: '#3498DB', label: 'Gem' }
   };
 
-  // Add reward to animation queue
+
   const addReward = (type, amount, message = '') => {
     const id = Date.now() + Math.random();
     const reward = {
@@ -54,24 +54,24 @@ const InstantRewards = ({
 
     setActiveRewards(prev => [...prev, reward]);
     
-    // Update combo system
+  
     setComboCount(prev => prev + 1);
     if (comboCount >= 2) {
       setComboMultiplier(prev => Math.min(prev + 0.5, 3));
     }
 
-    // Remove reward after animation
+  
     setTimeout(() => {
       setActiveRewards(prev => prev.filter(r => r.id !== id));
     }, 2000);
 
-    // Reset combo after inactivity
+  
     setTimeout(() => {
       setComboCount(0);
       setComboMultiplier(1);
     }, 5000);
 
-    // Trigger callback
+  
     if (onRewardEarned) {
       onRewardEarned({
         type,
@@ -81,7 +81,7 @@ const InstantRewards = ({
     }
   };
 
-  // Quick reward functions for common actions
+
   const rewardCorrectAnswer = (difficulty = 'medium') => {
     const baseXP = { easy: 10, medium: 15, hard: 25 }[difficulty] || 15;
     const baseCoins = { easy: 5, medium: 8, hard: 12 }[difficulty] || 8;
@@ -115,7 +115,7 @@ const InstantRewards = ({
     setTimeout(() => setLevelUpAnimation(false), 3000);
   };
 
-  // Expose reward functions globally
+
   useEffect(() => {
     window.eduquestRewards = {
       correctAnswer: rewardCorrectAnswer,
@@ -132,7 +132,7 @@ const InstantRewards = ({
 
   return (
     <div className="instant-rewards-container">
-      {/* Level Up Animation */}
+
       <AnimatePresence>
         {levelUpAnimation && (
           <motion.div
@@ -158,7 +158,7 @@ const InstantRewards = ({
         )}
       </AnimatePresence>
 
-      {/* Combo Multiplier Display */}
+
       <AnimatePresence>
         {comboMultiplier > 1 && (
           <motion.div
@@ -173,7 +173,7 @@ const InstantRewards = ({
         )}
       </AnimatePresence>
 
-      {/* Floating Rewards */}
+
       <div className="rewards-container">
         <AnimatePresence>
           {activeRewards.map((reward) => {
@@ -222,7 +222,7 @@ const InstantRewards = ({
         </AnimatePresence>
       </div>
 
-      {/* XP Progress Bar (Mini) */}
+
       <div className="mini-xp-bar">
         <div className="xp-info">
           <span>Level {currentLevel}</span>

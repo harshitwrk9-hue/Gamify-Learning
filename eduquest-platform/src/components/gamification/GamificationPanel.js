@@ -51,7 +51,7 @@ const GamificationPanel = () => {
       transition={{ duration: 0.6 }}
       className="gamification-panel"
     >
-      {/* Currency Display */}
+
       <div className="currency-display">
         <motion.div 
           className="currency-item coins"
@@ -93,7 +93,7 @@ const GamificationPanel = () => {
         </motion.div>
       </div>
 
-      {/* Tab Navigation */}
+
       <div className="tab-navigation">
         <button 
           className={`tab-button ${activeTab === 'quests' ? 'active' : ''}`}
@@ -115,7 +115,7 @@ const GamificationPanel = () => {
         </button>
       </div>
 
-      {/* Tab Content */}
+
       <AnimatePresence mode="wait">
         {activeTab === 'quests' && (
           <motion.div

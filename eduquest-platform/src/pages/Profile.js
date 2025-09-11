@@ -9,7 +9,7 @@ const Profile = () => {
   const [editedUser, setEditedUser] = useState({ ...currentUser });
 
   const handleSave = () => {
-    // In a real app, this would save to backend
+
     setIsEditing(false);
   };
 
@@ -19,7 +19,7 @@ const Profile = () => {
   };
 
   const userBadges = badges.filter(badge => currentUser.badges.includes(badge.id));
-  const userAchievements = achievements.slice(0, 5); // Show recent achievements
+  const userAchievements = achievements.slice(0, 5);
 
   return (
     <motion.div 

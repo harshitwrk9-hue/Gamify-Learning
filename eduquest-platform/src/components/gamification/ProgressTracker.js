@@ -45,22 +45,22 @@ const ProgressTracker = ({
   }, [currentStreak]);
 
   const getStreakColor = (streak) => {
-    if (streak >= 30) return '#FF6B35'; // Fire red
-    if (streak >= 14) return '#FF8E53'; // Orange
-    if (streak >= 7) return '#FFA726'; // Light orange
-    return '#FFB74D'; // Yellow
+    if (streak >= 30) return '#FF6B35';
+    if (streak >= 14) return '#FF8E53';
+    if (streak >= 7) return '#FFA726';
+    return '#FFB74D';
   };
 
   const getProgressColor = (percentage) => {
-    if (percentage >= 100) return '#4CAF50'; // Green
-    if (percentage >= 75) return '#8BC34A'; // Light green
-    if (percentage >= 50) return '#FFC107'; // Yellow
-    return '#FF9800'; // Orange
+    if (percentage >= 100) return '#4CAF50';
+    if (percentage >= 75) return '#8BC34A';
+    if (percentage >= 50) return '#FFC107';
+    return '#FF9800';
   };
 
   return (
     <div className="progress-tracker">
-      {/* Celebration Animation */}
+
       <AnimatePresence>
         {showCelebration && (
           <motion.div
@@ -79,7 +79,7 @@ const ProgressTracker = ({
         )}
       </AnimatePresence>
 
-      {/* Streak Counter */}
+
       <motion.div 
         className="streak-section"
         animate={animateStreak ? { scale: [1, 1.1, 1] } : {}}
@@ -112,9 +112,9 @@ const ProgressTracker = ({
         </div>
       </motion.div>
 
-      {/* Progress Goals */}
+
       <div className="progress-goals">
-        {/* Daily Progress */}
+
         <motion.div 
           className="progress-card daily"
           whileHover={{ y: -5 }}
@@ -149,7 +149,7 @@ const ProgressTracker = ({
           )}
         </motion.div>
 
-        {/* Weekly Progress */}
+
         <motion.div 
           className="progress-card weekly"
           whileHover={{ y: -5 }}
@@ -184,7 +184,7 @@ const ProgressTracker = ({
           )}
         </motion.div>
 
-        {/* Monthly Progress */}
+
         <motion.div 
           className="progress-card monthly"
           whileHover={{ y: -5 }}
@@ -220,7 +220,7 @@ const ProgressTracker = ({
         </motion.div>
       </div>
 
-      {/* Recent Achievements */}
+
       {recentAchievements.length > 0 && (
         <div className="recent-achievements">
           <h4>Recent Achievements</h4>

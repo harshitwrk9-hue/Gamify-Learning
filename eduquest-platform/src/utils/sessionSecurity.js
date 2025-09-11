@@ -8,8 +8,8 @@ import securityLogger from './securityLogger.js';
 class SessionSecurity {
   constructor() {
     this.tokenLength = 64;
-    this.maxSessionAge = 30 * 24 * 60 * 60 * 1000; // 30 days
-    this.sessionCleanupInterval = 60 * 60 * 1000; // 1 hour
+    this.maxSessionAge = 30 * 24 * 60 * 60 * 1000;
+    this.sessionCleanupInterval = 60 * 60 * 1000;
     this.activeSessions = new Map();
     this.suspiciousSessions = new Set();
     
@@ -17,26 +17,26 @@ class SessionSecurity {
   }
 
   initializeSessionMonitoring() {
-    // Periodic cleanup of expired sessions
+
     setInterval(() => {
       this.cleanupExpiredSessions();
     }, this.sessionCleanupInterval);
 
-    // Monitor for session anomalies
+
     setInterval(() => {
       this.monitorSessionAnomalies();
-    }, 5 * 60 * 1000); // Every 5 minutes
+    }, 5 * 60 * 1000);
   }
 
   generateSecureToken() {
     try {
-      // Use crypto API for secure random token generation
+    
       const array = new Uint8Array(this.tokenLength / 2);
       
       if (typeof window !== 'undefined' && window.crypto) {
         window.crypto.getRandomValues(array);
       } else {
-        // Fallback for environments without crypto API
+    
         for (let i = 0; i < array.length; i++) {
           array[i] = Math.floor(Math.random() * 256);
         }
@@ -58,7 +58,7 @@ class SessionSecurity {
     }
   }
 
-  // Legacy method for backward compatibility
+
   generateToken() {
     return this.generateSecureToken();
   }
@@ -75,7 +75,7 @@ class SessionSecurity {
 
       const { token, expiresAt, userId, timestamp } = sessionData;
 
-      // Check required fields
+  
       if (!token || !expiresAt || !userId) {
         securityLogger.log('session_validation_failed', {
           reason: 'missing_required_fields',
@@ -86,7 +86,7 @@ class SessionSecurity {
         return false;
       }
 
-      // Check token format
+  
       if (!this.isValidTokenFormat(token)) {
         securityLogger.log('session_validation_failed', {
           reason: 'invalid_token_format',
@@ -95,7 +95,7 @@ class SessionSecurity {
         return false;
       }
 
-      // Check expiration
+  
       const now = Date.now();
       if (now > expiresAt) {
         securityLogger.log('session_expired', {
@@ -106,7 +106,7 @@ class SessionSecurity {
         return false;
       }
 
-      // Check for suspicious session activity
+  
       if (this.isSuspiciousSession(sessionData)) {
         securityLogger.log('suspicious_session_detected', {
           userId,
@@ -115,7 +115,7 @@ class SessionSecurity {
         return false;
       }
 
-      // Track active session
+  
       this.trackActiveSession(sessionData);
 
       securityLogger.log('session_validated', {
@@ -138,7 +138,7 @@ class SessionSecurity {
     if (typeof token !== 'string') return false;
     if (token.length !== this.tokenLength) return false;
     
-    // Check if token contains only hexadecimal characters
+  
     const hexPattern = /^[a-f0-9]+$/i;
     return hexPattern.test(token);
   }
@@ -146,16 +146,16 @@ class SessionSecurity {
   isSuspiciousSession(sessionData) {
     const sessionId = sessionData.token;
     
-    // Check if session is already marked as suspicious
+  
     if (this.suspiciousSessions.has(sessionId)) {
       return true;
     }
 
-    // Check for rapid session creation from same user
+
     const recentSessions = Array.from(this.activeSessions.values())
       .filter(session => 
         session.userId === sessionData.userId &&
-        Date.now() - session.createdAt < 5 * 60 * 1000 // 5 minutes
+        Date.now() - session.createdAt < 5 * 60 * 1000
       );
 
     if (recentSessions.length > 5) {
@@ -163,7 +163,7 @@ class SessionSecurity {
       return true;
     }
 
-    // Check for unusual session duration patterns
+
     if (this.hasUnusualDurationPattern(sessionData)) {
       this.markSessionSuspicious(sessionId, 'unusual_duration_pattern');
       return true;
@@ -176,13 +176,11 @@ class SessionSecurity {
     const { expiresAt, timestamp, rememberMe } = sessionData;
     const sessionDuration = expiresAt - (timestamp || Date.now());
     
-    // Check for suspiciously long sessions without remember me
-    if (!rememberMe && sessionDuration > 7 * 24 * 60 * 60 * 1000) { // 7 days
+    if (!rememberMe && sessionDuration > 7 * 24 * 60 * 60 * 1000) {
       return true;
     }
 
-    // Check for suspiciously short sessions
-    if (sessionDuration < 5 * 60 * 1000) { // 5 minutes
+    if (sessionDuration < 5 * 60 * 1000) {
       return true;
     }
 
@@ -269,11 +267,11 @@ class SessionSecurity {
     const now = Date.now();
     const anomalies = [];
 
-    // Check for sessions with no recent activity
+
     const inactiveSessions = Array.from(this.activeSessions.entries())
       .filter(([token, session]) => {
         const inactiveTime = now - session.lastActivity;
-        return inactiveTime > 2 * 60 * 60 * 1000; // 2 hours
+        return inactiveTime > 2 * 60 * 60 * 1000;
       });
 
     if (inactiveSessions.length > 0) {
@@ -288,7 +286,7 @@ class SessionSecurity {
       });
     }
 
-    // Check for users with multiple active sessions
+
     const userSessions = new Map();
     for (const [token, session] of this.activeSessions.entries()) {
       if (!userSessions.has(session.userId)) {
@@ -311,7 +309,7 @@ class SessionSecurity {
       });
     }
 
-    // Log anomalies
+
     anomalies.forEach(anomaly => {
       securityLogger.log('session_anomaly_detected', anomaly, 'warn');
     });
@@ -324,7 +322,7 @@ class SessionSecurity {
 
     const sanitized = { ...sessionData };
     
-    // Sanitize sensitive fields
+
     if (sanitized.token) {
       sanitized.token = sanitized.token.substring(0, 8) + '...';
     }
@@ -332,7 +330,7 @@ class SessionSecurity {
     return sanitized;
   }
 
-  // Security reporting methods
+
   getSessionStats() {
     const now = Date.now();
     const stats = {
@@ -349,14 +347,14 @@ class SessionSecurity {
     let newestTime = 0;
 
     for (const [token, session] of this.activeSessions.entries()) {
-      // Count by type
+  
       if (session.rememberMe) {
         stats.sessionsByType.persistent++;
       } else {
         stats.sessionsByType.regular++;
       }
 
-      // Calculate ages
+  
       const sessionAge = now - session.createdAt;
       totalAge += sessionAge;
 
@@ -393,7 +391,7 @@ class SessionSecurity {
   }
 }
 
-// Create singleton instance
+
 const sessionSecurity = new SessionSecurity();
 
 export default sessionSecurity;

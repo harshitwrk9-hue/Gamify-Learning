@@ -41,13 +41,13 @@ const SocialLeaderboard = ({
   const [showChallengeModal, setShowChallengeModal] = useState(null);
   const [recentActivities, setRecentActivities] = useState([]);
 
-  // Mock leaderboard data - in real app, this would come from API
+
   const mockLeaderboardData = {
     global: {
       weekly: [
         {
           id: 1,
-          name: 'Alex Chen',
+          name: 'Arjun Sharma',
           avatar: '👨‍💻',
           xp: 15420,
           level: 28,
@@ -56,15 +56,15 @@ const SocialLeaderboard = ({
           weeklyXP: 2840,
           rank: 1,
           previousRank: 3,
-          school: 'MIT',
-          country: '🇺🇸',
+          school: 'IIT Delhi',
+          country: '🇮🇳',
           isOnline: true,
           achievements: ['Speed Demon', 'Perfect Score', 'Scholar'],
           specialties: ['Mathematics', 'Physics']
         },
         {
           id: 2,
-          name: 'Sarah Johnson',
+          name: 'Priya Patel',
           avatar: '👩‍🎓',
           xp: 14890,
           level: 27,
@@ -73,15 +73,15 @@ const SocialLeaderboard = ({
           weeklyXP: 2650,
           rank: 2,
           previousRank: 1,
-          school: 'Stanford',
-          country: '🇺🇸',
+          school: 'IIT Bombay',
+          country: '🇮🇳',
           isOnline: false,
           achievements: ['Unstoppable', 'Math Master', 'Night Owl'],
           specialties: ['Computer Science', 'Mathematics']
         },
         {
           id: 3,
-          name: 'Yuki Tanaka',
+          name: 'Vikram Singh',
           avatar: '👨‍🔬',
           xp: 14200,
           level: 26,
@@ -90,15 +90,15 @@ const SocialLeaderboard = ({
           weeklyXP: 2420,
           rank: 3,
           previousRank: 4,
-          school: 'Tokyo University',
-          country: '🇯🇵',
+          school: 'AIIMS Delhi',
+          country: '🇮🇳',
           isOnline: true,
           achievements: ['Science Wizard', 'Early Bird', 'Quick Learner'],
           specialties: ['Chemistry', 'Biology']
         },
         {
           id: 4,
-          name: 'Emma Wilson',
+          name: 'Ananya Gupta',
           avatar: '👩‍💼',
           xp: 13850,
           level: 25,
@@ -107,15 +107,15 @@ const SocialLeaderboard = ({
           weeklyXP: 2180,
           rank: 4,
           previousRank: 2,
-          school: 'Oxford',
-          country: '🇬🇧',
+          school: 'JNU Delhi',
+          country: '🇮🇳',
           isOnline: true,
           achievements: ['Social Butterfly', 'Perfectionist', 'Scholar'],
           specialties: ['Literature', 'History']
         },
         {
           id: 5,
-          name: 'Carlos Rodriguez',
+          name: 'Rajesh Kumar',
           avatar: '👨‍🎨',
           xp: 13420,
           level: 24,
@@ -124,8 +124,8 @@ const SocialLeaderboard = ({
           weeklyXP: 1950,
           rank: 5,
           previousRank: 6,
-          school: 'Barcelona University',
-          country: '🇪🇸',
+          school: 'NID Ahmedabad',
+          country: '🇮🇳',
           isOnline: false,
           achievements: ['Creative Genius', 'Art Master', 'Consistent'],
           specialties: ['Art', 'Design']
@@ -136,7 +136,7 @@ const SocialLeaderboard = ({
       weekly: [
         {
           id: 2,
-          name: 'Sarah Johnson',
+          name: 'Priya Patel',
           avatar: '👩‍🎓',
           xp: 14890,
           level: 27,
@@ -150,7 +150,7 @@ const SocialLeaderboard = ({
         },
         {
           id: 6,
-          name: 'Mike Thompson',
+          name: 'Rohit Sharma',
           avatar: '👨‍🏫',
           xp: 12800,
           level: 23,
@@ -168,7 +168,7 @@ const SocialLeaderboard = ({
       weekly: [
         {
           id: 7,
-          name: 'Lisa Park',
+          name: 'Kavya Nair',
           avatar: '👩‍🔬',
           xp: 16200,
           level: 29,
@@ -177,7 +177,7 @@ const SocialLeaderboard = ({
           weeklyXP: 3100,
           rank: 1,
           previousRank: 1,
-          school: 'MIT',
+          school: 'IIT Madras',
           year: 'Senior'
         }
       ]
@@ -187,7 +187,7 @@ const SocialLeaderboard = ({
   const mockActivities = [
     {
       id: 1,
-      user: 'Alex Chen',
+      user: 'Arjun Sharma',
       avatar: '👨‍💻',
       action: 'unlocked',
       target: 'Speed Demon badge',
@@ -197,7 +197,7 @@ const SocialLeaderboard = ({
     },
     {
       id: 2,
-      user: 'Sarah Johnson',
+      user: 'Priya Patel',
       avatar: '👩‍🎓',
       action: 'reached',
       target: 'Level 27',
@@ -207,7 +207,7 @@ const SocialLeaderboard = ({
     },
     {
       id: 3,
-      user: 'Yuki Tanaka',
+      user: 'Vikram Singh',
       avatar: '👨‍🔬',
       action: 'completed',
       target: '50 Chemistry quizzes',
@@ -229,15 +229,15 @@ const SocialLeaderboard = ({
     monthly: { icon: FaUsers, label: 'This Month' }
   };
 
-  // Load leaderboard data
+
   useEffect(() => {
     setIsLoading(true);
-    // Simulate API call
+
     setTimeout(() => {
       const data = mockLeaderboardData[activeTab]?.[timeFrame] || [];
       setLeaderboardData(data);
       
-      // Find current user's rank
+  
       const userIndex = data.findIndex(user => user.id === currentUser.id);
       if (userIndex !== -1) {
         setUserRank({
@@ -245,7 +245,7 @@ const SocialLeaderboard = ({
           position: userIndex + 1
         });
       } else {
-        // User not in top rankings
+  
         setUserRank({
           ...currentUser,
           position: Math.floor(Math.random() * 1000) + 100,
@@ -257,7 +257,7 @@ const SocialLeaderboard = ({
     }, 500);
   }, [activeTab, timeFrame, currentUser.id]);
 
-  // Load recent activities
+
   useEffect(() => {
     setRecentActivities(mockActivities);
   }, []);
@@ -303,7 +303,7 @@ const SocialLeaderboard = ({
 
   return (
     <div className="social-leaderboard">
-      {/* Header */}
+
       <div className="leaderboard-header">
         <div className="header-title">
           <FaTrophy className="header-icon" />
@@ -321,7 +321,7 @@ const SocialLeaderboard = ({
         </div>
       </div>
 
-      {/* Tab Navigation */}
+
       <div className="tab-navigation">
         {Object.entries(tabs).map(([key, tab]) => {
           const IconComponent = tab.icon;
@@ -338,7 +338,7 @@ const SocialLeaderboard = ({
         })}
       </div>
 
-      {/* Time Frame Selection */}
+
       <div className="time-frame-selection">
         {Object.entries(timeFrames).map(([key, frame]) => {
           const IconComponent = frame.icon;
@@ -355,7 +355,7 @@ const SocialLeaderboard = ({
         })}
       </div>
 
-      {/* Search and Filter */}
+
       <div className="search-filter-bar">
         <div className="search-box">
           <FaSearch className="search-icon" />
@@ -382,7 +382,7 @@ const SocialLeaderboard = ({
       </div>
 
       <div className="leaderboard-content">
-        {/* Current User Rank */}
+  
         {userRank && (
           <motion.div 
             className="current-user-rank"
@@ -425,7 +425,7 @@ const SocialLeaderboard = ({
           </motion.div>
         )}
 
-        {/* Leaderboard List */}
+  
         <div className="leaderboard-list">
           <AnimatePresence>
             {isLoading ? (
@@ -544,7 +544,7 @@ const SocialLeaderboard = ({
           </AnimatePresence>
         </div>
 
-        {/* Recent Activities */}
+  
         <div className="recent-activities">
           <h3>Recent Activities</h3>
           <div className="activities-list">
@@ -578,7 +578,7 @@ const SocialLeaderboard = ({
         </div>
       </div>
 
-      {/* Challenge Modal */}
+
       <AnimatePresence>
         {showChallengeModal && (
           <motion.div

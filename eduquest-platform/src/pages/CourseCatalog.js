@@ -19,7 +19,7 @@ const CourseCatalog = () => {
     { value: 'progress', label: 'My Progress' }
   ];
 
-  // Filter and sort courses
+
   const filteredCourses = courses
     .filter(course => {
       const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -59,7 +59,7 @@ const CourseCatalog = () => {
   return (
     <div className="course-catalog">
       <div className="catalog-container">
-        {/* Header */}
+  
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -82,7 +82,7 @@ const CourseCatalog = () => {
           </div>
         </motion.div>
 
-        {/* Categories */}
+  
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -113,7 +113,7 @@ const CourseCatalog = () => {
           </div>
         </motion.div>
 
-        {/* Filters and Search */}
+  
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -176,7 +176,7 @@ const CourseCatalog = () => {
           </div>
         </motion.div>
 
-        {/* Results */}
+  
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -242,57 +242,55 @@ const CourseCatalog = () => {
                     </div>
                   </div>
 
-                  <div className="course-content">
-                    <div className="course-category">{course.category}</div>
-                    <h3 className="course-title">{course.title}</h3>
-                    <p className="course-description">{course.description}</p>
+                  <div className="course-category">{course.category}</div>
+                  <h3 className="course-title">{course.title}</h3>
+                  <p className="course-description">{course.description}</p>
 
-                    <div className="course-instructor">
-                      <span>by {course.instructor}</span>
+                  <div className="course-instructor">
+                    <span>by {course.instructor}</span>
+                  </div>
+
+                  <div className="course-meta">
+                    <div className="meta-item">
+                      <FaStar className="meta-icon" />
+                      <span>{course.rating}</span>
                     </div>
-
-                    <div className="course-meta">
-                      <div className="meta-item">
-                        <FaStar className="meta-icon" />
-                        <span>{course.rating}</span>
-                      </div>
-                      <div className="meta-item">
-                        <FaUsers className="meta-icon" />
-                        <span>{course.students.toLocaleString()}</span>
-                      </div>
-                      <div className="meta-item">
-                        <FaClock className="meta-icon" />
-                        <span>{course.duration}</span>
-                      </div>
+                    <div className="meta-item">
+                      <FaUsers className="meta-icon" />
+                      <span>{course.students.toLocaleString()}</span>
                     </div>
+                    <div className="meta-item">
+                      <FaClock className="meta-icon" />
+                      <span>{course.duration}</span>
+                    </div>
+                  </div>
 
-                    {course.progress > 0 && (
-                      <div className="course-progress">
-                        <div className="progress-bar">
-                          <motion.div
-                            className="progress-fill"
-                            initial={{ width: 0 }}
-                            animate={{ width: `${course.progress}%` }}
-                            transition={{ duration: 1, delay: 0.5 + index * 0.1 }}
-                            style={{ background: course.color }}
-                          />
-                        </div>
-                        <span className="progress-text">
-                          {course.completedLessons}/{course.lessons} lessons completed
-                        </span>
+                  {course.progress > 0 && (
+                    <div className="course-progress">
+                      <div className="progress-bar">
+                        <motion.div
+                          className="progress-fill"
+                          initial={{ width: 0 }}
+                          animate={{ width: `${course.progress}%` }}
+                          transition={{ duration: 1, delay: 0.5 + index * 0.1 }}
+                          style={{ background: course.color }}
+                        />
                       </div>
-                    )}
+                      <span className="progress-text">
+                        {course.completedLessons}/{course.lessons} lessons completed
+                      </span>
+                    </div>
+                  )}
 
-                    <div className="course-footer">
-                      <div className="xp-reward">
-                        <span>+{course.xpReward} XP</span>
-                      </div>
-                      <Link to={`/course/${course.id}`} className="course-button">
+                  <div className="course-footer">
+                    <div className="xp-reward">
+                      <span>+{course.xpReward} XP</span>
+                    </div>
+                    <Link to={`/course/${course.id}`} className="course-button">
                         {progressStatus === 'completed' ? 'Review' :
                          progressStatus === 'in-progress' ? 'Continue' : 'Start Course'}
                       </Link>
                     </div>
-                  </div>
                 </motion.div>
               );
             })}

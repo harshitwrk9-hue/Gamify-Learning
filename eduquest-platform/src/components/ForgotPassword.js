@@ -44,21 +44,20 @@ const ForgotPassword = ({ isOpen, onClose, onBackToLogin }) => {
     setError('');
     
     try {
-      // Sanitize email input
+  
       const sanitizedEmail = sanitizeInput.text(email.trim().toLowerCase());
       
-      // Log password reset attempt
+  
       securityLogger.log('password_reset_requested', {
         email: sanitizedEmail,
         timestamp: new Date().toISOString(),
         userAgent: navigator.userAgent
       });
       
-      // Simulate API call for password reset
+  
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      // In a real application, this would send a reset email
-      // For demo purposes, we'll just show success
+      
       setSuccess(true);
       
       securityLogger.log('password_reset_email_sent', {

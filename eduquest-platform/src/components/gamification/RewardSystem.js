@@ -26,7 +26,7 @@ const RewardSystem = ({
   const [showCelebration, setShowCelebration] = useState(false);
   const [celebrationData, setCelebrationData] = useState(null);
 
-  // Simulate earning rewards (for demo purposes)
+
   const earnReward = (type, amount, reason) => {
     const rewardId = Date.now() + Math.random();
     const newReward = {
@@ -37,31 +37,31 @@ const RewardSystem = ({
       timestamp: Date.now()
     };
 
-    // Add floating animation
+
     setFloatingRewards(prev => [...prev, newReward]);
     
-    // Add to recent rewards
+
     setRecentRewards(prev => [newReward, ...prev.slice(0, 4)]);
     
-    // Show celebration for significant rewards
+
     if (amount >= 100 || type === 'gem') {
       setCelebrationData(newReward);
       setShowCelebration(true);
       setTimeout(() => setShowCelebration(false), 3000);
     }
 
-    // Remove floating reward after animation
+
     setTimeout(() => {
       setFloatingRewards(prev => prev.filter(r => r.id !== rewardId));
     }, 2000);
 
-    // Callback to parent component
+
     if (onRewardEarned) {
       onRewardEarned(newReward);
     }
   };
 
-  // Demo reward triggers
+
   const triggerDemoRewards = () => {
     const rewards = [
       { type: 'coin', amount: 50, reason: 'Lesson Completed' },
@@ -102,7 +102,7 @@ const RewardSystem = ({
 
   return (
     <div className="reward-system">
-      {/* Floating Rewards */}
+
       <AnimatePresence>
         {floatingRewards.map((reward) => (
           <motion.div
@@ -136,7 +136,7 @@ const RewardSystem = ({
         ))}
       </AnimatePresence>
 
-      {/* Celebration Modal */}
+
       <AnimatePresence>
         {showCelebration && celebrationData && (
           <motion.div
@@ -209,7 +209,7 @@ const RewardSystem = ({
         )}
       </AnimatePresence>
 
-      {/* Reward Display Panel */}
+
       {showRewards && (
         <motion.div 
           className="reward-display"
@@ -260,7 +260,7 @@ const RewardSystem = ({
             </motion.div>
           </div>
 
-          {/* Recent Rewards */}
+
           {recentRewards.length > 0 && (
             <div className="recent-rewards">
               <h4>Recent Rewards</h4>
@@ -297,7 +297,7 @@ const RewardSystem = ({
             </div>
           )}
 
-          {/* Demo Button */}
+
           <motion.button
             className="demo-rewards-btn"
             onClick={triggerDemoRewards}

@@ -6,25 +6,25 @@
 class SecurityLogger {
   constructor() {
     this.logLevel = process.env.NODE_ENV === 'production' ? 'warn' : 'debug';
-    this.maxLogSize = 1000; // Maximum number of logs to keep in memory
+    this.maxLogSize = 1000;
     this.logs = [];
     this.securityEvents = new Map();
     this.suspiciousActivities = [];
     
-    // Initialize security monitoring
+
     this.initializeMonitoring();
   }
 
   initializeMonitoring() {
-    // Set up periodic cleanup of old logs
+
     setInterval(() => {
       this.cleanupOldLogs();
-    }, 60000); // Every minute
+    }, 60000);
 
-    // Monitor for suspicious patterns
+
     setInterval(() => {
       this.analyzeSuspiciousPatterns();
-    }, 300000); // Every 5 minutes
+    }, 300000);
   }
 
   log(eventType, data = {}, level = 'info') {
@@ -40,27 +40,27 @@ class SecurityLogger {
       sessionId: this.getSessionId()
     };
 
-    // Add to memory logs
+
     this.logs.push(logEntry);
     
-    // Maintain log size limit
+
     if (this.logs.length > this.maxLogSize) {
       this.logs.shift();
     }
 
-    // Track security events
+
     this.trackSecurityEvent(eventType, logEntry);
 
-    // Console logging based on level
+
     this.consoleLog(logEntry);
 
-    // Check for immediate security threats
+
     this.checkSecurityThreats(eventType, data);
 
     return logEntry.id;
   }
 
-  // Security event tracking
+
   trackSecurityEvent(eventType, logEntry) {
     const securityEvents = [
       'login_attempt', 'login_success', 'login_failure',
@@ -79,14 +79,14 @@ class SecurityLogger {
       const events = this.securityEvents.get(eventType);
       events.push(logEntry);
       
-      // Keep only recent events (last 100)
+  
       if (events.length > 100) {
         events.shift();
       }
     }
   }
 
-  // Enhanced error logging
+
   logError(error, context = {}) {
     const errorData = {
       message: error.message,
@@ -98,11 +98,11 @@ class SecurityLogger {
 
     this.log('application_error', errorData, 'error');
     
-    // Check if error indicates security issue
+
     this.analyzeErrorForSecurity(error, context);
   }
 
-  // Security threat detection
+
   checkSecurityThreats(eventType, data) {
     const threats = {
       'login_failure': () => this.checkBruteForceAttempt(data),
@@ -117,7 +117,7 @@ class SecurityLogger {
   }
 
   checkBruteForceAttempt(data) {
-    const recentFailures = this.getRecentEvents('login_failure', 15 * 60 * 1000); // 15 minutes
+    const recentFailures = this.getRecentEvents('login_failure', 15 * 60 * 1000);
     const failuresFromIP = recentFailures.filter(event => 
       event.ip === this.getClientIP()
     );
@@ -133,7 +133,7 @@ class SecurityLogger {
   }
 
   checkDDoSAttempt(data) {
-    const recentRateLimits = this.getRecentEvents('rate_limit_exceeded', 5 * 60 * 1000); // 5 minutes
+    const recentRateLimits = this.getRecentEvents('rate_limit_exceeded', 5 * 60 * 1000);
     
     if (recentRateLimits.length >= 50) {
       this.log('suspicious_activity', {
@@ -160,7 +160,7 @@ class SecurityLogger {
     }, 'error');
   }
 
-  // Pattern analysis for suspicious activities
+
   analyzeSuspiciousPatterns() {
     const patterns = [
       this.detectUnusualLoginPatterns(),
@@ -176,7 +176,7 @@ class SecurityLogger {
   }
 
   detectUnusualLoginPatterns() {
-    const recentLogins = this.getRecentEvents('login_success', 24 * 60 * 60 * 1000); // 24 hours
+    const recentLogins = this.getRecentEvents('login_success', 24 * 60 * 60 * 1000);
     const ipCounts = {};
     
     recentLogins.forEach(login => {
@@ -196,12 +196,12 @@ class SecurityLogger {
   }
 
   detectSessionAnomalies() {
-    const recentSessions = this.getRecentEvents('session_created', 60 * 60 * 1000); // 1 hour
+    const recentSessions = this.getRecentEvents('session_created', 60 * 60 * 1000);
     const shortSessions = recentSessions.filter(session => {
       const sessionEnd = this.findSessionEnd(session.data.sessionId);
       if (sessionEnd) {
         const duration = new Date(sessionEnd.timestamp) - new Date(session.timestamp);
-        return duration < 30000; // Less than 30 seconds
+        return duration < 30000;
       }
       return false;
     });
@@ -229,7 +229,7 @@ class SecurityLogger {
     };
   }
 
-  // Utility methods
+
   getRecentEvents(eventType, timeWindow) {
     const cutoffTime = new Date(Date.now() - timeWindow);
     const events = this.securityEvents.get(eventType) || [];
@@ -249,7 +249,7 @@ class SecurityLogger {
   sanitizeLogData(data) {
     const sanitized = { ...data };
     
-    // Remove sensitive information
+  
     const sensitiveFields = ['password', 'token', 'secret', 'key', 'hash'];
     
     Object.keys(sanitized).forEach(key => {
@@ -277,7 +277,7 @@ class SecurityLogger {
   }
 
   getClientIP() {
-    // In a real application, this would be provided by the server
+  
     return 'client-side';
   }
 
@@ -336,12 +336,12 @@ class SecurityLogger {
   cleanupOldLogs() {
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
     
-    // Clean up main logs
+
     this.logs = this.logs.filter(log => 
       new Date(log.timestamp) > oneHourAgo
     );
 
-    // Clean up security events
+
     this.securityEvents.forEach((events, eventType) => {
       const recentEvents = events.filter(event => 
         new Date(event.timestamp) > oneHourAgo
@@ -350,7 +350,7 @@ class SecurityLogger {
     });
   }
 
-  // Public methods for retrieving logs
+
   getLogs(eventType = null, limit = 50) {
     let logs = eventType ? 
       this.logs.filter(log => log.eventType === eventType) : 
@@ -367,12 +367,12 @@ class SecurityLogger {
       systemHealth: 'good'
     };
 
-    // Count security events
+  
     this.securityEvents.forEach((events, eventType) => {
       summary.securityEvents[eventType] = events.length;
     });
 
-    // Get recent threats
+  
     const recentThreats = this.logs.filter(log => 
       log.eventType === 'suspicious_activity' || 
       log.eventType === 'security_violation'
@@ -380,7 +380,7 @@ class SecurityLogger {
     
     summary.recentThreats = recentThreats;
 
-    // Determine system health
+  
     if (recentThreats.length > 5) {
       summary.systemHealth = 'warning';
     }
@@ -392,7 +392,7 @@ class SecurityLogger {
   }
 }
 
-// Create singleton instance
+
 const securityLogger = new SecurityLogger();
 
 export default securityLogger;

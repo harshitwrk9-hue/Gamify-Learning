@@ -17,7 +17,7 @@ const SecurityDashboard = () => {
     isLoading: true
   });
   const [activeTab, setActiveTab] = useState('overview');
-  const [refreshInterval, setRefreshInterval] = useState(30000); // 30 seconds
+  const [refreshInterval, setRefreshInterval] = useState(30000);
   const [autoRefresh, setAutoRefresh] = useState(true);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const SecurityDashboard = () => {
     try {
       setSecurityData(prev => ({ ...prev, isLoading: true }));
       
-      // Get security data
+    
       const logs = securityLogger.getLogs(null, 100);
       const sessionStats = sessionSecurity.getSessionStats();
       const securitySummary = securityLogger.getSecuritySummary();

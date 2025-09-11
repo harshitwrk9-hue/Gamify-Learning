@@ -10,6 +10,11 @@
   overflow: hidden;
 }
 
+[data-theme="light"] .gamification-panel {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
 [data-theme="dark"] .gamification-panel {
   background: rgba(0, 0, 0, 0.9);
   border: 1px solid rgba(139, 92, 246, 0.3);
@@ -28,6 +33,13 @@
     rgba(0, 191, 255, 0.1) 100%);
   pointer-events: none;
   z-index: -1;
+}
+
+[data-theme="light"] .gamification-panel::before {
+  background: linear-gradient(135deg, 
+    rgba(59, 130, 246, 0.08) 0%,
+    rgba(16, 185, 129, 0.08) 50%,
+    rgba(139, 92, 246, 0.08) 100%);
 }
 
 [data-theme="dark"] .gamification-panel::before {

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import './App.css';
 import { initializeInteractiveEnhancements } from './utils/interactiveUtils';
 
-// Components
+
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -20,7 +20,7 @@ import Profile from './pages/Profile';
 
 function App() {
   useEffect(() => {
-    // Initialize interactive enhancements after component mounts
+  
     initializeInteractiveEnhancements();
   }, []);
 

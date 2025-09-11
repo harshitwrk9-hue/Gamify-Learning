@@ -17,12 +17,12 @@ import './Leaderboard.css';
 
 const Leaderboard = ({ 
   currentUserId = 'user1',
-  timeframe = 'weekly' // weekly, monthly, allTime
+  timeframe = 'weekly'
 }) => {
   const [selectedTab, setSelectedTab] = useState(timeframe);
   const [animateRankings, setAnimateRankings] = useState(false);
 
-  // Mock leaderboard data
+
   const leaderboardData = {
     weekly: [
       {
@@ -39,7 +39,7 @@ const Leaderboard = ({
       },
       {
         id: 'user2',
-        name: 'Sarah Chen',
+        name: 'Priya Sharma',
         avatar: '👩‍💻',
         xp: 3200,
         level: 15,
@@ -51,7 +51,7 @@ const Leaderboard = ({
       },
       {
         id: 'user3',
-        name: 'Alex Rodriguez',
+        name: 'Arjun Patel',
         avatar: '👨‍🎓',
         xp: 2800,
         level: 13,
@@ -63,7 +63,7 @@ const Leaderboard = ({
       },
       {
         id: 'user4',
-        name: 'Emma Wilson',
+        name: 'Ananya Gupta',
         avatar: '👩‍🔬',
         xp: 2100,
         level: 11,
@@ -75,7 +75,7 @@ const Leaderboard = ({
       },
       {
         id: 'user5',
-        name: 'David Kim',
+        name: 'Vikram Singh',
         avatar: '👨‍💼',
         xp: 1950,
         level: 10,
@@ -89,7 +89,7 @@ const Leaderboard = ({
     monthly: [
       {
         id: 'user2',
-        name: 'Sarah Chen',
+        name: 'Priya Sharma',
         avatar: '👩‍💻',
         xp: 12500,
         level: 15,
@@ -113,7 +113,7 @@ const Leaderboard = ({
       },
       {
         id: 'user3',
-        name: 'Alex Rodriguez',
+        name: 'Arjun Patel',
         avatar: '👨‍🎓',
         xp: 9200,
         level: 13,
@@ -127,7 +127,7 @@ const Leaderboard = ({
     allTime: [
       {
         id: 'user3',
-        name: 'Alex Rodriguez',
+        name: 'Arjun Patel',
         avatar: '👨‍🎓',
         xp: 45000,
         level: 25,
@@ -139,7 +139,7 @@ const Leaderboard = ({
       },
       {
         id: 'user2',
-        name: 'Sarah Chen',
+        name: 'Priya Sharma',
         avatar: '👩‍💻',
         xp: 42000,
         level: 24,
@@ -223,7 +223,7 @@ const Leaderboard = ({
         </div>
       </div>
 
-      {/* Current User Highlight */}
+
       {currentUser && (
         <motion.div 
           className="current-user-card"
@@ -256,7 +256,7 @@ const Leaderboard = ({
         </motion.div>
       )}
 
-      {/* Leaderboard List */}
+
       <div className="leaderboard-list">
         <AnimatePresence mode="wait">
           {currentData.map((user, index) => {
@@ -326,7 +326,7 @@ const Leaderboard = ({
         </AnimatePresence>
       </div>
 
-      {/* Leaderboard Footer */}
+
       <div className="leaderboard-footer">
         <div className="footer-stats">
           <div className="stat-item">

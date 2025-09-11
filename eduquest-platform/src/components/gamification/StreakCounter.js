@@ -123,7 +123,7 @@ const StreakCounter = ({
   const [selectedTab, setSelectedTab] = useState('daily');
   const [streakCalendar, setStreakCalendar] = useState([]);
 
-  // Generate streak calendar for the last 30 days
+
   useEffect(() => {
     const generateCalendar = () => {
       const calendar = [];
@@ -134,7 +134,7 @@ const StreakCounter = ({
         date.setDate(date.getDate() - i);
         
         const dateStr = date.toISOString().split('T')[0];
-        const hasActivity = Math.random() > 0.3; // Mock data - replace with real data
+        const hasActivity = Math.random() > 0.3;
         
         calendar.push({
           date: dateStr,
@@ -150,7 +150,7 @@ const StreakCounter = ({
     setStreakCalendar(generateCalendar());
   }, []);
 
-  // Update streak when activity occurs
+
   const updateStreak = () => {
     const today = new Date().toISOString().split('T')[0];
     const yesterday = new Date();
@@ -174,14 +174,14 @@ const StreakCounter = ({
         onStreakUpdate(newData);
       }
       
-      // Check for streak milestones
+    
       checkStreakMilestones(newStreak);
       
       setTimeout(() => setShowStreakAnimation(false), 2000);
     }
   };
 
-  // Check for streak milestone rewards
+
   const checkStreakMilestones = (streak) => {
     const milestones = {
       7: { coins: 100, xp: 200, badge: 'week_warrior' },
@@ -194,7 +194,7 @@ const StreakCounter = ({
     }
   };
 
-  // Update challenge progress
+
   const updateChallengeProgress = (challengeId, progress) => {
     setDailyChallenges(prev => prev.map(challenge => {
       if (challenge.id === challengeId) {
@@ -218,7 +218,7 @@ const StreakCounter = ({
     }));
   };
 
-  // Get difficulty color
+
   const getDifficultyColor = (difficulty) => {
     switch (difficulty) {
       case 'easy': return '#27ae60';
@@ -228,7 +228,7 @@ const StreakCounter = ({
     }
   };
 
-  // Get streak flame intensity
+
   const getFlameIntensity = (streak) => {
     if (streak >= 30) return 'legendary';
     if (streak >= 14) return 'epic';
@@ -237,7 +237,7 @@ const StreakCounter = ({
     return 'basic';
   };
 
-  // Expose functions for external use
+
   useEffect(() => {
     window.updateStreak = updateStreak;
     window.updateChallengeProgress = updateChallengeProgress;
@@ -250,7 +250,7 @@ const StreakCounter = ({
 
   return (
     <div className="streak-counter">
-      {/* Streak Animation Overlay */}
+
       <AnimatePresence>
         {showStreakAnimation && (
           <motion.div
@@ -273,7 +273,7 @@ const StreakCounter = ({
         )}
       </AnimatePresence>
 
-      {/* Challenge Complete Animation */}
+
       <AnimatePresence>
         {showChallengeComplete && (
           <motion.div
@@ -300,7 +300,7 @@ const StreakCounter = ({
         )}
       </AnimatePresence>
 
-      {/* Main Streak Display */}
+
       <div className="streak-main-display">
         <div className="streak-header">
           <div className="streak-icon-container">
@@ -338,7 +338,7 @@ const StreakCounter = ({
           </div>
         </div>
 
-        {/* Streak Calendar */}
+  
         <div className="streak-calendar">
           <h4><FaCalendarAlt /> Last 30 Days</h4>
           <div className="calendar-grid">
@@ -360,7 +360,7 @@ const StreakCounter = ({
         </div>
       </div>
 
-      {/* Tab Navigation */}
+      
       <div className="challenge-tabs">
         <button
           className={`tab-btn ${selectedTab === 'daily' ? 'active' : ''}`}
@@ -385,7 +385,7 @@ const StreakCounter = ({
         </button>
       </div>
 
-      {/* Challenge Content */}
+      
       <div className="challenge-content">
         {selectedTab === 'daily' && (
           <motion.div

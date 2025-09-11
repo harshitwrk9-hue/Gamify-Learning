@@ -12,7 +12,6 @@
   padding: 0 2rem;
 }
 
-/* Assessment Header */
 .assessment-header {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
@@ -98,7 +97,6 @@
   letter-spacing: 0.5px;
 }
 
-/* Filters Section */
 .filters-section {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
@@ -155,7 +153,7 @@
   border-color: transparent;
 }
 
-/* Quiz Grid */
+
 .quiz-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -297,7 +295,7 @@
   font-size: 0.9rem;
 }
 
-/* No Quizzes State */
+
 .no-quizzes {
   text-align: center;
   padding: 4rem 2rem;
@@ -326,7 +324,6 @@
   margin: 0;
 }
 
-/* Quiz Taking Interface */
 .assessment.taking {
   padding: 1rem 0;
 }
@@ -415,7 +412,6 @@
   min-width: 80px;
 }
 
-/* Question Card */
 .question-card {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
@@ -532,7 +528,6 @@
   font-size: 0.8rem;
 }
 
-/* Explanation Card */
 .explanation-card {
   background: linear-gradient(135f, #f0f9ff, #e0f2fe);
   border: 2px solid #0ea5e9;
@@ -560,7 +555,7 @@
   line-height: 1.6;
 }
 
-/* Quiz Navigation */
+
 .quiz-navigation {
   display: flex;
   justify-content: space-between;
@@ -645,7 +640,6 @@
   font-size: 0.9rem;
 }
 
-/* Results Screen */
 .assessment.results {
   padding: 2rem 0;
 }
@@ -682,7 +676,7 @@
   margin: 0;
 }
 
-/* Score Card */
+
 .score-card {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
@@ -755,7 +749,7 @@
   color: #10b981 !important;
 }
 
-/* Question Review */
+
 .question-review {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
@@ -904,7 +898,6 @@
   line-height: 1.5;
 }
 
-/* Results Actions */
 .results-actions {
   display: flex;
   justify-content: center;
@@ -957,7 +950,7 @@
   box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
 }
 
-/* Responsive Design */
+
 @media (max-width: 1024px) {
   .assessment-container,
   .quiz-container,
@@ -1133,7 +1126,6 @@
   }
 }
 
-/* Animation Enhancements */
 .progress-stat:hover .stat-icon {
   transform: scale(1.1) rotate(5deg);
 }
@@ -1154,12 +1146,11 @@
   transform: scale(1.1);
 }
 
-/* Loading States */
+
 .progress-fill {
   transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Focus States */
 .filter-option:focus,
 .start-quiz-btn:focus,
 .option-btn:focus,
@@ -1170,7 +1161,6 @@
   outline-offset: 2px;
 }
 
-/* Hover Effects */
 .quiz-card:hover .start-quiz-btn {
   transform: translateY(-2px);
 }
@@ -1179,7 +1169,6 @@
   transform: translateY(-2px);
 }
 
-/* Custom Animations */
 @keyframes scoreReveal {
   0% {
     transform: scale(0) rotate(-180deg);

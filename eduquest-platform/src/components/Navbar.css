@@ -1,16 +1,15 @@
 .navbar {
   background: var(--navbar-bg);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-medium);
   position: sticky;
   top: 0;
   z-index: 1000;
-  backdrop-filter: blur(10px);
+  backdrop-filter: var(--blur-light);
+  border-bottom: 1px solid var(--border-color);
+  transition: var(--transition-smooth);
 }
 
-[data-theme="dark"] .navbar {
-  background: var(--navbar-bg);
-  border-bottom: 1px solid var(--border-color);
-}
+
 
 .navbar-container {
   max-width: 1200px;
@@ -69,40 +68,54 @@
 .navbar-item {
   text-decoration: none;
   color: var(--text-secondary);
-  transition: all 0.3s ease;
+  transition: var(--transition-smooth);
+  font-weight: 500;
 }
 
-.navbar-item:hover,
+.navbar-item:hover {
+  color: var(--primary-color);
+  transform: translateY(-1px);
+}
+
 .navbar-item.active {
-  color: white;
+  color: var(--primary-color);
+  font-weight: 600;
 }
 
-[data-theme="dark"] .navbar-item:hover,
-[data-theme="dark"] .navbar-item.active {
-  color: #90cdf4;
-}
+
 
 .navbar-link {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 25px;
-  transition: all 0.3s ease;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-full);
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
 }
 
 .navbar-item:hover .navbar-link {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  background: var(--primary-50);
+  backdrop-filter: var(--blur-light);
+  box-shadow: var(--shadow-light);
 }
 
 .navbar-item.active .navbar-link {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
+  background: var(--primary-100);
+  backdrop-filter: var(--blur-light);
+  box-shadow: var(--shadow-medium);
 }
 
 .navbar-icon {
   font-size: 1.1rem;
+}
+
+/* Navbar Right Section */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 /* User Info */
@@ -299,11 +312,7 @@
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.mobile-theme-toggle {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1rem;
-}
+
 
 .mobile-xp {
   display: flex;

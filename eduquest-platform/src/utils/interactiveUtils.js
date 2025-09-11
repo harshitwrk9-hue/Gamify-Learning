@@ -3,7 +3,7 @@
  * Handles enhanced interactions, accessibility, and cross-device compatibility
  */
 
-// Debounce utility for performance optimization
+
 export const debounce = (func, wait) => {
   let timeout;
   return function executedFunction(...args) {
@@ -16,7 +16,7 @@ export const debounce = (func, wait) => {
   };
 };
 
-// Throttle utility for scroll and resize events
+
 export const throttle = (func, limit) => {
   let inThrottle;
   return function() {
@@ -30,7 +30,7 @@ export const throttle = (func, limit) => {
   };
 };
 
-// Device detection utilities
+
 export const deviceUtils = {
   isMobile: () => {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -56,7 +56,7 @@ export const deviceUtils = {
   }
 };
 
-// Enhanced click handler with ripple effect
+
 export const addRippleEffect = (element) => {
   if (!element) return;
   
@@ -93,9 +93,9 @@ export const addRippleEffect = (element) => {
   });
 };
 
-// Enhanced focus management
+
 export const focusUtils = {
-  // Trap focus within a container (useful for modals)
+  
   trapFocus: (container) => {
     const focusableElements = container.querySelectorAll(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -120,7 +120,7 @@ export const focusUtils = {
     });
   },
   
-  // Enhanced focus visible handling
+  
   handleFocusVisible: () => {
     let hadKeyboardEvent = true;
     const keyboardThrottledUpdateHadKeyboardEvent = throttle(() => {
@@ -144,14 +144,14 @@ export const focusUtils = {
   }
 };
 
-// Touch gesture utilities
+
 export const touchUtils = {
-  // Add swipe gesture support
+  
   addSwipeGesture: (element, callbacks) => {
     let startX, startY, startTime;
-    const threshold = 50; // minimum distance for swipe
-    const restraint = 100; // maximum distance perpendicular to swipe
-    const allowedTime = 300; // maximum time for swipe
+    const threshold = 50;
+  const restraint = 100;
+  const allowedTime = 300;
     
     element.addEventListener('touchstart', (e) => {
       const touch = e.changedTouches[0];
@@ -178,7 +178,7 @@ export const touchUtils = {
     }, { passive: true });
   },
   
-  // Add long press support
+
   addLongPress: (element, callback, duration = 500) => {
     let timer;
     
@@ -197,9 +197,9 @@ export const touchUtils = {
   }
 };
 
-// Keyboard navigation utilities
+
 export const keyboardUtils = {
-  // Arrow key navigation for grids and lists
+  
   addArrowNavigation: (container, itemSelector) => {
     container.addEventListener('keydown', (e) => {
       const items = Array.from(container.querySelectorAll(itemSelector));
@@ -236,7 +236,7 @@ export const keyboardUtils = {
     });
   },
   
-  // Enhanced Enter/Space key handling
+  
   addActivationKeys: (element, callback) => {
     element.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
@@ -247,9 +247,9 @@ export const keyboardUtils = {
   }
 };
 
-// Animation utilities
+
 export const animationUtils = {
-  // Smooth scroll to element
+  
   scrollToElement: (element, options = {}) => {
     const defaultOptions = {
       behavior: 'smooth',
@@ -260,12 +260,12 @@ export const animationUtils = {
     element.scrollIntoView({ ...defaultOptions, ...options });
   },
   
-  // Animate element entrance
+  
   animateIn: (element, animation = 'fadeInUp', duration = 300) => {
     element.style.animation = `${animation} ${duration}ms ease-out forwards`;
   },
   
-  // Animate element exit
+  
   animateOut: (element, animation = 'fadeOut', duration = 300) => {
     return new Promise((resolve) => {
       element.style.animation = `${animation} ${duration}ms ease-in forwards`;
@@ -273,7 +273,7 @@ export const animationUtils = {
     });
   },
   
-  // Stagger animations for lists
+  
   staggerAnimation: (elements, animation = 'fadeInUp', delay = 100) => {
     elements.forEach((element, index) => {
       setTimeout(() => {
@@ -283,16 +283,16 @@ export const animationUtils = {
   }
 };
 
-// Performance monitoring utilities
+
 export const performanceUtils = {
-  // Measure interaction latency
+
   measureInteraction: (name, fn) => {
     return function(...args) {
       const start = performance.now();
       const result = fn.apply(this, args);
       const end = performance.now();
       
-      if (end - start > 16) { // More than one frame
+      if (end - start > 16) {
         console.warn(`Slow interaction: ${name} took ${end - start}ms`);
       }
       
@@ -300,7 +300,7 @@ export const performanceUtils = {
     };
   },
   
-  // Intersection Observer for lazy loading
+
   createIntersectionObserver: (callback, options = {}) => {
     const defaultOptions = {
       root: null,
@@ -312,9 +312,9 @@ export const performanceUtils = {
   }
 };
 
-// Accessibility utilities
+
 export const a11yUtils = {
-  // Announce to screen readers
+  
   announce: (message, priority = 'polite') => {
     const announcer = document.createElement('div');
     announcer.setAttribute('aria-live', priority);
@@ -335,14 +335,14 @@ export const a11yUtils = {
     }, 1000);
   },
   
-  // Enhanced ARIA attributes management
+  
   setARIA: (element, attributes) => {
     Object.entries(attributes).forEach(([key, value]) => {
       element.setAttribute(`aria-${key}`, value);
     });
   },
   
-  // Skip link functionality
+  
   addSkipLink: (targetId, text = 'Skip to main content') => {
     const skipLink = document.createElement('a');
     skipLink.href = `#${targetId}`;
@@ -373,9 +373,9 @@ export const a11yUtils = {
   }
 };
 
-// Initialize all interactive enhancements
+
 export const initializeInteractiveEnhancements = () => {
-  // Add CSS for animations
+
   const style = document.createElement('style');
   style.textContent = `
     @keyframes ripple {
@@ -417,13 +417,13 @@ export const initializeInteractiveEnhancements = () => {
   `;
   document.head.appendChild(style);
   
-  // Initialize focus visible handling
+
   focusUtils.handleFocusVisible();
   
-  // Add ripple effects to buttons
+
   document.querySelectorAll('button, .btn, .course-button, .action-btn').forEach(addRippleEffect);
   
-  // Add skip link
+
   const mainContent = document.querySelector('main, #root, .app');
   if (mainContent && !mainContent.id) {
     mainContent.id = 'main-content';
@@ -432,17 +432,17 @@ export const initializeInteractiveEnhancements = () => {
     a11yUtils.addSkipLink('main-content');
   }
   
-  // Add keyboard navigation to course grids
+
   const courseGrids = document.querySelectorAll('.courses-grid, .course-catalog');
   courseGrids.forEach(grid => {
     keyboardUtils.addArrowNavigation(grid, '.course-card, .course-item');
   });
   
-  // Add touch gestures to mobile elements
+
   if (deviceUtils.isTouchDevice()) {
     document.body.classList.add('touch-device');
     
-    // Add swipe navigation to carousels or sliders
+  
     const carousels = document.querySelectorAll('.carousel, .slider');
     carousels.forEach(carousel => {
       touchUtils.addSwipeGesture(carousel, {
@@ -452,7 +452,7 @@ export const initializeInteractiveEnhancements = () => {
     });
   }
   
-  // Performance monitoring
+
   if (typeof PerformanceObserver !== 'undefined') {
     const observer = new PerformanceObserver((list) => {
       list.getEntries().forEach((entry) => {
@@ -467,7 +467,7 @@ export const initializeInteractiveEnhancements = () => {
   console.log('Interactive enhancements initialized successfully!');
 };
 
-// Auto-initialize when DOM is ready
+
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initializeInteractiveEnhancements);
 } else {

@@ -1,5 +1,3 @@
-// Security utilities for authentication and user protection
-
 /**
  * Rate limiting utility to prevent brute force attacks
  */
@@ -20,13 +18,13 @@ class RateLimiter {
     const now = Date.now();
     const userAttempts = this.attempts.get(identifier) || [];
     
-    // Remove old attempts outside the time window
+  
     const recentAttempts = userAttempts.filter(timestamp => now - timestamp < windowMs);
     
-    // Check if user is currently locked out
+  
     const lockoutEnd = this.lockouts.get(identifier);
     if (lockoutEnd && now < lockoutEnd) {
-      const remainingTime = Math.ceil((lockoutEnd - now) / 1000 / 60); // minutes
+      const remainingTime = Math.ceil((lockoutEnd - now) / 1000 / 60);
       return {
         allowed: false,
         reason: 'account_locked',
@@ -35,9 +33,9 @@ class RateLimiter {
       };
     }
 
-    // Check rate limit
+  
     if (recentAttempts.length >= maxAttempts) {
-      // Lock account for 30 minutes
+  
       this.lockouts.set(identifier, now + (30 * 60 * 1000));
       return {
         allowed: false,
@@ -92,7 +90,7 @@ class RateLimiter {
   }
 }
 
-// Global rate limiter instance
+
 export const rateLimiter = new RateLimiter();
 
 /**
@@ -108,8 +106,8 @@ export const sanitizeInput = {
     if (typeof username !== 'string') return '';
     return username
       .trim()
-      .replace(/[<>"'&]/g, '') // Remove potentially dangerous characters
-      .substring(0, 50); // Limit length
+      .replace(/[<>"'&]/g, '')
+    .substring(0, 50);
   },
 
   /**
@@ -119,7 +117,7 @@ export const sanitizeInput = {
    */
   password: (password) => {
     if (typeof password !== 'string') return '';
-    return password.substring(0, 128); // Just limit length
+    return password.substring(0, 128);
   },
 
   /**
@@ -149,7 +147,7 @@ export const sanitizeInput = {
  * Session security utilities with JWT-like functionality
  */
 export const sessionSecurity = {
-  // Secret key for token signing (in production, this should be server-side)
+  
   SECRET_KEY: 'eduquest_secret_2024_secure_key_change_in_production',
 
   /**
@@ -167,9 +165,9 @@ export const sessionSecurity = {
     const now = Date.now();
     const tokenPayload = {
       ...payload,
-      iat: now, // issued at
-      exp: now + expiresIn, // expires at
-      jti: sessionSecurity.generateSecureToken() // unique token ID
+      iat: now,
+    exp: now + expiresIn,
+    jti: sessionSecurity.generateSecureToken()
     };
 
     const encodedHeader = sessionSecurity.base64UrlEncode(JSON.stringify(header));
@@ -193,17 +191,17 @@ export const sessionSecurity = {
 
       const [encodedHeader, encodedPayload, signature] = parts;
       
-      // Verify signature
+    
       const expectedSignature = sessionSecurity.sign(`${encodedHeader}.${encodedPayload}`);
       if (signature !== expectedSignature) {
         securityLogger.log('token_signature_invalid', { token: token.substring(0, 20) + '...' });
         return null;
       }
 
-      // Decode payload
+    
       const payload = JSON.parse(sessionSecurity.base64UrlDecode(encodedPayload));
       
-      // Check expiration
+    
       if (payload.exp && Date.now() > payload.exp) {
         securityLogger.log('token_expired', { 
           userId: payload.userId,
@@ -252,9 +250,9 @@ export const sessionSecurity = {
    * @returns {string} Decoded string
    */
   base64UrlDecode: (str) => {
-    // Add padding if needed
+
     str += '='.repeat((4 - str.length % 4) % 4);
-    // Replace URL-safe characters
+
     str = str.replace(/-/g, '+').replace(/_/g, '/');
     return atob(str);
   },
@@ -265,7 +263,7 @@ export const sessionSecurity = {
    * @returns {string} Signature
    */
   sign: (data) => {
-    // Simple HMAC-like signing (in production, use proper HMAC)
+  
     const key = sessionSecurity.SECRET_KEY;
     let hash = 0;
     const combined = key + data + key;
@@ -273,7 +271,7 @@ export const sessionSecurity = {
     for (let i = 0; i < combined.length; i++) {
       const char = combined.charCodeAt(i);
       hash = ((hash << 5) - hash) + char;
-      hash = hash & hash; // Convert to 32-bit integer
+      hash = hash & hash;
     }
     
     return sessionSecurity.base64UrlEncode(Math.abs(hash).toString(36));
@@ -325,16 +323,16 @@ export const sessionSecurity = {
     const payload = sessionSecurity.verifyToken(token);
     if (!payload) return null;
 
-    // Create new token with updated expiration but same payload data
+  
     const newPayload = {
       ...payload,
       iat: Date.now(),
       exp: Date.now() + expiresIn,
-      jti: sessionSecurity.generateSecureToken(), // new unique ID
+      jti: sessionSecurity.generateSecureToken(),
       refreshCount: (payload.refreshCount || 0) + 1
     };
 
-    delete newPayload.exp; // Remove old expiration
+    delete newPayload.exp;
     return sessionSecurity.generateToken(newPayload, expiresIn);
   }
 };
@@ -357,10 +355,10 @@ export const securityLogger = {
       url: window.location.href
     };
 
-    // In a real application, this would send to a logging service
+  
     console.warn('[SECURITY]', logEntry);
     
-    // Store in localStorage for debugging (limit to last 100 entries)
+  
     try {
       const logs = JSON.parse(localStorage.getItem('eduquest_security_logs') || '[]');
       logs.push(logEntry);
@@ -406,7 +404,7 @@ export const csrfProtection = {
         return replacements[match];
       });
     
-    // Store in session storage for SPA
+    
     sessionStorage.setItem('csrf_token', token);
     return token;
   },
@@ -449,7 +447,7 @@ export const contentSecurity = {
   sanitizeHtml: (html) => {
     if (!html) return '';
     
-    // Create a temporary div to parse HTML
+  
     const temp = document.createElement('div');
     temp.textContent = html;
     return temp.innerHTML;
@@ -467,12 +465,12 @@ export const contentSecurity = {
     try {
       const urlObj = new URL(url, window.location.origin);
       
-      // Only allow http/https protocols
+    
       if (!['http:', 'https:'].includes(urlObj.protocol)) {
         return null;
       }
       
-      // Check if domain is allowed (if allowedDomains specified)
+    
       if (allowedDomains.length > 0) {
         const isAllowed = allowedDomains.some(domain => 
           urlObj.hostname === domain || urlObj.hostname.endsWith('.' + domain)
@@ -524,7 +522,7 @@ export const securityHeaders = {
     const issues = [];
     const recommendations = [];
     
-    // Check for security headers
+    
     if (!headers.get('X-Content-Type-Options')) {
       issues.push('Missing X-Content-Type-Options header');
     }
@@ -570,7 +568,7 @@ export const passwordStrength = {
       noCommon: !['password', '123456', 'qwerty', 'admin'].includes(password.toLowerCase())
     };
 
-    // Score calculation
+    
     if (checks.length) score += 2;
     else feedback.push('Use at least 8 characters');
     
@@ -589,11 +587,11 @@ export const passwordStrength = {
     if (checks.noCommon) score += 1;
     else feedback.push('Avoid common passwords');
 
-    // Additional length bonus
+  
     if (password.length >= 12) score += 1;
     if (password.length >= 16) score += 1;
 
-    // Determine level
+  
     let level;
     if (score <= 2) level = 'very-weak';
     else if (score <= 4) level = 'weak';

@@ -6,6 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { currentUser } from '../data/mockData';
 import { ReactComponent as ShikshaLogo } from '../assets/shiksha-logo.svg';
 import { ReactComponent as UserAvatar } from '../assets/user-avatar.svg';
+
 import './Navbar.css';
 
 const Navbar = () => {
@@ -14,7 +15,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { currentUser: authUser, logout } = useAuth();
 
-  // Only show navigation items if user is authenticated
+
   const navItems = authUser ? [
     { path: '/dashboard', label: 'Dashboard', icon: FaHome },
     { path: '/courses', label: 'Courses', icon: FaBook },
@@ -42,7 +43,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        {/* Logo */}
+
         <Link to="/" className="navbar-logo">
           <motion.div
             whileHover={{ scale: 1.05 }}
@@ -54,7 +55,7 @@ const Navbar = () => {
           </motion.div>
         </Link>
 
-        {/* Desktop Navigation */}
+
         <div className="navbar-menu">
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -77,34 +78,36 @@ const Navbar = () => {
           })}
         </div>
 
-        {/* User Info or Auth Buttons */}
-        {authUser ? (
-          <motion.div className="auth-buttons">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleLogout}
-              className="logout-btn user-avatar-btn"
-              title="Sign Out"
-            >
-              <UserAvatar className="user-avatar-icon" />
-            </motion.button>
-          </motion.div>
-        ) : (
-          <motion.div className="auth-buttons">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleLogin}
-              className="login-btn"
-            >
-              <FaSignInAlt className="auth-icon" />
-              <span>Sign In</span>
-            </motion.button>
-          </motion.div>
-        )}
 
-        {/* Mobile Menu Toggle */}
+        <div className="navbar-right">
+          {authUser ? (
+            <motion.div className="auth-buttons">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleLogout}
+                className="logout-btn user-avatar-btn"
+                title="Sign Out"
+              >
+                <UserAvatar className="user-avatar-icon" />
+              </motion.button>
+            </motion.div>
+          ) : (
+            <motion.div className="auth-buttons">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleLogin}
+                className="login-btn"
+              >
+                <FaSignInAlt className="auth-icon" />
+                <span>Sign In</span>
+              </motion.button>
+            </motion.div>
+          )}
+        </div>
+
+  
         <button
           className="mobile-menu-toggle"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -113,7 +116,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+
       <motion.div
         className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}
         initial={false}
@@ -135,6 +138,7 @@ const Navbar = () => {
               </Link>
             );
           })}
+
           {authUser ? (
             <>
               <div className="mobile-user-info">

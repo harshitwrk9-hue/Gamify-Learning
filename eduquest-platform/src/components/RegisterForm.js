@@ -22,7 +22,6 @@ const RegisterForm = ({ onSuccess, onSwitchToLogin }) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     
-    // Sanitize input based on field type
     let sanitizedValue;
     if (name === 'username') {
       sanitizedValue = sanitizeInput.username(value);
@@ -37,13 +36,11 @@ const RegisterForm = ({ onSuccess, onSwitchToLogin }) => {
       [name]: sanitizedValue
     }));
     
-    // Update password strength analysis
     if (name === 'password') {
       const strength = passwordStrength.analyze(sanitizedValue);
       setPasswordStrengthInfo(strength);
     }
     
-    // Clear validation error for this field
     if (validationErrors[name]) {
       setValidationErrors(prev => ({
         ...prev,
@@ -55,19 +52,16 @@ const RegisterForm = ({ onSuccess, onSwitchToLogin }) => {
   const validateForm = () => {
     const errors = {};
     
-    // Validate username
     const usernameValidation = validateUsername(formData.username);
     if (!usernameValidation.isValid) {
       errors.username = usernameValidation.messages[0];
     }
     
-    // Validate password
     const passwordValidation = validatePassword(formData.password);
     if (!passwordValidation.isValid) {
       errors.password = passwordValidation.messages[0];
     }
     
-    // Validate password confirmation
     if (formData.password !== formData.confirmPassword) {
       errors.confirmPassword = 'Passwords do not match';
     }
@@ -86,7 +80,6 @@ const RegisterForm = ({ onSuccess, onSwitchToLogin }) => {
     setIsSubmitting(true);
     
     try {
-      // Log registration attempt
       securityLogger.log('registration_attempt', {
         username: formData.username,
         passwordStrength: passwordStrengthInfo?.level || 'unknown'

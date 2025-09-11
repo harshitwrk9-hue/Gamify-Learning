@@ -28,7 +28,6 @@
   z-index: 1;
 }
 
-/* Enhanced Header Design */
 .leaderboard-header {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
@@ -98,7 +97,6 @@
   font-weight: 500;
 }
 
-/* User Position Indicator for Nearby Rankings */
 .user-position {
   display: flex;
   align-items: center;
@@ -116,7 +114,6 @@
   font-size: 0.8rem;
 }
 
-/* Current User Indicator in Nearby Rankings */
 .current-user-indicator {
   display: flex;
   align-items: center;
@@ -135,7 +132,6 @@
   font-size: 0.6rem;
 }
 
-/* Enhanced Live Indicator */
 .live-indicator {
   display: flex;
   align-items: center;
@@ -249,7 +245,6 @@
   letter-spacing: 0.5px;
 }
 
-/* Enhanced Navigation */
 .leaderboard-nav {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
@@ -402,7 +397,6 @@
   box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
 }
 
-/* Filters Section */
 .filters-section {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
@@ -453,7 +447,7 @@
   border-color: transparent;
 }
 
-/* Unified Leaderboard Section */
+
 .unified-leaderboard {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
@@ -544,7 +538,6 @@
   50% { opacity: 0.5; transform: scale(1.2); }
 }
 
-/* Top Performers Section */
 .top-performers {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -809,7 +802,6 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Rankings Container */
 .rankings-container {
   position: relative;
   z-index: 1;
@@ -818,14 +810,14 @@
 .rankings-header {
   display: grid;
   grid-template-columns: 80px 1fr 140px 140px 120px;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
   background: rgba(59, 130, 246, 0.08);
-  border-radius: 12px;
-  margin-bottom: 1rem;
+  border-radius: 10px;
+  margin-bottom: 0.75rem;
   font-weight: 600;
   color: #475569;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   border: 1px solid rgba(59, 130, 246, 0.1);
@@ -834,24 +826,23 @@
 .rankings-list {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .ranking-item {
   display: grid;
   grid-template-columns: 80px 1fr 140px 140px 120px;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
   background: rgba(255, 255, 255, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 12px;
+  border-radius: 10px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
   align-items: center;
 }
 
-/* Enhanced rank-specific styling */
 .ranking-item.rank-1 {
   background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 255, 255, 0.95));
   border: 2px solid rgba(255, 215, 0, 0.3);
@@ -910,7 +901,6 @@
   transform: scale(1.02);
 }
 
-/* Enhanced rank number styling */
 .rank-number {
   font-size: 1.2rem;
   font-weight: 800;
@@ -948,7 +938,6 @@
   box-shadow: 0 4px 12px rgba(205, 127, 50, 0.3);
 }
 
-/* Enhanced user info section */
 .user-info {
   flex: 1;
   display: flex;
@@ -957,45 +946,45 @@
 }
 
 .user-info h3 {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--text-primary);
   margin: 0;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .you-indicator {
   background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 600;
-  padding: 0.2rem 0.5rem;
-  border-radius: 8px;
+  padding: 0.15rem 0.4rem;
+  border-radius: 6px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   animation: pulse 2s infinite;
 }
 
-/* Enhanced XP display */
+
 .user-xp {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #667eea;
   display: flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.25rem;
 }
 
 .xp-change {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  padding: 0.2rem 0.4rem;
-  border-radius: 6px;
+  padding: 0.15rem 0.3rem;
+  border-radius: 5px;
   display: flex;
   align-items: center;
-  gap: 0.2rem;
+  gap: 0.15rem;
 }
 
 .xp-change.positive {
@@ -1008,13 +997,12 @@
   color: #ef4444;
 }
 
-/* Enhanced location and status */
 .user-location {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: #64748b;
   display: flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.25rem;
 }
 
 .online-indicator {
@@ -1035,7 +1023,7 @@
 .rank-number {
   font-weight: 700;
   color: #374151;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .rank-highlight {
@@ -1053,7 +1041,7 @@
 .user-cell {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
 }
 
 .user-avatar-mini {
@@ -1214,7 +1202,6 @@
   font-size: 0.8rem;
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
   .leaderboard-container {
     padding: 0 1rem;
@@ -1350,7 +1337,6 @@
   }
 }
 
-/* Animation Enhancements */
 .stat-card:hover .stat-icon {
   transform: scale(1.1) rotate(5deg);
 }
@@ -1367,12 +1353,10 @@
   transform: scale(1.1) rotate(5deg);
 }
 
-/* Loading States */
 .level-progress-fill {
   transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Focus States */
 .nav-tab:focus,
 .filter-btn:focus,
 .join-competition-btn:focus {
@@ -1380,7 +1364,6 @@
   outline-offset: 2px;
 }
 
-/* Hover Effects */
 .list-item:hover .user-avatar-small img {
   transform: scale(1.1);
 }
@@ -1389,7 +1372,6 @@
   height: 6px;
 }
 
-/* Custom Scrollbar */
 .list-container::-webkit-scrollbar {
   height: 8px;
 }

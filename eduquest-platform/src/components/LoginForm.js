@@ -26,7 +26,7 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
   
   const { login, error, loading } = useAuth();
 
-  // Check security status when username changes
+
   useEffect(() => {
     if (formData.username.trim()) {
       const sanitizedUsername = sanitizeInput.username(formData.username);
@@ -53,12 +53,12 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
       [name]: value
     }));
     
-    // Clear error message when user starts typing
+  
     if (error || localError) {
       setLocalError('');
     }
     
-    // Real-time validation with debounce
+  
     clearTimeout(window.validationTimeout);
     window.validationTimeout = setTimeout(() => {
       validateField(name, value);
@@ -69,23 +69,23 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
     const errors = {};
     const warnings = [];
     
-    // Enhanced username validation with security checks
+  
     if (!formData.username.trim()) {
       errors.username = 'Username or email is required';
     } else if (formData.username.trim().length < 3) {
       errors.username = 'Username must be at least 3 characters long';
     } else if (formData.username.includes('@')) {
-      // Email validation with additional security checks
+    
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formData.username)) {
         errors.username = 'Please enter a valid email address';
       }
-      // Check for suspicious email patterns
+    
       if (formData.username.includes('..') || formData.username.startsWith('.') || formData.username.endsWith('.')) {
         warnings.push('Email format appears suspicious');
       }
     } else {
-      // Username security checks
+    
       if (/[<>"'&]/.test(formData.username)) {
         errors.username = 'Username contains invalid characters';
       }
@@ -94,13 +94,13 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
       }
     }
     
-    // Enhanced password validation
+  
     if (!formData.password) {
       errors.password = 'Password is required';
     } else if (formData.password.length < 6) {
       errors.password = 'Password must be at least 6 characters long';
     } else {
-      // Additional password security checks
+    
       if (formData.password.length > 128) {
         errors.password = 'Password is too long (maximum 128 characters)';
       }
@@ -117,7 +117,7 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
     return Object.keys(errors).length === 0;
   };
   
-  // Real-time validation on input change
+
   const validateField = (name, value) => {
     const errors = { ...validationErrors };
     
@@ -166,24 +166,24 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
     setIsSubmitting(true);
     
     try {
-      // Get CSRF token for secure login
+  
       const csrfToken = csrfProtection.getToken();
       const result = await login(formData.username, formData.password, rememberMe, csrfToken);
       
       if (result.success) {
-        // Clear any previous errors
+    
         setValidationErrors({});
         setLocalError('');
         setSuccessMessage('Login successful! Redirecting...');
         
-        // Clear success message after a short delay
+    
         setTimeout(() => setSuccessMessage(''), 2000);
         
         onSuccess && onSuccess(result.user);
       } else {
-        // Handle specific error cases
+    
         if (result.error) {
-          // Handle rate limiting errors
+    
           if (result.error.includes('locked') || result.error.includes('Too many')) {
             setSecurityStatus({
               isLocked: true,
@@ -196,7 +196,7 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
     } catch (error) {
       console.error('Login error:', error);
       
-      // Handle network errors
+  
       if (error.name === 'NetworkError' || error.message.includes('fetch')) {
         setLocalError('Network connection error. Please check your internet connection and try again.');
       } else if (error.message.includes('timeout')) {
@@ -209,7 +209,7 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }) => {
     }
   };
   
-  // Helper function to extract lockout time from error message
+
   const extractLockoutTime = (errorMessage) => {
     const match = errorMessage.match(/(\d+)\s+minutes?/);
     return match ? parseInt(match[1]) : 5;

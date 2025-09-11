@@ -22,7 +22,7 @@ const ParticleSystem = ({
     const ctx = canvas.getContext('2d');
     const particles = particlesRef.current;
 
-    // Set canvas size
+
     const resizeCanvas = () => {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
@@ -31,7 +31,7 @@ const ParticleSystem = ({
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Initialize particles
+
     const initParticles = () => {
       particles.length = 0;
       for (let i = 0; i < particleCount; i++) {
@@ -42,7 +42,7 @@ const ParticleSystem = ({
           vy: (Math.random() - 0.5) * speed,
           size: Math.random() * particleSize + 1,
           opacity: Math.random() * 0.5 + 0.2,
-          hue: Math.random() * 60 + 200, // Blue to purple range
+          hue: Math.random() * 60 + 200,
           life: Math.random() * 100,
           maxLife: 100 + Math.random() * 100
         });
@@ -51,7 +51,7 @@ const ParticleSystem = ({
 
     initParticles();
 
-    // Mouse interaction
+
     const handleMouseMove = (e) => {
       const rect = canvas.getBoundingClientRect();
       mouseRef.current.x = e.clientX - rect.left;
@@ -62,17 +62,17 @@ const ParticleSystem = ({
       canvas.addEventListener('mousemove', handleMouseMove);
     }
 
-    // Animation loop
+
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       particles.forEach((particle, index) => {
-        // Update particle position
+  
         particle.x += particle.vx;
         particle.y += particle.vy;
         particle.life++;
 
-        // Mouse interaction effect
+  
         if (interactive) {
           const dx = mouseRef.current.x - particle.x;
           const dy = mouseRef.current.y - particle.y;
@@ -85,7 +85,7 @@ const ParticleSystem = ({
           }
         }
 
-        // Boundary collision
+  
         if (particle.x < 0 || particle.x > canvas.width) {
           particle.vx *= -0.8;
           particle.x = Math.max(0, Math.min(canvas.width, particle.x));
@@ -95,15 +95,15 @@ const ParticleSystem = ({
           particle.y = Math.max(0, Math.min(canvas.height, particle.y));
         }
 
-        // Apply friction
+  
         particle.vx *= 0.99;
         particle.vy *= 0.99;
 
-        // Update opacity based on life
+  
         const lifeRatio = particle.life / particle.maxLife;
         particle.opacity = Math.max(0, 0.7 * (1 - lifeRatio));
 
-        // Reset particle if it's too old
+  
         if (particle.life > particle.maxLife) {
           particle.x = Math.random() * canvas.width;
           particle.y = Math.random() * canvas.height;
@@ -113,11 +113,11 @@ const ParticleSystem = ({
           particle.hue = Math.random() * 60 + 200;
         }
 
-        // Draw particle with glow effect
+  
         ctx.save();
         ctx.globalAlpha = particle.opacity;
         
-        // Create gradient for glow effect
+  
         const gradient = ctx.createRadialGradient(
           particle.x, particle.y, 0,
           particle.x, particle.y, particle.size * 3
@@ -131,7 +131,7 @@ const ParticleSystem = ({
         ctx.arc(particle.x, particle.y, particle.size * 3, 0, Math.PI * 2);
         ctx.fill();
         
-        // Draw core particle
+  
         ctx.fillStyle = `hsl(${particle.hue}, 80%, 70%)`;
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
@@ -140,7 +140,7 @@ const ParticleSystem = ({
         ctx.restore();
       });
 
-      // Draw connections between nearby particles
+  
       particles.forEach((particle1, i) => {
         particles.slice(i + 1).forEach(particle2 => {
           const dx = particle1.x - particle2.x;
@@ -164,7 +164,7 @@ const ParticleSystem = ({
       animationRef.current = requestAnimationFrame(animate);
     };
 
-    // Start animation when component becomes visible
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {

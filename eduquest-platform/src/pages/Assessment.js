@@ -7,7 +7,7 @@ import './Assessment.css';
 
 const Assessment = () => {
   const [currentQuiz, setCurrentQuiz] = useState(null);
-  const [quizState, setQuizState] = useState('selection'); // selection, taking, results, analytics
+  const [quizState, setQuizState] = useState('selection');
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(0);
@@ -20,14 +20,14 @@ const Assessment = () => {
   const categories = ['all', 'Math', 'Science', 'Programming', 'History', 'Language'];
   const difficulties = ['all', 'Beginner', 'Intermediate', 'Advanced'];
 
-  // Filter quizzes based on category and difficulty
+
   const filteredQuizzes = quizzes.filter(quiz => {
     const categoryMatch = selectedCategory === 'all' || quiz.category === selectedCategory;
     const difficultyMatch = difficulty === 'all' || quiz.difficulty === difficulty;
     return categoryMatch && difficultyMatch;
   });
 
-  // Timer effect
+
   useEffect(() => {
     let timer;
     if (quizState === 'taking' && timeLeft > 0) {
@@ -49,7 +49,7 @@ const Assessment = () => {
     setQuizState('taking');
     setCurrentQuestion(0);
     setAnswers({});
-    setTimeLeft(quiz.timeLimit * 60); // Convert minutes to seconds
+    setTimeLeft(quiz.timeLimit * 60);
     setScore(0);
     setShowExplanation(false);
   };
@@ -60,7 +60,7 @@ const Assessment = () => {
       [questionIndex]: answerIndex
     }));
     
-    // Instant feedback for correct answers
+
     const question = currentQuiz.questions[questionIndex];
     const isCorrect = answerIndex === question.correctAnswer;
     
@@ -68,7 +68,7 @@ const Assessment = () => {
       window.eduquestRewards.correctAnswer(currentQuiz.difficulty.toLowerCase());
     }
     
-    // Show explanation after selection
+
     setTimeout(() => setShowExplanation(true), 500);
   };
 
@@ -105,11 +105,11 @@ const Assessment = () => {
     });
 
     const finalScore = Math.round((correctAnswers / currentQuiz.questions.length) * 100);
-    const xpEarned = Math.round(finalScore * 2); // 2 XP per percentage point
+    const xpEarned = Math.round(finalScore * 2);
     
     setScore(finalScore);
     
-    // Trigger quiz completion rewards
+
     if (window.eduquestRewards) {
       setTimeout(() => {
         window.eduquestRewards.quizComplete(finalScore);
@@ -164,7 +164,7 @@ const Assessment = () => {
     return (
       <div className="assessment taking">
         <div className="quiz-container">
-          {/* Quiz Header */}
+  
           <div className="quiz-header">
             <div className="quiz-info">
               <h2>{currentQuiz.title}</h2>
@@ -193,7 +193,7 @@ const Assessment = () => {
             </div>
           </div>
 
-          {/* Question Card */}
+  
           <motion.div 
             className="question-card"
             key={currentQuestion}
@@ -258,7 +258,7 @@ const Assessment = () => {
             )}
           </motion.div>
 
-          {/* Navigation */}
+  
           <div className="quiz-navigation">
             <button 
               className="nav-btn prev-btn"
@@ -307,7 +307,7 @@ const Assessment = () => {
     return (
       <div className="assessment results">
         <div className="results-container">
-          {/* Results Header */}
+  
           <motion.div 
             className="results-header"
             initial={{ opacity: 0, y: -50 }}
@@ -328,7 +328,7 @@ const Assessment = () => {
             </div>
           </motion.div>
 
-          {/* Score Card */}
+  
           <motion.div 
             className="score-card"
             initial={{ opacity: 0, scale: 0.8 }}
@@ -359,7 +359,7 @@ const Assessment = () => {
             </div>
           </motion.div>
 
-          {/* Question Review */}
+  
           <motion.div 
             className="question-review"
             initial={{ opacity: 0, y: 50 }}
@@ -404,7 +404,7 @@ const Assessment = () => {
             </div>
           </motion.div>
 
-          {/* Action Buttons */}
+  
           <motion.div 
             className="results-actions"
             initial={{ opacity: 0 }}
@@ -429,11 +429,11 @@ const Assessment = () => {
     );
   }
 
-  // Quiz Selection Screen
+
   return (
     <div className="assessment selection">
       <div className="assessment-container">
-        {/* Header */}
+
         <motion.div 
           className="assessment-header"
           initial={{ opacity: 0, y: -30 }}
@@ -471,7 +471,7 @@ const Assessment = () => {
           </div>
         </motion.div>
 
-        {/* Filters */}
+
         <motion.div 
           className="filters-section"
           initial={{ opacity: 0, y: 20 }}
@@ -508,7 +508,7 @@ const Assessment = () => {
           </div>
         </motion.div>
 
-        {/* Quiz Grid */}
+
         <motion.div 
           className="quiz-grid"
           initial={{ opacity: 0 }}
@@ -581,14 +581,14 @@ const Assessment = () => {
         )}
       </div>
       
-      {/* Instant Rewards System */}
+      
       <InstantRewards 
         currentXP={1250}
         currentCoins={450}
         currentLevel={8}
         onRewardEarned={(reward) => {
           console.log('Reward earned:', reward);
-          // Here you would typically update user stats in your state management
+  
         }}
       />
     </div>

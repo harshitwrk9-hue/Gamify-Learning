@@ -42,7 +42,7 @@ const LearningModule = () => {
   const [readingProgress, setReadingProgress] = useState(0);
 
   useEffect(() => {
-    // Find current course and lesson
+  
     const course = courses.find(c => c.id === parseInt(courseId));
     const lesson = lessons.find(l => l.id === parseInt(lessonId));
     const quiz = quizzes.find(q => q.lessonId === parseInt(lessonId));
@@ -51,7 +51,7 @@ const LearningModule = () => {
     setCurrentLesson(lesson);
     setCurrentQuiz(quiz);
     
-    // Simulate lesson progress
+  
     const timer = setInterval(() => {
       setLessonProgress(prev => {
         if (prev >= 100) {
@@ -107,13 +107,13 @@ const LearningModule = () => {
     setQuizCompleted(true);
 
     
-    // Calculate XP earned
+
     const baseXP = 50;
     const bonusXP = Math.round(finalScore * 0.5);
     const totalXP = baseXP + bonusXP;
     setEarnedXP(totalXP);
     
-    // Show XP animation
+
     setTimeout(() => {
       setShowXPAnimation(true);
     }, 1000);
@@ -177,7 +177,7 @@ const LearningModule = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      {/* Header */}
+
       <motion.div 
         className="module-header animate-slide-in-down"
         initial={{ opacity: 0, y: -20 }}
@@ -226,9 +226,9 @@ const LearningModule = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
-        {/* Main Content Area */}
+
         <div className="content-area">
-          {/* Lesson Content */}
+
           <motion.div 
             className="lesson-content"
             initial={{ y: 20, opacity: 0 }}
@@ -237,7 +237,7 @@ const LearningModule = () => {
           >
             <h1 className="lesson-title">{currentLesson.title}</h1>
             
-            {/* Video Section */}
+
             {currentLesson.type === 'video' && (
               <div className="video-section">
                 <div className="video-player">
@@ -266,7 +266,7 @@ const LearningModule = () => {
               </div>
             )}
             
-            {/* Reading Section */}
+
             {currentLesson.type === 'reading' && (
               <div className="reading-section">
                 <div 
@@ -336,7 +336,7 @@ const LearningModule = () => {
               </div>
             )}
             
-            {/* Interactive Elements */}
+
             <div className="interactive-elements">
               <div className="element-grid">
                 <div className="element-card">
@@ -358,7 +358,7 @@ const LearningModule = () => {
             </div>
           </motion.div>
 
-          {/* Quiz Section */}
+          
           {currentQuiz && (
             <motion.div 
               className="quiz-section"
@@ -534,7 +534,7 @@ const LearningModule = () => {
           )}
         </div>
 
-        {/* Sidebar */}
+
         <div className="module-sidebar">
           <div className="sidebar-section">
             <h3>Course Progress</h3>
@@ -580,7 +580,7 @@ const LearningModule = () => {
         </div>
       </motion.div>
 
-      {/* Navigation Footer */}
+      
       <motion.div className="module-footer">
         <button 
           className="nav-footer-btn prev"

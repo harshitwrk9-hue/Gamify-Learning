@@ -1,5 +1,3 @@
-// Secure password hashing utilities using Web Crypto API
-
 /**
  * Generate a random salt for password hashing
  * @returns {string} Base64 encoded salt
@@ -21,7 +19,7 @@ export const hashPassword = async (password) => {
     const encoder = new TextEncoder();
     const data = encoder.encode(password + salt);
     
-    // Import the password as a key
+  
     const key = await crypto.subtle.importKey(
       'raw',
       encoder.encode(password),
@@ -30,7 +28,7 @@ export const hashPassword = async (password) => {
       ['deriveBits']
     );
     
-    // Derive bits using PBKDF2
+  
     const hashBuffer = await crypto.subtle.deriveBits(
       {
         name: 'PBKDF2',
@@ -42,7 +40,7 @@ export const hashPassword = async (password) => {
       256
     );
     
-    // Convert to base64 and combine with salt
+  
     const hashArray = new Uint8Array(hashBuffer);
     const hashBase64 = btoa(String.fromCharCode.apply(null, hashArray));
     
@@ -69,7 +67,7 @@ export const verifyPassword = async (password, hashedPassword) => {
     
     const encoder = new TextEncoder();
     
-    // Import the password as a key
+  
     const key = await crypto.subtle.importKey(
       'raw',
       encoder.encode(password),
@@ -78,7 +76,7 @@ export const verifyPassword = async (password, hashedPassword) => {
       ['deriveBits']
     );
     
-    // Derive bits using the same parameters
+  
     const hashBuffer = await crypto.subtle.deriveBits(
       {
         name: 'PBKDF2',
@@ -90,7 +88,7 @@ export const verifyPassword = async (password, hashedPassword) => {
       256
     );
     
-    // Convert to base64 and compare
+  
     const hashArray = new Uint8Array(hashBuffer);
     const computedHash = btoa(String.fromCharCode.apply(null, hashArray));
     

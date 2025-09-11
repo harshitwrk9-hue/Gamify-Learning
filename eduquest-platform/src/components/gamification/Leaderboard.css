@@ -234,18 +234,18 @@
 .leaderboard-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
 .leaderboard-item {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 16px;
+  gap: 12px;
+  padding: 12px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  border-radius: 10px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   position: relative;
@@ -283,17 +283,17 @@
 }
 
 .item-rank {
-  font-size: 24px;
-  min-width: 40px;
+  font-size: 20px;
+  min-width: 32px;
   display: flex;
   justify-content: center;
 }
 
 .item-avatar {
   position: relative;
-  font-size: 32px;
-  width: 50px;
-  height: 50px;
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -335,19 +335,19 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .item-name {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-primary);
 }
 
 .item-details {
   display: flex;
-  gap: 12px;
-  font-size: 12px;
+  gap: 8px;
+  font-size: 11px;
   color: var(--text-secondary);
 }
 
@@ -356,7 +356,7 @@
 .item-courses {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 }
 
 .item-stats {
@@ -364,17 +364,17 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 2px;
+  gap: 1px;
 }
 
 .item-xp {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   color: var(--accent-color);
 }
 
 .xp-label {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
